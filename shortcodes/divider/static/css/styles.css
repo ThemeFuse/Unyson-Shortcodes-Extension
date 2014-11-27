@@ -1,0 +1,22 @@
+/* Divider space (empty) */
+.fw-divider-space {
+	clear: both;
+	width: 100%;
+}
+.fw-divider-space.space-sm {
+	height: 30px;
+}
+.fw-divider-space.space-md {
+	height: 60px;
+}
+.fw-divider-space.space-lg {
+	height: 100px;
+}
+/* Divider only Line */
+.fw-divider-line {
+	clear: both;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 100%;
+}

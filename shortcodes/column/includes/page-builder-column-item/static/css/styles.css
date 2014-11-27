@@ -1,0 +1,59 @@
+/* Thumb */
+.fw-option-type-page-builder .builder-item-type[data-builder-item-type="column"] img {
+	width: 30px;
+	height: 25px;
+}
+
+/* Column Builder Item */
+.pb-item-type-column {
+	background-color: #f8f8f8;
+	border: 1px dashed #d8d8d8;
+	color: #01729c;
+	min-height: 50px;
+}
+
+/* Panel */
+.pb-item-type-column > .panel {
+	padding: 10px 5px;
+	font-size: 12px;
+}
+.pb-item-type-column > .panel i {
+	cursor: pointer;
+	font-size: 16px;
+}
+.pb-item-type-column > .panel i:hover {
+	color: #019aca;
+}
+.pb-item-type-column > .panel .controls {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: none;
+}
+.pb-item-type-column:hover > .panel .controls {
+	display: block;
+}
+.builder-item.ui-sortable-helper > .pb-item-type-column:hover > .panel .controls {
+	display: none;
+}
+
+/* Hide Duplicate Button when 1/6 column & small screen */
+@media (max-width: 1824px) {
+	.builder-item.fw-col-sm-2 .pb-item-type-column.has-options .column-item-clone {
+		display: none;
+	}
+}
+
+/* Inner Items */
+.pb-item-type-column > .builder-items {
+	padding: 7px 0 13px;
+	min-height: 83px;
+}
+.pb-item-type-column > .builder-items > .builder-item {
+	padding: 0 11px 11px;
+}
+
+/* Accept / Deny Incoming Items */
+.builder-item.fw-builder-item-deny-incoming-type > .pb-item-type-column .ui-sortable-placeholder {
+	display: none;
+}

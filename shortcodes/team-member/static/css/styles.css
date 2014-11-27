@@ -1,0 +1,17 @@
+.fw-team .fw-team-image {
+	text-align: center;
+}
+.fw-team .fw-team-inner {
+	text-align: center;
+}
+.fw-team .fw-team-name {
+	margin-bottom: 10px;
+}
+.fw-team .fw-team-name h3 {
+	font-size: 23px;
+	margin: 10px 0 5px 0;
+}
+.fw-team .fw-team-name span {
+	font-size: 13px;
+	color: #666666;
+}

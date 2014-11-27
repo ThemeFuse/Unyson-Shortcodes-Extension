@@ -1,0 +1,156 @@
+.fw-btn {
+	display: inline-block;
+	margin-bottom: 0;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	text-decoration: none;
+	white-space: nowrap;
+	outline: none;
+	padding: 8px 20px;
+	font-size: 14px;
+	line-height: 1.6;
+	border-radius: 4px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-ms-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+.fw-btn span {
+	display: block;
+}
+.fw-btn:hover,
+.fw-btn:focus {
+	text-decoration: none;
+	outline: none;
+	opacity: 0.85;
+}
+.fw-btn:active {
+	box-shadow: inset 0 0 20px #2e935f;
+}
+.fw-btn i {
+	margin-right: 5px;
+}
+.fw-btn i.pull-right {
+	margin: 0 0 0 8px;
+	position: relative;
+	top: 0.3em;
+}
+/* Additional styles */
+.fw-btn.fw-btn-round {
+	border-radius: 38px;
+}
+.fw-btn.fw-btn-square {
+	border-radius: 0 !important;
+}
+.fw-btn.fw-btn-outline,
+.fw-btn.fw-btn-borders {
+	background: transparent;
+	box-shadow: none;
+	text-shadow: none;
+}
+/* Button Sizes */
+.fw-btn.fw-btn-lg {
+	padding: 15px 35px;
+	font-size: 17px;
+	line-height: 1.33;
+	border-radius: 6px;
+}
+.fw-btn.fw-btn-lg.fw-btn-round {
+	border-radius: 52px;
+}
+.fw-btn.fw-btn-lg i.pull-right {
+	top: 0.2em;
+}
+.fw-btn.fw-btn-sm {
+	padding: 4px 12px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 3px;
+}
+.fw-btn.fw-btn-sm.fw-btn-round {
+	border-radius: 30px;
+}
+.fw-btn.fw-btn-sm i.pull-right {
+	top: 0.2em;
+}
+.fw-btn.fw-btn-full {
+	width: 100%;
+}
+/* Button Style 1 */
+.fw-btn-1 {
+	background-color: #5bcc92;
+	border-color: transparent;
+	border-width: 2px;
+	color: #ffffff;
+	font-family: Arial;
+	font-size: 14px;
+	font-weight: bold;
+	/* btn colors */
+}
+.fw-btn-1.fw-btn-outline {
+	border-color: #5bcc92;
+	color: #5bcc92;
+}
+.fw-btn-1.fw-btn-outline:hover,
+.fw-btn-1.fw-btn-outline:focus {
+	background-color: #5bcc92;
+	color: #ffffff;
+}
+.fw-btn-1:hover,
+.fw-btn-1:focus {
+	background-color: #82d8ac;
+	color: #ffffff;
+}
+.fw-btn-1.fw-btn-rounded {
+	border-radius: 4px;
+}
+.fw-btn-1.fw-btn-borders {
+	border-top: 2px solid #5bcc92;
+	border-bottom: 2px solid #5bcc92;
+	color: #5bcc92;
+	border-radius: 0;
+}
+.fw-btn-1.fw-btn-borders:hover,
+.fw-btn-1.fw-btn-borders:focus {
+	background-color: #5bcc92;
+	color: #ffffff;
+}
+.fw-btn-1.fw-btn-black {
+	background-color: #000000;
+	border-color: #000000;
+	color: #ffffff;
+}
+.fw-btn-1.fw-btn-black:active {
+	box-shadow: inset 0 0 20px #333333;
+}
+.fw-btn-1.fw-btn-blue {
+	background-color: #3c9beb;
+	border-color: #3c9beb;
+	color: #ffffff;
+}
+.fw-btn-1.fw-btn-blue:active {
+	box-shadow: inset 0 0 20px #1267af;
+}
+.fw-btn-1.fw-btn-green {
+	background-color: #44ac48;
+	border-color: #44ac48;
+	color: #ffffff;
+}
+.fw-btn-1.fw-btn-green:active {
+	box-shadow: inset 0 0 20px #276329;
+}
+.fw-btn-1.fw-btn-red {
+	background-color: #cb1e1b;
+	border-color: #cb1e1b;
+	color: #ffffff;
+}
+.fw-btn-1.fw-btn-red:active {
+	box-shadow: inset 0 0 20px #71110f;
+}

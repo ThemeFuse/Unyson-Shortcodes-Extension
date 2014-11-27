@@ -1,0 +1,16 @@
+.fw-icon {
+	display: inline-block;
+	text-align: center;
+}
+.fw-icon i, .icon-box i {
+	font-family: 'FontAwesome';
+	font-style: normal;
+	font-size: 28px;
+	position: relative;
+	line-height: 1.5;
+}
+.fw-icon .list-title, .icon-box .list-title {
+	font-size: 16px;
+	display: inline-block;
+	line-height: normal;
+}

@@ -1,0 +1,70 @@
+.fw-tabs-container .fw-tabs ul {
+	list-style: outside none none;
+	margin: 0;
+	padding: 0;
+}
+.fw-tabs-container .fw-tabs ul:before,
+.fw-tabs-container .fw-tabs ul:after {
+	content: " ";
+	display: table;
+}
+.fw-tabs-container .fw-tabs ul:after {
+	clear: both;
+}
+.fw-tabs-container .fw-tabs ul:before,
+.fw-tabs-container .fw-tabs ul:after {
+	content: " ";
+	display: table;
+}
+.fw-tabs-container .fw-tabs ul:after {
+	clear: both;
+}
+.fw-tabs-container .fw-tabs ul li {
+	background: none repeat scroll 0 0 #f2f2f2;
+	border: 1px solid #cfcfcf;
+	border-left: 0;
+	display: inline-block;
+	float: left;
+}
+.fw-tabs-container .fw-tabs ul li:first-child {
+	border-left: 1px solid #cfcfcf;
+}
+.fw-tabs-container .fw-tabs ul li a {
+	color: #333333;
+	display: block;
+	font-size: 15px;
+	padding: 7px 25px;
+	text-decoration: none;
+}
+.fw-tabs-container .fw-tabs ul li a:focus {
+	outline: medium none;
+}
+.fw-tabs-container .fw-tabs ul li.ui-state-active {
+	background: none repeat scroll 0 0 #fff;
+	border-bottom-color: #fff;
+}
+.fw-tabs-container .fw-tabs ul li.ui-state-active a {
+	color: #000000;
+}
+.fw-tabs-container.tabs-justified .fw-tabs ul li {
+	float: none;
+	display: table-cell;
+	width: 1%;
+	text-align: center;
+}
+.fw-tabs-container.tabs-justified .fw-tab-content {
+	border-top: 0px;
+}
+.fw-tabs-container .fw-tab-content {
+	border: 1px solid #cfcfcf;
+	display: none;
+	margin-top: -1px;
+	padding: 20px 30px;
+}
+.fw-tabs-container .fw-tab-content img {
+	float: left;
+	margin: 5px 20px 5px 0;
+}
+.fw-tabs-container .fw-tab-content p:last-child {
+	margin-bottom: 0;
+}

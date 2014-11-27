@@ -1,0 +1,41 @@
+/** fix infowindow dimensions **/
+.fw-map-canvas .unyson-shortcode-map-content {
+	/*max-width: 420px;*/
+	min-width: 274px;
+	padding: 5px 4px ;
+}
+.fw-map-canvas img {
+	max-width: none !important;
+
+}
+.fw-map-canvas .gm-style-iw{
+	/*min-height: 70px;*/
+	overflow: hidden;
+}
+/** .fix infowindow dimensions **/
+
+.fw-map-canvas .infowindow a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #568EC7;
+}
+.fw-map-canvas .infowindow-thump img {
+	width: 100px;
+	height: 60px;
+	margin-right: 10px;
+}
+.fw-map-canvas .infowindow-thump {
+	float: left;
+}
+.fw-map-canvas .infowindow-title {
+	line-height: 27px;
+}
+.fw-map-canvas .infowindow-description {
+	color: #AFAFAF;
+	font-size: 11px;
+	font-style: italic;
+}
+.fw-map-canvas .infowindow-content {
+	float: left;
+	max-width: 130px;
+}

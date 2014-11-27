@@ -1,0 +1,18 @@
+.fw-call-to-action {
+	border: 1px solid #dbdbdb;
+	border-radius: 3px;
+	padding: 20px;
+	display: table;
+}
+.fw-call-to-action > div {
+	display: table-cell;
+	vertical-align: middle;
+}
+.fw-call-to-action .fw-action-content h2 {
+	margin-top: 0;
+	font-weight: bold;
+}
+
+.fw-call-to-action .fw-action-btn {
+	padding-left: 40px;
+}
