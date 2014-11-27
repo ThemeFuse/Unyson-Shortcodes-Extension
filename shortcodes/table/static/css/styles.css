@@ -147,11 +147,13 @@ table th[class*="col-"] {
 .fw-package {
 	display: inline-block;
 	font-size: 14px;
-	width: 255px;
+	/* width: 255px; */
+	width: 100%;
 	position: relative;
 	border: 1px solid #eeeeee;
 	padding-bottom: 0;
-	vertical-align: middle;
+	vertical-align: top;
+	/* vertical-align: middle;*/
 }
 .fw-package .fw-heading-row,
 .fw-package .fw-pricing-row {
