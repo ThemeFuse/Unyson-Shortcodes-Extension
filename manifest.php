@@ -2,9 +2,9 @@
 
 $manifest = array();
 
-$manifest['version']      = '0.0.0';
-$manifest['author']       = 'ThemeFuse';
-$manifest['author_uri']   = 'http://themefuse.com/';
+$manifest['name']         = __( 'Shortcodes', 'fw' );
+$manifest['version']      = '1.0.0';
 $manifest['display']      = false;
 $manifest['standalone']   = false;
-$manifest['github_update'] = 'asdsdfdfg/shortcodes';
+
+$manifest['github_update'] = 'ThemeFuse/Unyson-Shortcodes-Extension';
