@@ -82,9 +82,9 @@ unset(
 						);
 
 						//set popup-button title
-						$internal_options['button'] = __( 'Edit', 'unyson' );
+						$internal_options['button'] = __( 'Edit', 'fw' );
 						if ( empty( $cell_value['button'] ) ) {
-							$internal_options['button'] = __( 'Add', 'unyson' );
+							$internal_options['button'] = __( 'Add', 'fw' );
 						}
 
 						?>
@@ -142,7 +142,7 @@ unset(
 						'value'       => ''
 					);
 
-					$internal_options['button'] = __( 'Add', 'unyson' );
+					$internal_options['button'] = __( 'Add', 'fw' );
 					?>
 					<div
 						class="fw-table-cell-button"><?php echo fw()->backend->option_type( 'popup' )->render( 'button', $internal_options, $popup_data ) ?></div>

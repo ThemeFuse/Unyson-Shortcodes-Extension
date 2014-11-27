@@ -12,8 +12,8 @@ class FW_Option_Type_Table_Builder extends FW_Option_Type {
 		if ( $button ) {
 			$this->internal_options = array(
 				'type'          => 'popup',
-				'popup-title'   => __( 'Button', 'unyson' ),
-				'button'        => __( 'Add', 'unyson' ),
+				'popup-title'   => __( 'Button', 'fw' ),
+				'button'        => __( 'Add', 'fw' ),
 				'popup-options' => $button->get_options()
 			);
 		}
@@ -55,7 +55,7 @@ class FW_Option_Type_Table_Builder extends FW_Option_Type {
 			true
 		);
 
-		wp_localize_script( 'fw-option-' . $this->get_type(), 'localizeTableBuilder', array( 'msgEdit' => __( 'Edit', 'unyson' ) ) );
+		wp_localize_script( 'fw-option-' . $this->get_type(), 'localizeTableBuilder', array( 'msgEdit' => __( 'Edit', 'fw' ) ) );
 		fw()->backend->option_type( 'popup' )->enqueue_static();
 	}
 
@@ -68,7 +68,7 @@ class FW_Option_Type_Table_Builder extends FW_Option_Type {
 
 		if ( ! $table_shortcode ) {
 			trigger_error(
-				__( 'table-builder option type must be inside the table shortcode', 'unyson' ),
+				__( 'table-builder option type must be inside the table shortcode', 'fw' ),
 				E_USER_ERROR
 			);
 		}
@@ -160,18 +160,18 @@ class FW_Option_Type_Table_Builder extends FW_Option_Type {
 		return array(
 			'row_options'     => array(
 				'choices' => array(
-					''            => __( 'Default row', 'unyson' ),
-					'heading-row' => __( 'Heading row', 'unyson' ),
-					'pricing-row' => __( 'Pricing row', 'unyson' ),
-					'button-row'  => __( 'Button row', 'unyson' )
+					''            => __( 'Default row', 'fw' ),
+					'heading-row' => __( 'Heading row', 'fw' ),
+					'pricing-row' => __( 'Pricing row', 'fw' ),
+					'button-row'  => __( 'Button row', 'fw' )
 				)
 			),
 			'columns_options' => array(
 				'choices' => array(
-					''              => __( 'Default column', 'unyson' ),
-					'highlight-col' => __( 'Highlight column', 'unyson' ),
-					'desc-col'      => __( 'Description column', 'unyson' ),
-					'center-col'    => __( 'Center text column', 'unyson' )
+					''              => __( 'Default column', 'fw' ),
+					'highlight-col' => __( 'Highlight column', 'fw' ),
+					'desc-col'      => __( 'Description column', 'fw' ),
+					'center-col'    => __( 'Center text column', 'fw' )
 				)
 			),
 			'value'           => array(
