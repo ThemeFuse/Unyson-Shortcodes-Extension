@@ -3,7 +3,7 @@
 $options = array(
 	'sidebar' => array(
 		'label'   => __( 'Sidebar', 'fw' ),
-		'desc'    => __( '', 'fw' ),
+		'desc'    => '',
 		'type'    => 'select',
 		'choices' => FW_Shortcode_Widget_Area::get_sidebars()
 	)
