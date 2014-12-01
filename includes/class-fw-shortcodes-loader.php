@@ -6,13 +6,22 @@
 class _FW_Shortcodes_Loader
 {
 
-	private static $extension_shortcodes = array();
-
 	/** @var FW_Shortcode[] $shortcodes */
 	private static $shortcodes = array();
 
-	public static function load()
+	private static $disabled_shortcodes = array();
+
+	private static $extension_shortcodes = array();
+
+	public static function load($data)
 	{
+		if (
+			isset($data['disabled_shortcodes']) &&
+			is_array($data['disabled_shortcodes'])
+		) {
+			self::$disabled_shortcodes = array_fill_keys($data['disabled_shortcodes'], true);
+		}
+
 		self::load_core_shortcodes();
 		self::load_extensions_shortcodes();
 		return self::$shortcodes;
@@ -136,6 +145,10 @@ class _FW_Shortcodes_Loader
 		foreach (glob($paths['path'] .'/*', GLOB_ONLYDIR) as $shortcode_path) {
 			$shortcode_dir = strtolower(basename($shortcode_path));
 			$shortcode_tag = str_replace('-', '_', $shortcode_dir);
+
+			if (isset(self::$disabled_shortcodes[$shortcode_tag])) {
+				continue;
+			}
 
 			if (isset(self::$extension_shortcodes[$ext_name][$shortcode_tag])) {
 				continue;

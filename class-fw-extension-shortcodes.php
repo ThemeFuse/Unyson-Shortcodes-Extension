@@ -64,18 +64,10 @@ class FW_Extension_Shortcodes extends FW_Extension
 		if ($this->shortcodes) {
 			return;
 		}
-		$all_shortcodes        = _FW_Shortcodes_Loader::load();
-		$shortcode_tags        = array_keys($all_shortcodes);
-		$shortcodes_to_disable = apply_filters(
-			'fw_ext_shortcodes_disable_shortcodes',
-			array(),
-			array_combine($shortcode_tags, $shortcode_tags)
-		);
-
-		foreach ($shortcodes_to_disable as $to_disable) {
-			unset($all_shortcodes[$to_disable]);
-		}
-		$this->shortcodes = $all_shortcodes;
+		$disabled_shortcodes = apply_filters('fw_ext_shortcodes_disable_shortcodes', array());
+		$this->shortcodes    = _FW_Shortcodes_Loader::load(array(
+			'disabled_shortcodes' => $disabled_shortcodes
+		));
 	}
 
 	private function register_shortcodes()
