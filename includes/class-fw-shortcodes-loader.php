@@ -48,7 +48,8 @@ class _FW_Shortcodes_Loader
 	 */
 	private static function load_extension_shortcodes($extension)
 	{
-		$ext_name = $extension->get_name();
+		$ext_name     = $extension->get_name();
+		$ext_rel_path = $extension->get_rel_path();
 		if ($extension->get_declared_source() === 'framework') {
 			self::load_folder_shortcodes(
 				$ext_name,
@@ -58,35 +59,35 @@ class _FW_Shortcodes_Loader
 				),
 				array(
 					'paths' => array(
-						fw_get_stylesheet_customizations_directory('/extensions/' . $ext_name . '/shortcodes'),
-						fw_get_template_customizations_directory('/extensions/' . $ext_name . '/shortcodes')
+						fw_get_stylesheet_customizations_directory('/extensions' . $ext_rel_path . '/shortcodes'),
+						fw_get_template_customizations_directory('/extensions' . $ext_rel_path . '/shortcodes')
 					),
 					'uris' => array(
-						fw_get_stylesheet_customizations_directory_uri('/extensions/' . $ext_name . '/shortcodes'),
-						fw_get_template_customizations_directory_uri('/extensions/' . $ext_name . '/shortcodes')
+						fw_get_stylesheet_customizations_directory_uri('/extensions' . $ext_rel_path . '/shortcodes'),
+						fw_get_template_customizations_directory_uri('/extensions' . $ext_rel_path . '/shortcodes')
 					)
 				)
 			);
 			self::load_folder_shortcodes(
 				$ext_name,
 				array(
-					'path' => fw_get_template_customizations_directory('/extensions/' . $ext_name . '/shortcodes'),
-					'uri'  => fw_get_template_customizations_directory_uri('/extensions/' . $ext_name . '/shortcodes')
+					'path' => fw_get_template_customizations_directory('/extensions' . $ext_rel_path . '/shortcodes'),
+					'uri'  => fw_get_template_customizations_directory_uri('/extensions' . $ext_rel_path . '/shortcodes')
 				),
 				array(
 					'paths' => array(
-						fw_get_stylesheet_customizations_directory('/extensions/' . $ext_name . '/shortcodes')
+						fw_get_stylesheet_customizations_directory('/extensions' . $ext_rel_path . '/shortcodes')
 					),
 					'uris'  => array(
-						fw_get_stylesheet_customizations_directory_uri('/extensions/' . $ext_name . '/shortcodes')
+						fw_get_stylesheet_customizations_directory_uri('/extensions' . $ext_rel_path . '/shortcodes')
 					)
 				)
 			);
 			self::load_folder_shortcodes(
 				$ext_name,
 				array(
-					'path' => fw_get_stylesheet_customizations_directory('/extensions/' . $ext_name . '/shortcodes'),
-					'uri'  => fw_get_stylesheet_customizations_directory_uri('/extensions/' . $ext_name . '/shortcodes')
+					'path' => fw_get_stylesheet_customizations_directory('/extensions' . $ext_rel_path . '/shortcodes'),
+					'uri'  => fw_get_stylesheet_customizations_directory_uri('/extensions' . $ext_rel_path . '/shortcodes')
 				)
 			);
 		} elseif ($extension->get_declared_source() === 'parent') {
@@ -98,18 +99,18 @@ class _FW_Shortcodes_Loader
 				),
 				array(
 					'paths' => array(
-						fw_get_stylesheet_customizations_directory('/extensions/' . $ext_name . '/shortcodes')
+						fw_get_stylesheet_customizations_directory('/extensions' . $ext_rel_path . '/shortcodes')
 					),
 					'uris'  => array(
-						fw_get_stylesheet_customizations_directory_uri('/extensions/' . $ext_name . '/shortcodes')
+						fw_get_stylesheet_customizations_directory_uri('/extensions' . $ext_rel_path . '/shortcodes')
 					)
 				)
 			);
 			self::load_folder_shortcodes(
 				$ext_name,
 				array(
-					'path' => fw_get_stylesheet_customizations_directory('/extensions/' . $ext_name . '/shortcodes'),
-					'uri'  => fw_get_stylesheet_customizations_directory_uri('/extensions/' . $ext_name . '/shortcodes')
+					'path' => fw_get_stylesheet_customizations_directory('/extensions' . $ext_rel_path . '/shortcodes'),
+					'uri'  => fw_get_stylesheet_customizations_directory_uri('/extensions' . $ext_rel_path . '/shortcodes')
 				)
 			);
 		} else {
