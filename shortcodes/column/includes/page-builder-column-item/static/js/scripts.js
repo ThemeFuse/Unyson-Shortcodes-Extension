@@ -19,7 +19,7 @@
 						title: 'Column', // TODO: make translatable
 						options: options.modalOptions,
 						values: this.model.get('atts'),
-						size: 'medium'
+						size: 'small'
 					});
 
 					this.listenTo(this.modal, 'change:values', function (modal, values) {
