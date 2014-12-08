@@ -28,6 +28,7 @@
 
 				readTemplateCell: function(){
 					_self.htmlCellTemplate = $table.find('.fw-cell-template').data('html-template');
+					$table.find('.fw-cell-template').remove();
 				},
 
 				initialize: function () {
