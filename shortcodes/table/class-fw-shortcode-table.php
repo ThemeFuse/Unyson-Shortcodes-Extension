@@ -13,7 +13,7 @@ class FW_Shortcode_Table extends FW_Shortcode {
 	}
 
 	private function load_option_type() {
-		require $this->locate_path('/includes/fw-option-type-table-builder/class-fw-option-type-table-builder.php');
+		require $this->locate_path('/includes/fw-option-type-table/class-fw-option-type-table.php');
 	}
 
 	protected function _render($atts, $content = null, $tag = '') {

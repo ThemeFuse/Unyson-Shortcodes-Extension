@@ -13,17 +13,27 @@
 				return ui;
 			};
 
-			var $table = $tableBuilder.find('.fw-table'),
+			var _self = this,
+				$table = $tableBuilder.find('.fw-table'),
 				lastRow = parseInt($tableBuilder.find('.fw-table-last-row').val()),
 				lastCol = parseInt($tableBuilder.find('.fw-table-last-col').val()),
-				worksheetNonButtonCellsSelector = '.fw-table-row:not(.button-row, .fw-table-col-options, .fw-template-row, .fw-table-cols-delete) .fw-table-cell-worksheet',
+				worksheetNonButtonCellsSelector = '.fw-table-row:not(.button-row, .switch-row, .fw-table-col-options, .fw-template-row, .fw-table-cols-delete) .fw-table-cell-worksheet',
 				worksheetRowsSelector = '.fw-table-row:not(.fw-table-col-options, .fw-template-row, .fw-table-cols-delete)',
 				$currentCell = false,
-				isAllowedTabMove = true;
+				isAllowedTabMove = true,
+				htmlCellTemplate;
+
 
 			var process = {
+
+				readTemplateCell: function(){
+					_self.htmlCellTemplate = $table.find('.fw-cell-template').data('html-template');
+					$table.find('.fw-cell-template').remove();
+				},
+
 				initialize: function () {
 					process.tableBuilderEvents();
+					process.readTemplateCell();
 					process.reInitSortable();
 				},
 
@@ -65,8 +75,9 @@
 				},
 
 				cellTriggerManager: function (e, $cell) {
-					if (false === $cell.parent().hasClass('button-row')){
-						$cell.find('.fw-table-cell-content').trigger('click');
+					e.stopPropagation();
+					if (false === $cell.parent().hasClass('button-row') && false === $cell.parent().hasClass('switch-row') ){
+						process.openEditor($cell);
 						process.setCurrentCell($cell);
 					}
 				},
@@ -145,20 +156,12 @@
 							$insertedWorksheetCell = $worksheetCellTemplate.clone().addClass(dropDownDefaultColValue).insertBefore($beforeDeleteRowCell);
 
 						$insertedWorksheetCell.attr('data-col', lastCol);
-						$insertedWorksheetCell.each(function () {
 
-							if (false === $(this).parent().hasClass('fw-template-row')) {
-								var rowId = $(this).parent().data('row');
-
-								$(this).find(':input').each(function () {
-									$(this).attr('name', $(this).attr('name').replace(/_template_key_row_/, rowId).replace(/_template_key_col_/, lastCol));
-									$(this).attr('id', $(this).attr('id').replace(/_template_key_row_/, rowId).replace(/_template_key_col_/, lastCol));
-								});
-
+						$insertedWorksheetCell.each(function(){
+							var rowId =  $(this).parent().data('row');
+							if ( false === $(this).parent().hasClass('fw-template-row')) {
+								$(this).html( _self.htmlCellTemplate.split( '_template_key_row_' ).join( rowId ).split( '_template_key_col_' ).join( lastCol ) );
 							}
-
-							process.reinitOptions($(this));
-							process.trigger('column:added', {$elements: $insertedWorksheetCell});
 						});
 
 						/**
@@ -182,6 +185,9 @@
 						 * set column default style
 						 */
 						process.changeTableColumnStyle.apply(clone2.find('select'));
+
+						process.reinitOptions($insertedWorksheetCell);
+						process.trigger('column:added', {$elements: $insertedWorksheetCell});
 					}
 
 					return false;
@@ -190,24 +196,17 @@
 				addTableRow: function () {
 					var $templateRow = $tableBuilder.find('.fw-template-row');
 					lastRow++;
+
 					var $insertedRow = $templateRow.clone().removeClass('fw-template-row').attr('data-row', lastRow).insertBefore($templateRow);
 
-					/**
-					 * replace inputs templates names & id's
-					 */
-					$insertedRow.each(function () {
-						if (false === $(this).hasClass('fw-template-row')) {
+					$insertedRow.find('.fw-table-cell-worksheet').each(function(){
+						var col = $(this).data('col');
+						$(this).html( _self.htmlCellTemplate.split( '_template_key_row_' ).join( lastRow ).split( '_template_key_col_' ).join( col ) );
+					});
 
-							var $inputElements = $(this).find(':input');
-
-							$inputElements.each(function () {
-								var colId = $(this).parents('.fw-table-cell').data('col');
-
-								$(this).attr('name', $(this).attr('name').replace(/_template_key_row_/, lastRow).replace(/_template_key_col_/, colId));
-								$(this).attr('id', $(this).attr('id').replace(/_template_key_row_/, lastRow).replace(/_template_key_col_/, colId));
-							});
-
-						}
+					$insertedRow.find('.fw-table-cell-options :input').each(function(){
+						$(this).attr('name', $(this).attr('name').split( '_template_key_row_' ).join( lastRow ) );
+						$(this).attr('id', $(this).attr('id').split( '_template_key_row_' ).join( lastRow ) );
 					});
 
 					process.reinitOptions($insertedRow);
@@ -216,10 +215,14 @@
 				},
 
 				reinitOptions: function ($container) {
-					$container.find('.fw-option-type-popup').removeClass('fw-option-initialized');
-					$container.find('.fw-table-cell-content').on('click', process.openEditor);
+					$container.find('.fw-table-cell-content').on('click', function(e){
+						process.cellTriggerManager(e, $(this).parent());
+					});
+
+					fwEvents.trigger('fw:options:init',
+						{$elements: $container}
+					);
 					process.reInitSortable();
-					fwEvents.trigger('fw:options:init', {$elements: $container});
 				},
 
 				reInitSortable: function() {
@@ -266,9 +269,9 @@
 					$(this).parent().find('.fw-table-cell-content').text(value);
 				},
 
-				openEditor: function (e) {
-					e.stopPropagation();
-					var $cell = $(this).parents('.fw-table-cell');
+				openEditor: function ($cell) {
+					//e.stopPropagation();
+					//var $cell = $(this).parents('.fw-table-cell');
 					process.closeEditor();
 
 					if ($cell.find('textarea').length) {
@@ -296,7 +299,9 @@
 				},
 
 				tableBuilderEvents: function () {
-					$table.find('.fw-table-cell-content').on('click', process.openEditor);
+					$table.find('.fw-table-cell-content').on('click', function(e){
+						process.cellTriggerManager(e, $(this).parent());
+					});
 
 					$table.on('click', '.fw-table-cell-worksheet', function(e){
 						process.cellTriggerManager(e, $(this));
@@ -328,7 +333,7 @@
 		};
 
 		fwEvents.on('fw:options:init', function (data) {
-			data.$elements.find('.fw-option-type-table-builder:not(.fw-option-initialized)').each(function () {
+			data.$elements.find('.fw-option-type-table:not(.fw-option-initialized)').each(function () {
 				new FwTableBuilder($(this));
 			}).addClass('fw-option-initialized');
 		});
