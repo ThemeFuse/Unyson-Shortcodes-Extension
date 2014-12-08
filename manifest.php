@@ -3,7 +3,7 @@
 $manifest = array();
 
 $manifest['name']         = __( 'Shortcodes', 'fw' );
-$manifest['version']      = '1.1.1';
+$manifest['version']      = '1.2.0';
 $manifest['display']      = false;
 $manifest['standalone']   = false;
 

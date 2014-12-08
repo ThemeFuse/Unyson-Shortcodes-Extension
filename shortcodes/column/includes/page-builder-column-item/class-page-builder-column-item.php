@@ -67,73 +67,23 @@ class Page_Builder_Column_Item extends Page_Builder_Item
 
 	protected function get_thumbnails_data()
 	{
-		$column_shortcode = fw()->extensions->get('shortcodes')->get_shortcode('column');
-		$img_uri          = $column_shortcode->locate_URI('/includes/page-builder-column-item/static/img/');
-		return array(
-			array(
+		$builder_extension = fw_ext('builder');
+		$column_shortcode  = fw_ext('shortcodes')->get_shortcode('column');
+		$builder_widths    = $builder_extension->get_config('default_item_widths');
+
+		$column_thumbnails = array();
+		foreach ($builder_widths as $key => $value) {
+			$column_thumbnails[$key] = array(
 				'tab'         => __('Layout Elements', 'fw'),
-				'title'       => __('1/6', 'fw'),
-				'description' => __('Creates a 1/6 column' ,'fw'),
-				'image'       => $img_uri . '1-6.png',
+				'title'       => $value['title'],
+				'description' => __("Creates a {$value['title']} column" ,'fw'),
+				'image'       => $column_shortcode->locate_URI("/includes/page-builder-column-item/static/img/{$key}.png"),
 				'data'        => array(
-					'width'   => '1_6'
+					'width'   => $key
 				)
-			),
-			array(
-				'tab'         => __('Layout Elements', 'fw'),
-				'title'       => __('1/4', 'fw'),
-				'description' => __('Creates a 1/4 column' ,'fw'),
-				'image'       => $img_uri . '1-4.png',
-				'data'        => array(
-					'width'   => '1_4'
-				)
-			),
-			array(
-				'tab'         => __('Layout Elements', 'fw'),
-				'title'       => __('1/3', 'fw'),
-				'description' => __('Creates a 1/3 column' ,'fw'),
-				'image'       => $img_uri . '1-3.png',
-				'data'        => array(
-					'width'   => '1_3'
-				)
-			),
-			array(
-				'tab'         => __('Layout Elements', 'fw'),
-				'title'       => __('1/2', 'fw'),
-				'description' => __('Creates a 1/2 column' ,'fw'),
-				'image'       => $img_uri . '1-2.png',
-				'data'        => array(
-					'width'   => '1_2'
-				)
-			),
-			array(
-				'tab'         => __('Layout Elements', 'fw'),
-				'title'       => __('2/3', 'fw'),
-				'description' => __('Creates a 2/3 column' ,'fw'),
-				'image'       => $img_uri . '2-3.png',
-				'data'        => array(
-					'width'   => '2_3'
-				)
-			),
-			array(
-				'tab'         => __('Layout Elements', 'fw'),
-				'title'       => __('3/4', 'fw'),
-				'description' => __('Creates a 3/4 column' ,'fw'),
-				'image'       => $img_uri . '3-4.png',
-				'data'        => array(
-					'width'   => '3_4'
-				)
-			),
-			array(
-				'tab'         => __('Layout Elements', 'fw'),
-				'title'       => __('1/1', 'fw'),
-				'description' => __('Creates a 1/1 column' ,'fw'),
-				'image'       => $img_uri . '1-1.png',
-				'data'        => array(
-					'width'   => '1_1'
-				)
-			)
-		);
+			);
+		}
+		return apply_filters('fw_shortcode_column_thumbnails_data', $column_thumbnails);
 	}
 
 	public function get_value_from_attributes($attributes)
