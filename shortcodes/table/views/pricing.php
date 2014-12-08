@@ -6,7 +6,6 @@
  * @var array $atts
  */
 
-fw_print($atts);
 $class_width = 'fw-col-sm-' . floor(12 / count($atts['table']['cols']));
 
 ?>

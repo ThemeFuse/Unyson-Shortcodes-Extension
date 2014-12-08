@@ -52,11 +52,11 @@ unset(
 			<div class="fw-table-cell fw-table-cell-options empty-cell">&nbsp;</div>
 
 			<?php $j = 0; ?>
-			<?php foreach ( reset( $data['value']['content'] ) as $key_col => $val ) : ?>
+			<?php foreach ( $data['value']['cols'] as $col ) : ?>
 
-				<div class="fw-table-cell fw-table-col-option <?php echo $data['value']['cols'][ $j ]['name'] ?>"
+				<div class="fw-table-cell fw-table-col-option <?php echo $col['name'] ?>"
 				     data-col="<?php echo $j ?>">
-					<?php echo fw_render_view( $header_cell_template, compact( 'internal_options', 'option', 'data', 'option', 'j' ) );  ?>
+					<?php echo fw_render_view( $header_cell_template, compact( 'internal_options', 'option', 'data', 'j' ) );  ?>
 				</div>
 				<?php $j++; ?>
 			<?php  endforeach; ?>
@@ -106,9 +106,10 @@ unset(
 			<?php $last_row = $i; ?>
 			<?php $i++; ?>
 		<?php endforeach; ?>
-		<!--end data rows -->
+		<?php /** End data rows */?>
 
-		<!--start template row-->
+
+		<?php /** Start template row */ ?>
 		<div class="fw-table-row fw-template-row">
 
 			<div class='fw-table-cell fw-table-cell-options'>
@@ -124,7 +125,7 @@ unset(
 			</div>
 
 			<?php for($j = 0; $j <= $last_col; $j++)  : ?>
-				<div class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $key_col ]['name'] ?>' data-col="<?php echo $j ?>"></div>
+				<div class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $j ]['name'] ?>' data-col="<?php echo $j ?>"></div>
 			<?php endfor; ?>
 
 			<div class="fw-table-cell fw-table-row-delete">
@@ -132,7 +133,8 @@ unset(
 			</div>
 
 		</div>
-		<!--end template row-->
+		<?php /** End template row */ ?>
+
 
 		<?php /** Start delete buttons row **/ ?>
 		<div class="fw-table-row fw-table-cols-delete">
