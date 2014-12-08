@@ -76,6 +76,7 @@
 				},
 
 				cellTriggerManager: function (e, $cell) {
+					//todo: smth changes
 					e.stopPropagation();
 					if (false === $cell.parent().hasClass('button-row')
 						&& false === $cell.parent().hasClass('switch-row')
@@ -189,6 +190,7 @@
 						 */
 						process.changeTableColumnStyle.apply(clone2.find('select'));
 
+						process.reinitOptions(clone2);
 						process.reinitOptions($insertedWorksheetCell);
 						process.trigger('column:added', {$elements: $insertedWorksheetCell});
 					}
@@ -274,10 +276,7 @@
 				},
 
 				openEditor: function ($cell) {
-					//e.stopPropagation();
-					//var $cell = $(this).parents('.fw-table-cell');
 					process.closeEditor();
-
 					if ($cell.find('textarea').length) {
 						$cell.addClass('fw-cell-show-editor').find('textarea').focus();
 					}

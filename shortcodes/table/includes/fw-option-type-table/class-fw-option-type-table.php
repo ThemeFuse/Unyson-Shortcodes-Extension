@@ -113,9 +113,9 @@ class FW_Option_Type_Table extends FW_Option_Type {
 		}
 
 		$this->replace_with_defaults( $option );
-		$views_path = $table_shortcode->get_declared_path() . '/includes/fw-option-type-table/views/';
+		$view_path = $table_shortcode->get_declared_path() . '/includes/fw-option-type-table/views/view.php';
 
-		return fw_render_view( $views_path . 'view.php', array(
+		return fw_render_view( $view_path, array(
 			'id'               => $option['attr']['id'],
 			'option'           => $option,
 			'data'             => $data,
@@ -125,10 +125,10 @@ class FW_Option_Type_Table extends FW_Option_Type {
 
 	protected function replace_with_defaults( &$option ) {
 		$option['row_options']['attr']['class']     = 'fw-table-builder-row-style';
-		$option['columns_options']['attr']['class'] = 'fw-table-builder-col-style';
+		$option['columns_options']['name']['attr']['class'] = 'fw-table-builder-col-style';
 		$defaults                                   = $this->_get_defaults();
 		$option['row_options']['choices']           = $defaults['row_options']['choices'];
-		$option['columns_options']['choices']       = $defaults['columns_options']['choices'];
+		$option['columns_options']['name']['choices']       = $defaults['columns_options']['name']['choices'];
 	}
 
 	/**
@@ -208,15 +208,20 @@ class FW_Option_Type_Table extends FW_Option_Type {
 				)
 			),
 			'columns_options' => array(
-				'choices' => array(
-					''              => __( 'Default column', 'fw' ),
-					'highlight-col' => __( 'Highlight column', 'fw' ),
-					'desc-col'      => __( 'Description column', 'fw' ),
-					'center-col'    => __( 'Center text column', 'fw' )
+				'name' => array(
+					'type'  => 'select',
+					'label' => false,
+					'desc'  => false,
+					'choices' => array(
+						''              => __( 'Default column', 'fw' ),
+						'highlight-col' => __( 'Highlight column', 'fw' ),
+						'desc-col'      => __( 'Description column', 'fw' ),
+						'center-col'    => __( 'Center text column', 'fw' )
+					)
 				)
 			),
 			'value'           => array(
-				'cols'  => array( array('class'=> ''), array('class'=> ''), array('class'=> '') ),
+				'cols'  => array( array('name'=> ''), array('name'=> ''), array('name'=> '') ),
 				'rows'  => array( '', '', '' ),
 				'content' => $this->_fw_generate_default_values()
 			)
