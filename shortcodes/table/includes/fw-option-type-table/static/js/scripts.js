@@ -17,17 +17,18 @@
 				$table = $tableBuilder.find('.fw-table'),
 				lastRow = parseInt($tableBuilder.find('.fw-table-last-row').val()),
 				lastCol = parseInt($tableBuilder.find('.fw-table-last-col').val()),
-				worksheetNonButtonCellsSelector = '.fw-table-row:not(.button-row, .switch-row, .fw-table-col-options, .fw-template-row, .fw-table-cols-delete) .fw-table-cell-worksheet',
+				worksheetNonInteractiveCellsSelector = '.fw-table-row:not(.button-row, .pricing-row, .switch-row, .fw-table-col-options, .fw-template-row, .fw-table-cols-delete) .fw-table-cell-worksheet',
 				worksheetRowsSelector = '.fw-table-row:not(.fw-table-col-options, .fw-template-row, .fw-table-cols-delete)',
 				$currentCell = false,
 				isAllowedTabMove = true,
-				htmlCellTemplate;
+				htmlWorksheetCell;
 
 
 			var process = {
 
 				readTemplateCell: function(){
-					_self.htmlCellTemplate = $table.find('.fw-cell-template').data('html-template');
+					_self.htmlWorksheetCell = $table.find('.fw-cell-template').data('worksheet-cell-template');
+					_self.htmlHeaderCell = $table.find('.fw-cell-template').data('header-cell-template');
 					$table.find('.fw-cell-template').remove();
 				},
 
@@ -59,7 +60,7 @@
 				},
 
 				onTabPress: function (e) {
-					var $cells = $table.find(worksheetNonButtonCellsSelector),
+					var $cells = $table.find(worksheetNonInteractiveCellsSelector),
 						currentCellIndex = $cells.index($currentCell),
 						order = e.shiftKey ? -1 : 1,
 						$nextCell = $cells.filter(':eq(' + (currentCellIndex + order) + ')');
@@ -76,7 +77,10 @@
 
 				cellTriggerManager: function (e, $cell) {
 					e.stopPropagation();
-					if (false === $cell.parent().hasClass('button-row') && false === $cell.parent().hasClass('switch-row') ){
+					if (false === $cell.parent().hasClass('button-row')
+						&& false === $cell.parent().hasClass('switch-row')
+						&& false === $cell.parent().hasClass('pricing-row')
+					){
 						process.openEditor($cell);
 						process.setCurrentCell($cell);
 					}
@@ -160,7 +164,7 @@
 						$insertedWorksheetCell.each(function(){
 							var rowId =  $(this).parent().data('row');
 							if ( false === $(this).parent().hasClass('fw-template-row')) {
-								$(this).html( _self.htmlCellTemplate.split( '_template_key_row_' ).join( rowId ).split( '_template_key_col_' ).join( lastCol ) );
+								$(this).html( _self.htmlWorksheetCell.split( '_template_key_row_' ).join( rowId ).split( '_template_key_col_' ).join( lastCol ) );
 							}
 						});
 
@@ -169,9 +173,8 @@
 						 */
 						var $lastEmptyCellFirstRow = $table.find('.fw-table-row:eq(0) .fw-table-row-delete'),
 							clone2 = $dropdownColCell.clone().insertBefore($lastEmptyCellFirstRow);
-						clone2.attr('data-col', lastCol).find('select').val(dropDownDefaultColValue);
-						clone2.find('select').attr('name', clone2.find('select').attr('name').replace(/\[\d+]$/, '[' + lastCol + ']')); //add column number to select
-						clone2.find('select').attr('id', clone2.find('select').attr('id').replace(/\-\d+$/, '-' + lastCol));
+							clone2.attr('data-col', lastCol);
+							clone2.html( _self.htmlHeaderCell.split( '_template_key_col_' ).join( lastCol ) );
 
 						/**
 						 * Clone last row (row which consists with remove cols buttons) and insert it before last row's cell
@@ -201,7 +204,8 @@
 
 					$insertedRow.find('.fw-table-cell-worksheet').each(function(){
 						var col = $(this).data('col');
-						$(this).html( _self.htmlCellTemplate.split( '_template_key_row_' ).join( lastRow ).split( '_template_key_col_' ).join( col ) );
+						$(this).html( _self.htmlWorksheetCell.split( '_template_key_row_' ).join( lastRow ).split( '_template_key_col_' ).join( col ) );
+
 					});
 
 					$insertedRow.find('.fw-table-cell-options :input').each(function(){
@@ -266,7 +270,7 @@
 
 				changeContent: function () {
 					var value = $(this).val();
-					$(this).parent().find('.fw-table-cell-content').text(value);
+					$(this).parents('.fw-table-cell').find('.fw-table-cell-content').text(value);
 				},
 
 				openEditor: function ($cell) {

@@ -9,7 +9,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 	protected function _init() {
 		$button = fw()->extensions->get( 'shortcodes' )->get_shortcode( 'button' );
 		if ( $button ) {
-			$this->internal_options['button-option'] = array(
+			$this->internal_options['button-options'] = array(
 				'type'          => 'popup',
 				'popup-title'   => __( 'Button', 'fw' ),
 				'button'        => __( 'Add', 'fw' ),
@@ -17,7 +17,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 			);
 		}
 
-		$this->internal_options['switch-option'] = array(
+		$this->internal_options['switch-options'] = array(
 			'label'        => false,
 			'type'         => 'switch',
 			'right-choice' => array(
@@ -30,6 +30,27 @@ class FW_Option_Type_Table extends FW_Option_Type {
 			),
 			'value'        => 'no',
 			'desc'         => false,
+		);
+
+		$this->internal_options['pricing-options'] = array(
+			'amount' => array(
+				'type'  => 'text',
+				'label' => false,
+				'desc'  => false,
+				'value' => '',
+				'attr' => array(
+					'class' => 'fw-col-sm-6',
+				)
+			),
+			'description' => array(
+				'type'  => 'text',
+				'label' => false,
+				'desc'  => false,
+				'value' => '',
+				'attr' => array(
+					'class' => 'fw-col-sm-6',
+				)
+			),
 		);
 
 	}
@@ -149,7 +170,9 @@ class FW_Option_Type_Table extends FW_Option_Type {
 					foreach($input_value_rows_data as $column => $input_value_cols_data) {
 						$cols[$j]['textarea'] = $input_value_cols_data['textarea'];
 						$cols[$j]['button'] = json_decode($input_value_cols_data['button'], true);
-						$cols[$j]['switch'] = isset($input_value_cols_data['switch-' . $row . '-' . $column ]) ?  fw()->backend->option_type('switch')->get_value_from_input($this->internal_options['switch-option'], $input_value_cols_data['switch-' . $row . '-' . $column]) : '';
+						$cols[$j]['switch'] = isset($input_value_cols_data['switch-' . $row . '-' . $column ]) ?  fw()->backend->option_type('switch')->get_value_from_input($this->internal_options['switch-options'], $input_value_cols_data['switch-' . $row . '-' . $column]) : '';
+						//todo: call get value from input
+						$cols[$j]['pricing'] = $input_value_cols_data['pricing'];
 
 						$j++;
 					}
@@ -193,7 +216,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 				)
 			),
 			'value'           => array(
-				'cols'  => array( '', '', '' ),
+				'cols'  => array( array('class'=> ''), array('class'=> ''), array('class'=> '') ),
 				'rows'  => array( '', '', '' ),
 				'content' => $this->_fw_generate_default_values()
 			)
@@ -212,6 +235,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 
 		return $result;
 	}
+
 
 	/**
 	 * @internal

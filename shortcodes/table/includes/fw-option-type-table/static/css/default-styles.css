@@ -155,6 +155,26 @@
 }
 
 /** cell content **/
+
+/** pricing row **/
+.fw-option-type-table .fw-cell-option-wrapper {
+	padding: 0 5px;
+}
+
+.fw-option-type-table .fw-table-cell-price {
+	display: none;
+}
+
+.fw-option-type-table .pricing-row .fw-table-cell-price {
+	display: inline-block;
+	width: 100%;
+}
+
+.fw-option-type-table .pricing-row .fw-table-cell-content {
+	display: none;
+}
+/** end pricing row **/
+
 /** button row **/
 .fw-option-type-table .fw-table-cell-button {
 	display: none;
