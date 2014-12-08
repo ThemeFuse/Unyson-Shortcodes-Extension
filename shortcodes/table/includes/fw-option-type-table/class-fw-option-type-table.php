@@ -2,15 +2,14 @@
 	die( 'Forbidden' );
 }
 
-class FW_Option_Type_Table_Builder extends FW_Option_Type {
+class FW_Option_Type_Table extends FW_Option_Type {
 
 	private $internal_options;
 
 	protected function _init() {
 		$button = fw()->extensions->get( 'shortcodes' )->get_shortcode( 'button' );
-
 		if ( $button ) {
-			$this->internal_options = array(
+			$this->internal_options['button-option'] = array(
 				'type'          => 'popup',
 				'popup-title'   => __( 'Button', 'fw' ),
 				'button'        => __( 'Add', 'fw' ),
@@ -18,10 +17,25 @@ class FW_Option_Type_Table_Builder extends FW_Option_Type {
 			);
 		}
 
+		$this->internal_options['switch-option'] = array(
+			'label'        => false,
+			'type'         => 'switch',
+			'right-choice' => array(
+				'value' => 'yes',
+				'label' => __( 'Yes', 'fw' )
+			),
+			'left-choice'  => array(
+				'value' => 'no',
+				'label' => __( 'No', 'fw' )
+			),
+			'value'        => 'no',
+			'desc'         => false,
+		);
+
 	}
 
 	public function get_type() {
-		return 'table-builder';
+		return 'table';
 	}
 
 	/**
@@ -31,7 +45,7 @@ class FW_Option_Type_Table_Builder extends FW_Option_Type {
 	protected function _enqueue_static( $id, $option, $data ) {
 		$table_shortcode = fw()->extensions->get( 'shortcodes' )->get_shortcode( 'table' );
 
-		$static_uri = $table_shortcode->get_declared_uri() . '/includes/fw-option-type-table-builder/static/';
+		$static_uri = $table_shortcode->get_declared_uri() . '/includes/fw-option-type-table/static/';
 
 		wp_enqueue_style('fw-font-awesome');
 
@@ -78,7 +92,7 @@ class FW_Option_Type_Table_Builder extends FW_Option_Type {
 		}
 
 		$this->replace_with_defaults( $option );
-		$views_path = $table_shortcode->get_declared_path() . '/includes/fw-option-type-table-builder/views/';
+		$views_path = $table_shortcode->get_declared_path() . '/includes/fw-option-type-table/views/';
 
 		return fw_render_view( $views_path . 'view.php', array(
 			'id'               => $option['attr']['id'],
@@ -100,6 +114,7 @@ class FW_Option_Type_Table_Builder extends FW_Option_Type {
 	 * @internal
 	 */
 	protected function _get_value_from_input( $option, $input_value ) {
+
 		if ( ! is_array( $input_value ) ) {
 			return $option['value'];
 		}
@@ -127,18 +142,20 @@ class FW_Option_Type_Table_Builder extends FW_Option_Type {
 		$value = array();
 		if ( is_array( $input_value ) ) {
 			if (isset($input_value['content']) && is_array($input_value['content']) ) {
-
-				foreach($input_value['content'] as $input_value_rows_data) {
+				$i = 0;
+				foreach($input_value['content'] as $row => $input_value_rows_data) {
 					$cols = array();
-					$i = 0;
-					foreach($input_value_rows_data as $input_value_cols_data) {
-						$cols[$i]['textarea'] = $input_value_cols_data['textarea'];
-						$cols[$i]['button'] = json_decode($input_value_cols_data['button'], true);
-						$i++;
-					}
-					$value['content'][] = $cols;
-				}
+					$j = 0;
+					foreach($input_value_rows_data as $column => $input_value_cols_data) {
+						$cols[$j]['textarea'] = $input_value_cols_data['textarea'];
+						$cols[$j]['button'] = json_decode($input_value_cols_data['button'], true);
+						$cols[$j]['switch'] = isset($input_value_cols_data['switch-' . $row . '-' . $column ]) ?  fw()->backend->option_type('switch')->get_value_from_input($this->internal_options['switch-option'], $input_value_cols_data['switch-' . $row . '-' . $column]) : '';
 
+						$j++;
+					}
+					$value['content'][$i] = $cols;
+					$i++;
+				}
 			}
 
 			if (isset($input_value['rows'])) {
@@ -163,7 +180,8 @@ class FW_Option_Type_Table_Builder extends FW_Option_Type {
 					''            => __( 'Default row', 'fw' ),
 					'heading-row' => __( 'Heading row', 'fw' ),
 					'pricing-row' => __( 'Pricing row', 'fw' ),
-					'button-row'  => __( 'Button row', 'fw' )
+					'button-row'  => __( 'Button row', 'fw' ),
+					'switch-row' => __('Row switch', 'fw')
 				)
 			),
 			'columns_options' => array(
@@ -188,6 +206,7 @@ class FW_Option_Type_Table_Builder extends FW_Option_Type {
 			for ( $j = 0; $j < $cols; $j ++ ) {
 				$result[ $i ][ $j ]['button']   = array();
 				$result[ $i ][ $j ]['textarea'] = '';
+				$result[ $i ][ $j ]['switch']   = array();
 			}
 		}
 
@@ -203,4 +222,4 @@ class FW_Option_Type_Table_Builder extends FW_Option_Type {
 
 }
 
-FW_Option_Type::register( 'FW_Option_Type_Table_Builder' );
+FW_Option_Type::register( 'FW_Option_Type_Table' );

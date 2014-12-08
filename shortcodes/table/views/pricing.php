@@ -6,6 +6,7 @@
  * @var array $atts
  */
 
+fw_print($atts);
 $class_width = 'fw-col-sm-' . floor(12 / count($atts['table']['cols']));
 
 ?>
@@ -35,8 +36,14 @@ $class_width = 'fw-col-sm-' . floor(12 / count($atts['table']['cols']));
 								<?php echo fw_render_view(  $button->locate_path( '/views/view.php' ), array( 'atts' => $atts['table']['content'][ $row_key ][ $col_key ]['button']) ); ?>
 							</div>
 						<?php endif; ?>
-					<?php
-					else : ?>
+					<?php elseif ($row === 'switch-row'): ?>
+						<div class="fw-switch-row">
+							<?php $value = $atts['table']['content'][$row_key][$col_key]['switch']; ?>
+							<span>
+								<?php echo ($value === 'yes') ? '+' : '-' ?>
+							</span>
+						</div>
+					<?php else : ?>
 						<div class="col-row">
 							<?php echo $atts['table']['content'][$row_key][$col_key]['textarea']; ?>
 						</div>

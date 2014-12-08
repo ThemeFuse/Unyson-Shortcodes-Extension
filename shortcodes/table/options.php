@@ -14,7 +14,7 @@ $options = array(
 		),
 	),
 	'table'         => array(
-		'type'  => 'table-builder',
+		'type'  => 'table',
 		'label' => false,
 		'desc'  => false,
 	)

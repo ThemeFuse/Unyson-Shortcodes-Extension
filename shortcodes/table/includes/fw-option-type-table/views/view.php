@@ -8,8 +8,9 @@
  * @var  array $internal_options
  */
 
-$last_row = 0;
-$last_col = 0;
+$last_row = 1;
+$last_col = 1;
+
 
 $wrapper_attr = $option['attr'];
 unset(
@@ -19,24 +20,27 @@ unset(
 
 ?>
 
-<div <?php echo fw_attr_to_html( $wrapper_attr ) ?>>
+<?php $template = fw_ext( 'shortcodes' )->get_shortcode( 'table' )->get_declared_path() . '/includes/fw-option-type-table/views/cell-template.php'; ?>
 
+
+<div <?php echo fw_attr_to_html( $wrapper_attr ) ?>>
 	<div class="fw-table">
+		<br class="fw-cell-template" data-html-template='<?php echo fw_htmlspecialchars( fw_render_view( $template, compact( 'internal_options', 'option' ) ) ) ?>' />
 		<!--start heading row -->
 		<div class="fw-table-row fw-table-col-options">
 
 			<div class="fw-table-cell fw-table-cell-options empty-cell">&nbsp;</div>
 
-			<?php $j=0; ?>
+			<?php $j = 1; ?>
 			<?php foreach ( reset( $data['value']['content'] ) as $key_col => $val ) : ?>
 				<?php $data_cols = array(
-					'value'       => $data['value']['cols'][ $j ],
+					'value'       => $data['value']['cols'][ $key_col ],
 					'id_prefix'   => $option['attr']['id'] . '-cols-',
 					'name_prefix' => $option['attr']['name'] . '[cols]'
 				);
 				?>
 
-				<div class="fw-table-cell fw-table-col-option <?php echo $data['value']['cols'][ $j ] ?>"
+				<div class="fw-table-cell fw-table-col-option <?php echo $data['value']['cols'][ $key_col ] ?>"
 				     data-col="<?php echo $j ?>">
 					<?php echo fw()->backend->option_type( 'select' )->render( $j, $option['columns_options'], $data_cols ); ?>
 					<a href="#"
@@ -52,7 +56,7 @@ unset(
 
 
 		<!--start data rows -->
-		<?php $i = 0; ?>
+		<?php $i = 1; ?>
 		<?php foreach ( $data['value']['content'] as $key_row => $row ) : ?>
 
 			<?php $data_rows = array(
@@ -68,9 +72,9 @@ unset(
 					<?php echo fw()->backend->option_type( 'select' )->render( $i, $option['row_options'], $data_rows ); ?>
 				</div>
 
-				<?php $j = 0; ?>
+				<?php $j = 1; ?>
 				<?php foreach ( $row as $key_col => $cell_value ): ?>
-					<div class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $j ] ?>'
+					<div class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $key_col ] ?>'
 					     data-col="<?php echo $j ?>">
 						<div class="fw-table-cell-content"><?php echo $cell_value['textarea'] ?></div>
 
@@ -82,15 +86,26 @@ unset(
 						);
 
 						//set popup-button title
-						$internal_options['button'] = __( 'Edit', 'fw' );
+						$internal_options['button-option']['button'] = __( 'Edit', 'fw' );
 						if ( empty( $cell_value['button'] ) ) {
-							$internal_options['button'] = __( 'Add', 'fw' );
+							$internal_options['button-option']['button'] = __( 'Add', 'fw' );
 						}
 
 						?>
 
-						<div
-							class="fw-table-cell-button"><?php echo fw()->backend->option_type( 'popup' )->render( 'button', $internal_options, $popup_data ) ?></div>
+						<div class="fw-table-cell-button"><?php echo fw()->backend->option_type( 'popup' )->render( 'button', $internal_options['button-option'], $popup_data ) ?></div>
+
+						<?php
+						$switch_data = array(
+							'id_prefix'   => $option['attr']['id'] . '-',
+							'name_prefix' => $option['attr']['name'] . '[content]' . '[' . $i . '][' . $j . ']',
+							'value'       => isset($cell_value['switch']) ? $cell_value['switch'] : ''
+						);
+
+						?>
+
+						<div class="fw-table-cell-switch"><?php echo fw()->backend->option_type( 'switch' )->render( 'switch-' . $i . '-' . $j, $internal_options['switch-option'], $switch_data ) ?></div>
+
 						<?php echo '<textarea rows="5" id="' . $option['attr']['id'] . '-textarea-' . $i . '-' . $j . '" name="' . $option['attr']['name'] . '[content]' . '[' . $i . '][' . $j . '][textarea]" value="' . $cell_value['textarea'] . '">' . $cell_value['textarea'] . '</textarea>' ?>
 					</div>
 					<?php $last_col = $j; ?>
@@ -122,7 +137,7 @@ unset(
 				<?php echo fw()->backend->option_type( 'select' )->render( '_template_key_row_', $option['row_options'], $data_rows ); ?>
 			</div>
 
-			<?php $j=0; ?>
+			<?php $j=1; ?>
 			<?php foreach ( reset( $data['value']['content'] ) as $key_col => $val ) : ?>
 				<?php $data_cols = array(
 					'value'       => '',
@@ -130,25 +145,10 @@ unset(
 					'name_prefix' => $option['attr']['name'] . '[cols]'
 				);
 				?>
-				<div class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $j ] ?>'
+				<div class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $key_col ] ?>'
 				     data-col="<?php echo $j ?>">
-					<div class="fw-table-cell-content"></div>
-
-					<?php
-
-					$popup_data = array(
-						'id_prefix'   => $option['attr']['id'] . '-',
-						'name_prefix' => $option['attr']['name'] . '[content][_template_key_row_][_template_key_col_]',
-						'value'       => ''
-					);
-
-					$internal_options['button'] = __( 'Add', 'fw' );
-					?>
-					<div
-						class="fw-table-cell-button"><?php echo fw()->backend->option_type( 'popup' )->render( 'button', $internal_options, $popup_data ) ?></div>
-
-					<?php echo '<textarea rows="5" id="' . $option['attr']['id'] . '-textarea-_template_key_row_-_template_key_col_" name="' . $option['attr']['name'] . '[content][_template_key_row_][_template_key_col_][textarea]" value=""></textarea>' ?>
 				</div>
+
 				<?php $j++; ?>
 			<?php endforeach; ?>
 
@@ -165,7 +165,7 @@ unset(
 			<div class="fw-table-cell fw-table-cell-options"><a href="#"
 			                                                    class="fw-table-add-row button button-large"><?php echo __( 'Add Row', 'fw' ) ?></a>
 			</div>
-			<?php $j=0 ?>
+			<?php $j=1 ?>
 			<?php foreach ( reset( $data['value']['content'] ) as $val ) : ?>
 				<?php $data_cols = array(
 					'value'       => '',
