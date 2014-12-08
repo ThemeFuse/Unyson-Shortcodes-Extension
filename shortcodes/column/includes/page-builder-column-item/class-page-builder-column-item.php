@@ -67,9 +67,8 @@ class Page_Builder_Column_Item extends Page_Builder_Item
 
 	protected function get_thumbnails_data()
 	{
-		$builder_extension = fw_ext('builder');
 		$column_shortcode  = fw_ext('shortcodes')->get_shortcode('column');
-		$builder_widths    = $builder_extension->get_config('default_item_widths');
+		$builder_widths    = fw_ext_builder_get_item_width('page-builder');
 
 		$column_thumbnails = array();
 		foreach ($builder_widths as $key => $value) {
