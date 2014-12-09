@@ -84,7 +84,7 @@
 	vertical-align: middle;
 }
 
-/** cell editor start **/
+/** cell editor start
 .fw-option-type-table .fw-table-cell.fw-cell-show-editor textarea {
 	display: block;
 }
@@ -97,9 +97,11 @@
 	display: block;
 }
 
+
 .fw-option-type-table .fw-table-cell textarea {
 	display: none;
 }
+*/
 
 /** cell editor end **/
 
@@ -156,7 +158,7 @@
 
 /** cell content **/
 
-/** pricing row **/
+/** pricing row
 .fw-option-type-table .fw-cell-option-wrapper {
 	padding: 0 5px;
 }
@@ -173,9 +175,9 @@
 .fw-option-type-table .pricing-row .fw-table-cell-content {
 	display: none;
 }
-/** end pricing row **/
+ end pricing row **/
 
-/** button row **/
+/** button row
 .fw-option-type-table .fw-table-cell-button {
 	display: none;
 }
@@ -187,9 +189,9 @@
 .fw-option-type-table .button-row .fw-table-cell-content {
 	display: none;
 }
-/** end button row **/
+ end button row **/
 
-/** switch row **/
+/** switch row
 .fw-option-type-table .fw-table-cell-switch {
 	display: none;
 }
@@ -204,12 +206,21 @@
 .fw-option-type-table .switch-row .fw-table-cell-content {
 	display: none;
 }
-/** end switch row **/
+ end switch row **/
 
 .fw-option-type-table .fw-table-cell-content {
 	height: 100%;
 	width: 100%;
 }
+
+.fw-option-type-table .fw-table-cell-content {
+	display: none;
+}
+
+.fw-option-type-table .fw-table-cell-content.fw-active-content {
+	display: inline-block;
+}
+
 
 .fw-option-type-table .fw-table-gripper {
 	display: inline-block;

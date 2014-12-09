@@ -17,6 +17,7 @@
 				$table = $tableBuilder.find('.fw-table'),
 				lastRow = parseInt($tableBuilder.find('.fw-table-last-row').val()),
 				lastCol = parseInt($tableBuilder.find('.fw-table-last-col').val()),
+				//todo: smth with
 				worksheetNonInteractiveCellsSelector = '.fw-table-row:not(.button-row, .pricing-row, .switch-row, .fw-table-col-options, .fw-template-row, .fw-table-cols-delete) .fw-table-cell-worksheet',
 				worksheetRowsSelector = '.fw-table-row:not(.fw-table-col-options, .fw-template-row, .fw-table-cols-delete)',
 				$currentCell = false,
@@ -76,15 +77,9 @@
 				},
 
 				cellTriggerManager: function (e, $cell) {
-					//todo: smth changes
 					e.stopPropagation();
-					if (false === $cell.parent().hasClass('button-row')
-						&& false === $cell.parent().hasClass('switch-row')
-						&& false === $cell.parent().hasClass('pricing-row')
-					){
-						process.openEditor($cell);
-						process.setCurrentCell($cell);
-					}
+					process.openEditor($cell);
+					process.setCurrentCell($cell);
 				},
 
 				changeTableRowStyle: function () {
@@ -98,6 +93,10 @@
 
 					$row.removeClass(classNames).addClass(newClass);
 					$selectCell.removeClass(classNames).addClass(newClass);
+
+					$row.find('.fw-table-cell-worksheet .fw-table-cell-content').removeClass('fw-active-content');
+					$row.find('.fw-table-cell-worksheet .' + newClass).addClass('fw-active-content');
+
 					process.trigger('row:styling:changed', {$elements: $row});
 
 					return false;
@@ -163,9 +162,11 @@
 						$insertedWorksheetCell.attr('data-col', lastCol);
 
 						$insertedWorksheetCell.each(function(){
-							var rowId =  $(this).parent().data('row');
+							var $currentRow = $(this).parent(),
+								rowId = $currentRow.data('row');
 							if ( false === $(this).parent().hasClass('fw-template-row')) {
 								$(this).html( _self.htmlWorksheetCell.split( '_template_key_row_' ).join( rowId ).split( '_template_key_col_' ).join( lastCol ) );
+								process.changeTableRowStyle.apply( $currentRow.find('.fw-table-cell-options select') );
 							}
 						});
 
@@ -207,7 +208,6 @@
 					$insertedRow.find('.fw-table-cell-worksheet').each(function(){
 						var col = $(this).data('col');
 						$(this).html( _self.htmlWorksheetCell.split( '_template_key_row_' ).join( lastRow ).split( '_template_key_col_' ).join( col ) );
-
 					});
 
 					$insertedRow.find('.fw-table-cell-options :input').each(function(){
@@ -222,7 +222,7 @@
 
 				reinitOptions: function ($container) {
 					$container.find('.fw-table-cell-content').on('click', function(e){
-						process.cellTriggerManager(e, $(this).parent());
+						process.cellTriggerManager(e, $(this).parents('.fw-table-cell'));
 					});
 
 					fwEvents.trigger('fw:options:init',
@@ -270,21 +270,16 @@
 
 				},
 
-				changeContent: function () {
-					var value = $(this).val();
-					$(this).parents('.fw-table-cell').find('.fw-table-cell-content').text(value);
-				},
-
 				openEditor: function ($cell) {
 					process.closeEditor();
-					if ($cell.find('textarea').length) {
-						$cell.addClass('fw-cell-show-editor').find('textarea').focus();
-					}
+					$cell.find('.fw-active-content :input').trigger('activate');
 					process.setCurrentCell($cell);
 				},
 
 				closeEditor: function () {
-					$table.find('.fw-table-cell-worksheet').removeClass('fw-cell-show-editor');
+					if ($currentCell) {
+						$currentCell.find('.fw-active-content :input').trigger('deactivate');
+					}
 					process.setCurrentCell(false);
 				},
 
@@ -303,7 +298,7 @@
 
 				tableBuilderEvents: function () {
 					$table.find('.fw-table-cell-content').on('click', function(e){
-						process.cellTriggerManager(e, $(this).parent());
+						process.cellTriggerManager(e, $(this).parents('.fw-table-cell'));
 					});
 
 					$table.on('click', '.fw-table-cell-worksheet', function(e){
@@ -312,7 +307,6 @@
 
 					$table.on('click', '.fw-table-col-delete-btn', process.removeTableColumn );
 					$table.on('click', '.fw-table-row-delete-btn', process.removeTableRow);
-					$table.on('change', '.fw-table-cell textarea', process.changeContent);
 					$table.on('change', 'select.fw-table-builder-col-style', process.changeTableColumnStyle);
 					$table.on('change', 'select.fw-table-builder-row-style', process.changeTableRowStyle);
 					$table.on('keydown', process.onTabKeyDown);

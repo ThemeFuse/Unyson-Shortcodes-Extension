@@ -16,7 +16,6 @@ unset(
 	$wrapper_attr['name'],
 	$wrapper_attr['value']
 );
-
 ?>
 
 <?php $header_cell_template = fw_ext( 'shortcodes' )->get_shortcode( 'table' )->get_declared_path() . '/includes/fw-option-type-table/views/cell-head-template.php'; ?>
@@ -29,6 +28,7 @@ unset(
 			    'internal_options'  => $internal_options,
 			    'option'            => $option,
 			    'data'              => $data,
+				'current_row_name'  => 'default-row',
 			    'i'                 => '_template_key_row_',
 			    'j'                 => '_template_key_col_',
 			    'cell_value'        => array(
@@ -71,27 +71,27 @@ unset(
 		<?php /** Start data rows */?>
 		<?php $i = 0; ?>
 		<?php foreach ( $data['value']['content'] as $key_row => $row ) : ?>
-
+			<?php $current_row_name = $data['value']['rows'][ $key_row ]['name']; ?>
 			<?php $data_rows = array(
-				'value'       => $data['value']['rows'][ $key_row ],
+				'value'       => $data['value']['rows'][ $key_row ]['name'],
 				'id_prefix'   => $option['attr']['id'] . '-rows-',
-				'name_prefix' => $option['attr']['name'] . '[rows]'
+				'name_prefix' => $option['attr']['name'] . '[rows][' . $i . ']'
 			);?>
 
-			<div class="fw-table-row <?php echo $data['value']['rows'][ $key_row ] ?>"
+			<div class="fw-table-row <?php echo $current_row_name ?>"
 			     data-row="<?php echo $i ?>">
-				<div class='fw-table-cell fw-table-cell-options <?php echo $data['value']['rows'][ $key_row ] ?>'>
+				<div class='fw-table-cell fw-table-cell-options <?php echo $data['value']['rows'][ $key_row ]['name'] ?>'>
 					<i class="fa fa-unsorted fw-table-gripper"></i>
-					<?php echo fw()->backend->option_type( 'select' )->render( $i, $option['row_options'], $data_rows ); ?>
+					<?php echo fw()->backend->option_type( 'select' )->render( 'name', $option['row_options']['name'], $data_rows ); ?>
 				</div>
 
 				<?php $j = 0; ?>
 				<?php foreach ( $row as $key_col => $cell_value ): ?>
-					<div class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $key_col ]['name'] ?>'
+					<div class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $key_col ]['name']; ?>'
 					     data-col="<?php echo $j ?>">
 
 						<?php $worksheet_cell_template = fw_ext( 'shortcodes' )->get_shortcode( 'table' )->get_declared_path() . '/includes/fw-option-type-table/views/cell-worksheet-template.php'; ?>
-						<?php echo fw_render_view( $worksheet_cell_template, compact( 'internal_options', 'option', 'data', 'j', 'i', 'cell_value' ) );  ?>
+						<?php echo fw_render_view( $worksheet_cell_template, compact( 'internal_options', 'option', 'data', 'j', 'i', 'cell_value', 'current_row_name' ) );  ?>
 
 					</div>
 					<?php $last_col = $j; ?>
@@ -117,11 +117,11 @@ unset(
 				<?php $data_rows = array(
 					'value'       => '',
 					'id_prefix'   => $option['attr']['id'] . '-rows-',
-					'name_prefix' => $option['attr']['name'] . '[rows]'
+					'name_prefix' => $option['attr']['name'] . '[rows][_template_key_row_]'
 				);
 
 				?>
-				<?php echo fw()->backend->option_type( 'select' )->render( '_template_key_row_', $option['row_options'], $data_rows ); ?>
+				<?php echo fw()->backend->option_type( 'select' )->render( 'name', $option['row_options']['name'], $data_rows ); ?>
 			</div>
 
 			<?php for($j = 0; $j <= $last_col; $j++)  : ?>
