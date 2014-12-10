@@ -272,13 +272,13 @@
 
 				openEditor: function ($cell) {
 					process.closeEditor();
-					$cell.find('.fw-active-content :input').trigger('activate');
+					$cell.find('.fw-active-content .fw-cell-option-wrapper > *').trigger('activate');
 					process.setCurrentCell($cell);
 				},
 
 				closeEditor: function () {
 					if ($currentCell) {
-						$currentCell.find('.fw-active-content :input').trigger('deactivate');
+						$currentCell.find('.fw-active-content .fw-cell-option-wrapper > *').trigger('deactivate');
 					}
 					process.setCurrentCell(false);
 				},

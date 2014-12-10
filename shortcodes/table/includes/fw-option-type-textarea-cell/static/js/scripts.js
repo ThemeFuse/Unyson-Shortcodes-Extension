@@ -6,12 +6,12 @@
 			$container.find('.fw-textarea-tab.content').text($(this).val());
 		});
 
-		$container.find('.fw-textarea-tab.control textarea').on('deactivate', function(){
+		$container.on('deactivate', function(){
 			$container.find('.fw-textarea-tab.control').addClass('closed');
 			$container.find('.fw-textarea-tab.content').removeClass('closed');
 		});
 
-		$container.find('.fw-textarea-tab.control textarea').on('activate', function(){
+		$container.on('activate', function(){
 			$container.find('.fw-textarea-tab.control').removeClass('closed');
 			$container.find('.fw-textarea-tab.content').addClass('closed');
 			$container.find('.fw-textarea-tab.control textarea').focus();
