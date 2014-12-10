@@ -13,7 +13,7 @@
 						title: 'Section',
 						options: options.modalOptions,
 						values: this.model.get('atts'),
-						size: 'small'
+						size: options.modalSize
 					});
 
 					this.listenTo(this.modal, 'change:values', function (modal, values) {
@@ -84,6 +84,7 @@
 					id: 'page-builder-item-' + this.cid,
 					model: this,
 					modalOptions: itemData.options,
+					modalSize: itemData.popup_size,
 					templateData: {
 						hasOptions: !!itemData.options
 					}

@@ -13,6 +13,20 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 		return $shortcode_instance->get_options();
 	}
 
+	private function get_shortcode_config()
+	{
+		$shortcode_instance = fw_ext('shortcodes')->get_shortcode('section');
+		$config = $shortcode_instance->get_config('page_builder');
+		return array_merge(
+			array(
+				'tab'         => __('Layout Elements', 'fw'),
+				'title'       => __('Section', 'fw'),
+				'description' => __('Creates a section', 'fw'),
+			),
+			is_array($config) ? $config : array()
+		);
+	}
+
 	/**
 	 * Called when builder is rendered
 	 */
@@ -42,10 +56,16 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 	private function get_item_data()
 	{
 		$data    = array();
+
 		$options = $this->get_shortcode_options();
 		if ($options) {
 			fw()->backend->enqueue_options_static($options);
 			$data['options'] = $this->transform_options($options);
+		}
+
+		$config = $this->get_shortcode_config();
+		if (isset($config['popup_size'])) {
+			$data['popup_size'] = $config['popup_size'];
 		}
 
 		return $data;
@@ -66,15 +86,7 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 
 	protected function get_thumbnails_data()
 	{
-		$shortcode_instance = fw_ext('shortcodes')->get_shortcode('section');
-		return array(array_merge(
-			array(
-				'tab'         => __('Layout Elements', 'fw'),
-				'title'       => __('Section', 'fw'),
-				'description' => __('Creates a section', 'fw'),
-			),
-			$shortcode_instance->get_config('page_builder')
-		));
+		return array($this->get_shortcode_config());
 	}
 
 	public function get_value_from_attributes($attributes)
