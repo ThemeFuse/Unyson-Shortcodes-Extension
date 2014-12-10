@@ -17,7 +17,7 @@ if (!empty($atts['video'])) {
 	$extra_classes .= ' background-video';
 }
 
-$container_class = isset($atts['fullwidth']) ? 'fw-container-fluid' : 'fw-container';
+$container_class = (isset($atts['is_fullwidth']) && $atts['is_fullwidth']) ? 'fw-container-fluid' : 'fw-container';
 ?>
 <section class="fw-main-row <?php echo $extra_classes ?>" style="<?php echo $bg_color; ?> <?php echo $bg_image; ?>" <?php echo $bg_video_data_attr; ?>>
 	<div class="<?php echo $container_class; ?>">

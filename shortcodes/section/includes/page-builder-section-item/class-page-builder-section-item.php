@@ -9,7 +9,7 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 
 	private function get_shortcode_options()
 	{
-		$shortcode_instance = fw()->extensions->get('shortcodes')->get_shortcode('section');
+		$shortcode_instance = fw_ext('shortcodes')->get_shortcode('section');
 		return $shortcode_instance->get_options();
 	}
 
@@ -18,7 +18,7 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 	 */
 	public function enqueue_static()
 	{
-		$shortcode_instance = fw()->extensions->get('shortcodes')->get_shortcode('section');
+		$shortcode_instance = fw_ext('shortcodes')->get_shortcode('section');
 		wp_enqueue_style(
 			$this->get_builder_type() . '_item_type_' . $this->get_type(),
 			$shortcode_instance->locate_URI('/includes/page-builder-section-item/static/css/styles.css'),
@@ -66,13 +66,15 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 
 	protected function get_thumbnails_data()
 	{
-		return array(
+		$shortcode_instance = fw_ext('shortcodes')->get_shortcode('section');
+		return array(array_merge(
 			array(
 				'tab'         => __('Layout Elements', 'fw'),
 				'title'       => __('Section', 'fw'),
 				'description' => __('Creates a section', 'fw'),
-			)
-		);
+			),
+			$shortcode_instance->get_config('page_builder')
+		));
 	}
 
 	public function get_value_from_attributes($attributes)
