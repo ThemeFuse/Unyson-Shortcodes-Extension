@@ -5,7 +5,6 @@
  * @var  string $id
  * @var  array $option
  * @var  array $data
- * @var  array $internal_options
  */
 
 $last_row = 0;
@@ -25,7 +24,6 @@ unset(
 	<div class="fw-table">
 		<br class="fw-cell-template"
 		    data-worksheet-cell-template='<?php echo fw_htmlspecialchars( fw_render_view( $worksheet_cell_template, array(
-				    'internal_options' => $internal_options,
 				    'option'           => $option,
 				    'data'             => $data,
 				    'current_row_name' => 'default-row',
@@ -39,7 +37,6 @@ unset(
 			    )
 		    ) ) ?>'
 		    data-header-cell-template='<?php echo fw_htmlspecialchars( fw_render_view( $header_cell_template, array(
-			    'internal_options' => $internal_options,
 			    'option'           => $option,
 			    'j'                => '_template_key_col_',
 			    'data'             => array()
@@ -56,7 +53,7 @@ unset(
 
 				<div class="fw-table-cell fw-table-col-option <?php echo $col['name'] ?>"
 				     data-col="<?php echo $j ?>">
-					<?php echo fw_render_view( $header_cell_template, compact( 'internal_options', 'option', 'data', 'j' ) ); ?>
+					<?php echo fw_render_view( $header_cell_template, compact('option', 'data', 'j' ) ); ?>
 				</div>
 				<?php $j ++; ?>
 			<?php endforeach; ?>
@@ -93,7 +90,7 @@ unset(
 						data-col="<?php echo $j ?>">
 
 						<?php $worksheet_cell_template = fw_ext( 'shortcodes' )->get_shortcode( 'table' )->get_declared_path() . '/includes/fw-option-type-table/views/cell-worksheet-template.php'; ?>
-						<?php echo fw_render_view( $worksheet_cell_template, compact( 'internal_options', 'option', 'data', 'j', 'i', 'cell_value', 'current_row_name' ) ); ?>
+						<?php echo fw_render_view( $worksheet_cell_template, compact( 'option', 'data', 'j', 'i', 'cell_value', 'current_row_name' ) ); ?>
 
 					</div>
 					<?php $last_col = $j; ?>

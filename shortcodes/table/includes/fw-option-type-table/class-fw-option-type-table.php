@@ -80,10 +80,9 @@ class FW_Option_Type_Table extends FW_Option_Type {
 		$view_path = $table_shortcode->get_declared_path() . '/includes/fw-option-type-table/views/view.php';
 
 		return fw_render_view( $view_path, array(
-			'id'               => $option['attr']['id'],
-			'option'           => $option,
-			'data'             => $data,
-			'internal_options' => $this->internal_options
+			'id'     => $option['attr']['id'],
+			'option' => $option,
+			'data'   => $data,
 		) );
 	}
 
@@ -91,8 +90,8 @@ class FW_Option_Type_Table extends FW_Option_Type {
 		$option['row_options']['name']['attr']['class']     = 'fw-table-builder-row-style';
 		$option['columns_options']['name']['attr']['class'] = 'fw-table-builder-col-style';
 		$defaults                                           = $this->_get_defaults();
-		$option['row_options']['name']['choices']           = $defaults['row_options']['name']['choices'];
-		$option['columns_options']['name']['choices']       = $defaults['columns_options']['name']['choices'];
+		$option['row_options']                              = $defaults['row_options'];
+		$option['columns_options']                          = $defaults['columns_options'];
 		$option['content_options']                          = $defaults['content_options'];
 	}
 
@@ -266,11 +265,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 		$result = array();
 		for ( $i = 0; $i < $rows; $i ++ ) {
 			for ( $j = 0; $j < $cols; $j ++ ) {
-				$result[ $i ][ $j ]['button']      = '';
-				$result[ $i ][ $j ]['textarea']    = '';
-				$result[ $i ][ $j ]['switch']      = array();
-				$result[ $i ][ $j ]['amount']      = '';
-				$result[ $i ][ $j ]['description'] = '';
+				$result[ $i ][ $j ] = array();
 			}
 		}
 
