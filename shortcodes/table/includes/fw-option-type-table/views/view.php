@@ -25,24 +25,24 @@ unset(
 	<div class="fw-table">
 		<br class="fw-cell-template"
 		    data-worksheet-cell-template='<?php echo fw_htmlspecialchars( fw_render_view( $worksheet_cell_template, array(
-			    'internal_options'  => $internal_options,
-			    'option'            => $option,
-			    'data'              => $data,
-				'current_row_name'  => 'default-row',
-			    'i'                 => '_template_key_row_',
-			    'j'                 => '_template_key_col_',
-			    'cell_value'        => array(
-				    'button'   => array(),
-		            'textarea' =>'',
-		            'switch'   => array()
-			        )
+				    'internal_options' => $internal_options,
+				    'option'           => $option,
+				    'data'             => $data,
+				    'current_row_name' => 'default-row',
+				    'i'                => '_template_key_row_',
+				    'j'                => '_template_key_col_',
+				    'cell_value'       => array(
+					    'button'   => array(),
+					    'textarea' => '',
+					    'switch'   => array()
+				    )
 			    )
-		    )) ?>'
+		    ) ) ?>'
 		    data-header-cell-template='<?php echo fw_htmlspecialchars( fw_render_view( $header_cell_template, array(
 			    'internal_options' => $internal_options,
-			    'option' => $option,
-			    'j' => '_template_key_col_',
-			    'data' => array()
+			    'option'           => $option,
+			    'j'                => '_template_key_col_',
+			    'data'             => array()
 		    ) ) ) ?>'
 			/>
 
@@ -56,10 +56,10 @@ unset(
 
 				<div class="fw-table-cell fw-table-col-option <?php echo $col['name'] ?>"
 				     data-col="<?php echo $j ?>">
-					<?php echo fw_render_view( $header_cell_template, compact( 'internal_options', 'option', 'data', 'j' ) );  ?>
+					<?php echo fw_render_view( $header_cell_template, compact( 'internal_options', 'option', 'data', 'j' ) ); ?>
 				</div>
-				<?php $j++; ?>
-			<?php  endforeach; ?>
+				<?php $j ++; ?>
+			<?php endforeach; ?>
 
 			<div class="fw-table-cell fw-table-row-delete empty-cell">&nbsp;</div>
 
@@ -68,7 +68,7 @@ unset(
 		<?php /** End heading row */ ?>
 
 
-		<?php /** Start data rows */?>
+		<?php /** Start data rows */ ?>
 		<?php $i = 0; ?>
 		<?php foreach ( $data['value']['content'] as $key_row => $row ) : ?>
 			<?php $current_row_name = $data['value']['rows'][ $key_row ]['name']; ?>
@@ -80,22 +80,24 @@ unset(
 
 			<div class="fw-table-row <?php echo $current_row_name ?>"
 			     data-row="<?php echo $i ?>">
-				<div class='fw-table-cell fw-table-cell-options <?php echo $data['value']['rows'][ $key_row ]['name'] ?>'>
+				<div
+					class='fw-table-cell fw-table-cell-options <?php echo $data['value']['rows'][ $key_row ]['name'] ?>'>
 					<i class="fa fa-unsorted fw-table-gripper"></i>
 					<?php echo fw()->backend->option_type( 'select' )->render( 'name', $option['row_options']['name'], $data_rows ); ?>
 				</div>
 
 				<?php $j = 0; ?>
 				<?php foreach ( $row as $key_col => $cell_value ): ?>
-					<div class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $key_col ]['name']; ?>'
-					     data-col="<?php echo $j ?>">
+					<div
+						class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $key_col ]['name']; ?>'
+						data-col="<?php echo $j ?>">
 
 						<?php $worksheet_cell_template = fw_ext( 'shortcodes' )->get_shortcode( 'table' )->get_declared_path() . '/includes/fw-option-type-table/views/cell-worksheet-template.php'; ?>
-						<?php echo fw_render_view( $worksheet_cell_template, compact( 'internal_options', 'option', 'data', 'j', 'i', 'cell_value', 'current_row_name' ) );  ?>
+						<?php echo fw_render_view( $worksheet_cell_template, compact( 'internal_options', 'option', 'data', 'j', 'i', 'cell_value', 'current_row_name' ) ); ?>
 
 					</div>
 					<?php $last_col = $j; ?>
-					<?php $j++; ?>
+					<?php $j ++; ?>
 				<?php endforeach; ?>
 
 				<div class="fw-table-cell fw-table-row-delete">
@@ -104,9 +106,9 @@ unset(
 
 			</div>
 			<?php $last_row = $i; ?>
-			<?php $i++; ?>
+			<?php $i ++; ?>
 		<?php endforeach; ?>
-		<?php /** End data rows */?>
+		<?php /** End data rows */ ?>
 
 
 		<?php /** Start template row */ ?>
@@ -124,8 +126,9 @@ unset(
 				<?php echo fw()->backend->option_type( 'select' )->render( 'name', $option['row_options']['name'], $data_rows ); ?>
 			</div>
 
-			<?php for($j = 0; $j <= $last_col; $j++)  : ?>
-				<div class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $j ]['name'] ?>' data-col="<?php echo $j ?>"></div>
+			<?php for ( $j = 0; $j <= $last_col; $j ++ )  : ?>
+				<div class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $j ]['name'] ?>'
+				     data-col="<?php echo $j ?>"></div>
 			<?php endfor; ?>
 
 			<div class="fw-table-cell fw-table-row-delete">
@@ -143,7 +146,7 @@ unset(
 				<a href="#" class="fw-table-add-row button button-large"><?php echo __( 'Add Row', 'fw' ) ?></a>
 			</div>
 
-			<?php for($j = 0; $j <= $last_col; $j++)  : ?>
+			<?php for ( $j = 0; $j <= $last_col; $j ++ )  : ?>
 				<div class="fw-table-cell fw-table-col-delete"
 				     data-col="<?php echo $j ?>">
 					<i class="dashicons fw-x fw-table-col-delete-btn"></i>

@@ -16,43 +16,6 @@ class FW_Option_Type_Table extends FW_Option_Type {
 				'popup-options' => $button->get_options()
 			);
 		}
-
-		$this->internal_options['switch-options'] = array(
-			'label'        => false,
-			'type'         => 'switch',
-			'right-choice' => array(
-				'value' => 'yes',
-				'label' => __( 'Yes', 'fw' )
-			),
-			'left-choice'  => array(
-				'value' => 'no',
-				'label' => __( 'No', 'fw' )
-			),
-			'value'        => 'no',
-			'desc'         => false,
-		);
-
-		$this->internal_options['pricing-options'] = array(
-			'amount' => array(
-				'type'  => 'text',
-				'label' => false,
-				'desc'  => false,
-				'value' => '',
-				'attr' => array(
-					'class' => 'fw-col-sm-6',
-				)
-			),
-			'description' => array(
-				'type'  => 'text',
-				'label' => false,
-				'desc'  => false,
-				'value' => '',
-				'attr' => array(
-					'class' => 'fw-col-sm-6',
-				)
-			),
-		);
-
 	}
 
 	public function get_type() {
@@ -68,7 +31,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 
 		$static_uri = $table_shortcode->get_declared_uri() . '/includes/fw-option-type-table/static/';
 
-		wp_enqueue_style('fw-font-awesome');
+		wp_enqueue_style( 'fw-font-awesome' );
 
 		wp_enqueue_style(
 			'fw-option-' . $this->get_type() . '-default',
@@ -85,7 +48,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 		wp_enqueue_script(
 			'fw-option-' . $this->get_type(),
 			$static_uri . 'js/scripts.js',
-			array( 'jquery', 'fw-events',  'jquery-ui-sortable' ),
+			array( 'jquery', 'fw-events', 'jquery-ui-sortable' ),
 			fw()->theme->manifest->get_version(),
 			true
 		);
@@ -127,9 +90,10 @@ class FW_Option_Type_Table extends FW_Option_Type {
 	protected function replace_with_defaults( &$option ) {
 		$option['row_options']['name']['attr']['class']     = 'fw-table-builder-row-style';
 		$option['columns_options']['name']['attr']['class'] = 'fw-table-builder-col-style';
-		$defaults                                   = $this->_get_defaults();
+		$defaults                                           = $this->_get_defaults();
 		$option['row_options']['name']['choices']           = $defaults['row_options']['name']['choices'];
 		$option['columns_options']['name']['choices']       = $defaults['columns_options']['name']['choices'];
+		$option['content_options']                          = $defaults['content_options'];
 	}
 
 	/**
@@ -163,30 +127,30 @@ class FW_Option_Type_Table extends FW_Option_Type {
 
 		$value = array();
 		if ( is_array( $input_value ) ) {
-			if (isset($input_value['rows'])) {
-				$value['rows'] = array_values($input_value['rows']);
+			if ( isset( $input_value['rows'] ) ) {
+				$value['rows'] = array_values( $input_value['rows'] );
 			}
 
-			if (isset($input_value['cols'])) {
-				$value['cols'] = array_values($input_value['cols']);
+			if ( isset( $input_value['cols'] ) ) {
+				$value['cols'] = array_values( $input_value['cols'] );
 			}
 
-			if (isset($input_value['content']) && is_array($input_value['content']) ) {
+			if ( isset( $input_value['content'] ) && is_array( $input_value['content'] ) ) {
 				$i = 0;
-				foreach($input_value['content'] as $row => $input_value_rows_data) {
+				foreach ( $input_value['content'] as $row => $input_value_rows_data ) {
 					$cols = array();
-					$j = 0;
-					foreach($input_value_rows_data as $column => $input_value_cols_data) {
-						$row_name = $value['rows'][$i]['name'];
+					$j    = 0;
+					foreach ( $input_value_rows_data as $column => $input_value_cols_data ) {
+						$row_name = $value['rows'][ $i ]['name'];
 
-						foreach($option['content_options'][$row_name] as $id => $options) {
-							$cols[$j][$id] = fw()->backend->option_type($options['type'])->get_value_from_input($options, $input_value_cols_data[$row_name][$id . '-' . $row . '-' . $column ]);
+						foreach ( $option['content_options'][ $row_name ] as $id => $options ) {
+							$cols[ $j ][ $id ] = fw()->backend->option_type( $options['type'] )->get_value_from_input( $options, $input_value_cols_data[ $row_name ][ $id . '-' . $row . '-' . $column ] );
 						}
 
-						$j++;
+						$j ++;
 					}
-					$value['content'][$i] = $cols;
-					$i++;
+					$value['content'][ $i ] = $cols;
+					$i ++;
 				}
 			}
 
@@ -203,23 +167,23 @@ class FW_Option_Type_Table extends FW_Option_Type {
 		return array(
 			'row_options'     => array(
 				'name' => array(
-					'type'  => 'select',
-					'label' => false,
-					'desc'  => false,
+					'type'    => 'select',
+					'label'   => false,
+					'desc'    => false,
 					'choices' => array(
 						'default-row' => __( 'Default row', 'fw' ),
 						'heading-row' => __( 'Heading row', 'fw' ),
 						'pricing-row' => __( 'Pricing row', 'fw' ),
 						'button-row'  => __( 'Button row', 'fw' ),
-						'switch-row' => __('Row switch', 'fw')
-						)
+						'switch-row'  => __( 'Row switch', 'fw' )
 					)
+				)
 			),
 			'columns_options' => array(
 				'name' => array(
-					'type'  => 'select',
-					'label' => false,
-					'desc'  => false,
+					'type'    => 'select',
+					'label'   => false,
+					'desc'    => false,
 					'choices' => array(
 						''              => __( 'Default column', 'fw' ),
 						'highlight-col' => __( 'Highlight column', 'fw' ),
@@ -231,27 +195,27 @@ class FW_Option_Type_Table extends FW_Option_Type {
 			'content_options' => array(
 				'default-row' => array(
 					'textarea' => array(
-						'type' => 'textarea-cell',
+						'type'  => 'textarea-cell',
 						'label' => false,
-						'desc' => false,
+						'desc'  => false,
 						'value' => ''
 					)
 				),
 				'heading-row' => array(
 					'textarea' => array(
-						'type' => 'textarea-cell',
+						'type'  => 'textarea-cell',
 						'label' => false,
-						'desc' => false,
+						'desc'  => false,
 						'value' => ''
 					)
 				),
 				'pricing-row' => array(
-					'amount' => array(
+					'amount'      => array(
 						'type'  => 'text',
 						'label' => false,
 						'desc'  => false,
 						'value' => '',
-						'attr' => array(
+						'attr'  => array(
 							'class' => 'fw-col-sm-6',
 						)
 					),
@@ -260,22 +224,39 @@ class FW_Option_Type_Table extends FW_Option_Type {
 						'label' => false,
 						'desc'  => false,
 						'value' => '',
-						'attr' => array(
+						'attr'  => array(
 							'class' => 'fw-col-sm-6',
 						)
 					),
 				),
-				'button-row' => array(
+				'button-row'  => array(
 					'button' => $this->internal_options['button-options']
 				),
-				'switch-row' => array(
-					'switch' => $this->internal_options['switch-options']
+				'switch-row'  => array(
+					'switch' => array(
+						'label'        => false,
+						'type'         => 'switch',
+						'right-choice' => array(
+							'value' => 'yes',
+							'label' => __( 'Yes', 'fw' )
+						),
+						'left-choice'  => array(
+							'value' => 'no',
+							'label' => __( 'No', 'fw' )
+						),
+						'value'        => 'no',
+						'desc'         => false,
+					)
 				)
 
 			),
 			'value'           => array(
-				'cols'  => array( array('name'=> ''), array('name'=> ''), array('name'=> '') ),
-				'rows'  => array( array('name'=> 'default-row'), array('name'=> 'default-row'), array('name'=> 'default-row') ),
+				'cols'    => array( array( 'name' => '' ), array( 'name' => '' ), array( 'name' => '' ) ),
+				'rows'    => array(
+					array( 'name' => 'default-row' ),
+					array( 'name' => 'default-row' ),
+					array( 'name' => 'default-row' )
+				),
 				'content' => $this->_fw_generate_default_values()
 			)
 		);

@@ -2,11 +2,18 @@
 	die( 'Forbidden' );
 }
 
+/**
+ * @var  array $option
+ * @var  array $data
+ * @var  int | string $i - row id
+ * @var  int | string $j - column id
+ */
+
 ?>
 
-<?php foreach($option['columns_options'] as $id => $options) : ?>
+<?php foreach ( $option['columns_options'] as $id => $options ) : ?>
 	<?php $data_cols = array(
-		'value'       => isset($data['value']['cols'][ $j ][ $id ]) ? $data['value']['cols'][ $j ][ $id ] : '',
+		'value'       => isset( $data['value']['cols'][ $j ][ $id ] ) ? $data['value']['cols'][ $j ][ $id ] : '',
 		'id_prefix'   => $option['attr']['id'] . '-cols-' . $j . '-',
 		'name_prefix' => $option['attr']['name'] . '[cols][' . $j . ']'
 	);
