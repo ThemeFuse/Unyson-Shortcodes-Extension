@@ -1,12 +1,5 @@
 /** table builder start **/
 
-/** buttons start**/
-.fw-option-type-table .fw-add-buttons-builder {
-	float: right;
-}
-
-/** buttons end **/
-
 /** table start **/
 .fw-option-type-table .fw-table {
 	width: 100%;
@@ -84,27 +77,6 @@
 	vertical-align: middle;
 }
 
-/** cell editor start
-.fw-option-type-table .fw-table-cell.fw-cell-show-editor textarea {
-	display: block;
-}
-
-.fw-option-type-table .fw-table-cell.fw-cell-show-editor .fw-table-cell-content {
-	display: none;
-}
-
-.fw-option-type-table .fw-table-cell .fw-table-cell-content {
-	display: block;
-}
-
-
-.fw-option-type-table .fw-table-cell textarea {
-	display: none;
-}
-*/
-
-/** cell editor end **/
-
 .fw-option-type-table .fw-table-cell-options {
 	width: 180px;
 	-webkit-box-sizing: border-box;
@@ -112,6 +84,7 @@
 	box-sizing: border-box;
 }
 
+/** start column/rows class names selectors **/
 .fw-option-type-table .fw-table-row .fw-table-cell-options select {
 	width: 135px;
 	margin-left: 10px;
@@ -125,7 +98,10 @@
 .fw-option-type-table .fw-backend-option .fw-backend-option-input .fw-table-cell-options select {
 	width: auto;
 }
+/** end column/rows class names selectors **/
 
+
+/** start add column button **/
 .fw-option-type-table .fw-table-add-column {
 	display: none;
 	float: right;
@@ -134,11 +110,14 @@
 .fw-option-type-table .fw-table-col-options > :nth-last-child(2) > .fw-table-add-column {
 	display: inline-block;
 }
+/** end add column button **/
 
+/** start add row button **/
 .fw-option-type-table .fw-table-add-row {
 	float: right;
 	margin-right: 10px;
 }
+/** end add row button **/
 
 .fw-option-type-table .fw-table-col-options > .fw-table-cell {
 	padding-top: 0;
@@ -157,57 +136,6 @@
 }
 
 /** cell content **/
-
-/** pricing row
-.fw-option-type-table .fw-cell-option-wrapper {
-	padding: 0 5px;
-}
-
-.fw-option-type-table .fw-table-cell-price {
-	display: none;
-}
-
-.fw-option-type-table .pricing-row .fw-table-cell-price {
-	display: inline-block;
-	width: 100%;
-}
-
-.fw-option-type-table .pricing-row .fw-table-cell-content {
-	display: none;
-}
- end pricing row **/
-
-/** button row
-.fw-option-type-table .fw-table-cell-button {
-	display: none;
-}
-
-.fw-option-type-table .button-row .fw-table-cell-button {
-	display: inline-block;
-}
-
-.fw-option-type-table .button-row .fw-table-cell-content {
-	display: none;
-}
- end button row **/
-
-/** switch row
-.fw-option-type-table .fw-table-cell-switch {
-	display: none;
-}
-
-.fw-option-type-table .switch-row .fw-table-cell-worksheet {
-	text-align: center;
-}
-.fw-option-type-table .switch-row .fw-table-cell-switch {
-	display: inline-block;
-}
-
-.fw-option-type-table .switch-row .fw-table-cell-content {
-	display: none;
-}
- end switch row **/
-
 .fw-option-type-table .fw-table-cell-content {
 	height: 100%;
 	width: 100%;
