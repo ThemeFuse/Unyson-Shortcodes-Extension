@@ -28,3 +28,7 @@
 	text-align: center;
 }
 
+.fw-option-type-table .button-row .fw-table-cell-worksheet .fw-cell-option-wrapper {
+	display: inline-block;
+}
+
