@@ -6,27 +6,26 @@
  * @var array $atts
  */
 
-fw_print($atts);
 $class_width = 'fw-col-sm-' . floor(12 / count($atts['table']['cols']));
 
 ?>
 <div class="fw-pricing">
 	<?php foreach ($atts['table']['cols'] as $col_key => $col): ?>
-		<div class="fw-package-wrap <?php echo $class_width ?>">
-			<div class="fw-package <?php echo $col; ?>">
+		<div class="fw-package-wrap <?php echo $class_width . ' ' . $col['name']; ?> ">
+			<div class="fw-package">
 				<?php foreach ($atts['table']['rows'] as $row_key => $row): ?>
 					<?php if ($row === 'heading-row'): ?>
 						<div class="fw-heading-row">
 							<?php $value = $atts['table']['content'][$row_key][$col_key]['textarea']; ?>
 							<span>
-								<?php echo (empty($value) && $col === 'desc-col') ? '&nbps;' : $value; ?>
+								<?php echo (empty($value) && $col['name'] === 'desc-col') ? '&nbps;' : $value; ?>
 							</span>
 						</div>
 					<?php elseif ($row === 'pricing-row'): ?>
 						<div class="fw-pricing-row">
-							<?php $value = $atts['table']['content'][$row_key][$col_key]['textarea']; ?>
+							<?php $value = $atts['table']['content'][$row_key][$col_key]['pricing']['amount'] . $atts['table']['content'][$row_key][$col_key]['pricing']['description']; ?>
 							<span>
-								<?php echo (empty($value) && $col === 'desc-col') ? '&nbps;' : $value; ?>
+								<?php echo (empty($value) && $col['name'] === 'desc-col') ? '&nbps;' : $value; ?>
 							</span>
 						</div>
 					<?php elseif ( $row == 'button-row' ) : ?>

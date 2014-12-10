@@ -19,7 +19,7 @@
 				<thead>
 					<tr class="<?php echo $row; ?>">
 						<?php foreach ( $atts['table']['cols'] as $col_key => $col ) : ?>
-							<th class="<?php echo $col; ?>">
+							<th class="<?php echo $col['class']; ?>">
 								<?php echo $atts['table']['content'][ $row_key ][ $col_key ]['textarea']; ?>
 							</th>
 						<?php endforeach; ?>
@@ -28,7 +28,7 @@
 			<?php elseif ( $row == 'button-row' ) : ?>
 				<tr class="<?php echo $row ?>">
 					<?php foreach ( $atts['table']['cols'] as $col_key => $col ) : ?>
-						<td class="<?php echo $col ?>">
+						<td class="<?php echo $col['class'] ?>">
 							<?php $button = fw_ext( 'shortcodes' )->get_shortcode( 'button' ); ?>
 							<?php if ( false === empty( $atts['table']['content'][ $row_key ][ $col_key ]['button'] ) and false === empty($button) ) : ?>
 								<?php echo fw_render_view( $button->locate_path( '/views/view.php' ) , array( 'atts' => $atts['table']['content'][ $row_key ][ $col_key ]['button'] ) ); ?>
@@ -40,7 +40,7 @@
 			else : ?>
 				<tr class="<?php echo $row ?>">
 					<?php foreach ( $atts['table']['cols'] as $col_key => $col ) : ?>
-						<td class="<?php echo $col ?>">
+						<td class="<?php echo $col['class'] ?>">
 							<?php echo $atts['table']['content'][ $row_key ][ $col_key ]['textarea']; ?>
 						</td>
 					<?php endforeach; ?>
