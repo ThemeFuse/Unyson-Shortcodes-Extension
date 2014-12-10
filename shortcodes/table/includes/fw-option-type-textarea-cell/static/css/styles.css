@@ -1,0 +1,7 @@
+.fw-option-type-textarea-cell .fw-textarea-tab.closed {
+	display: none;
+}
+
+.fw-option-type-textarea-cell .fw-textarea-tab {
+	display: inherit;
+}
