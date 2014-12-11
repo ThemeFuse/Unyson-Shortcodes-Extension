@@ -15,6 +15,12 @@ class Page_Builder_Column_Item extends Page_Builder_Item
 		return $shortcode_instance->get_options();
 	}
 
+	private function get_shortcode_config()
+	{
+		$shortcode_instance = fw_ext('shortcodes')->get_shortcode('column');
+		return $shortcode_instance->get_config('page_builder');
+	}
+
 	public function enqueue_static()
 	{
 		$column_shortcode = fw()->extensions->get('shortcodes')->get_shortcode('column');
@@ -43,10 +49,16 @@ class Page_Builder_Column_Item extends Page_Builder_Item
 		$data = array(
 			'restrictedTypes' => $this->restricted_types,
 		);
+
 		$options = $this->get_shortcode_options();
 		if ($options) {
 			fw()->backend->enqueue_options_static($options);
 			$data['options'] = $this->transform_options($options);
+		}
+
+		$config = $this->get_shortcode_config();
+		if (isset($config['popup_size'])) {
+			$data['popup_size'] = $config['popup_size'];
 		}
 
 		return $data;
@@ -68,7 +80,7 @@ class Page_Builder_Column_Item extends Page_Builder_Item
 	protected function get_thumbnails_data()
 	{
 		$column_shortcode  = fw_ext('shortcodes')->get_shortcode('column');
-		$builder_widths    = fw_ext_builder_get_item_width('page-builder');
+		$builder_widths    = fw_ext_builder_get_item_width($this->get_builder_type());
 
 		$column_thumbnails = array();
 		foreach ($builder_widths as $key => $value) {
