@@ -26,6 +26,38 @@
 
 
 			var process = {
+				updateTable: function() {
+					var colHtml  = process.generateOptionsHtml(process.getAllowedCols()),
+						rowHtml = process.generateOptionsHtml(process.getAllowedRows());
+
+					$table.find('select.fw-table-builder-row-style').html(rowHtml).trigger('change');
+					setTimeout(function(){
+						$table.find('select.fw-table-builder-col-style').html(colHtml).trigger('change');
+					}, 500);
+
+				},
+
+				generateOptionsHtml: function(items){
+					var html = '';
+					for ( var i in items ) {
+						html += '<option value="' + i + '">' + items[i] + '</option>';
+					}
+					return html;
+				},
+
+				getAllowedCols: function(){
+					var $viewChooser = $tableBuilder.find('#fw-edit-options-modal-table-header-optionstable_purpose'),
+						allowedColumns = $viewChooser.data('cols');
+
+					return allowedColumns[$viewChooser.val()];
+				},
+
+				getAllowedRows: function(){
+					var $viewChooser = $tableBuilder.find('#fw-edit-options-modal-table-header-optionstable_purpose'),
+						allowedRows = $viewChooser.data('rows');
+
+					return allowedRows[$viewChooser.val()];
+				},
 
 				readTemplateCell: function(){
 					_self.htmlWorksheetCell = $table.find('.fw-cell-template').data('worksheet-cell-template');
@@ -34,6 +66,7 @@
 				},
 
 				initialize: function () {
+					process.updateTable();
 					process.tableBuilderEvents();
 					process.readTemplateCell();
 					process.reInitSortable();
@@ -189,7 +222,8 @@
 						/**
 						 * set column default style
 						 */
-						process.changeTableColumnStyle.apply(clone2.find('select'));
+						clone2.find('select.fw-table-builder-col-style').html(process.getAllowedCols());
+						process.changeTableColumnStyle.apply(clone2.find('select.fw-table-builder-col-style'));
 
 						process.reinitOptions(clone2);
 						process.reinitOptions($insertedWorksheetCell);
@@ -304,6 +338,8 @@
 					$table.on('click', '.fw-table-cell-worksheet', function(e){
 						process.cellTriggerManager(e, $(this));
 					});
+
+					$tableBuilder.find('#fw-edit-options-modal-table-header-optionstable_purpose').on('change', process.updateTable);
 
 					$table.on('click', '.fw-table-col-delete-btn', process.removeTableColumn );
 					$table.on('click', '.fw-table-row-delete-btn', process.removeTableRow);

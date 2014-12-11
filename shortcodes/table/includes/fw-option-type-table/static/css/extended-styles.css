@@ -32,3 +32,11 @@
 	display: inline-block;
 }
 
+.fw-backend-option.fw-backend-option-design-default.fw-backend-option-type-table {
+	padding-right: 0;
+	padding-left: 0;
+}
+
+.fw-table {
+	padding: 24px 27px 21px;
+}

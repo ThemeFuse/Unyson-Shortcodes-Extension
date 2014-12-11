@@ -88,6 +88,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 
 	protected function replace_with_defaults( &$option ) {
 		$defaults                                           = $this->_get_defaults();
+		$option['header_options']                           = $defaults['header_options'];
 		$option['row_options']                              = $defaults['row_options'];
 		$option['columns_options']                          = $defaults['columns_options'];
 		$option['content_options']                          = $defaults['content_options'];
@@ -103,6 +104,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 		if ( ! is_array( $input_value ) ) {
 			return $option['value'];
 		}
+
 
 		if ( ! isset( $input_value['content'] ) || empty( $input_value['content'] ) ) {
 			$input_value['content'] = $option['value']['content'];
@@ -134,6 +136,11 @@ class FW_Option_Type_Table extends FW_Option_Type {
 				$value['cols'] = array_values( $input_value['cols'] );
 			}
 
+			if (isset($input_value['header_options']) and is_array($input_value['header_options'])) {
+				$value['header_options'] = $input_value['header_options'];
+			}
+
+
 			if ( isset( $input_value['content'] ) && is_array( $input_value['content'] ) ) {
 				$i = 0;
 				foreach ( $input_value['content'] as $row => $input_value_rows_data ) {
@@ -164,6 +171,45 @@ class FW_Option_Type_Table extends FW_Option_Type {
 	 */
 	protected function _get_defaults() {
 		return array(
+			'header_options' => array(
+				'table_purpose' => array(
+					'type'    => 'select',
+					'label'   => __( 'Table Styling', 'fw' ),
+					'help'    => __('There you can select some styling for your table.', 'fw'),
+					'desc'    => __( 'Choose table styling options', 'fw' ),
+					'choices' => array(
+						'pricing' => __( 'Use the table as a pricing table', 'fw' ),
+						'tabular' => __( 'Use the table to display tabular data', 'fw' )
+					),
+					'value' => 'pricing',
+					'attr' => array(
+						'data-rows' => json_encode(array(
+							'pricing' => array(
+								'default-row' => __( 'Default row', 'fw' ),
+								'heading-row' => __( 'Heading row', 'fw' ),
+								'pricing-row' => __( 'Pricing row', 'fw' ),
+								'button-row'  => __( 'Button row', 'fw' ),
+								'switch-row'  => __( 'Row switch', 'fw' )
+							),
+							'tabular' => array(
+								'default-row' => __( 'Default row', 'fw' ),
+								'heading-row' => __( 'Heading row', 'fw' ),
+							)
+						)),
+						'data-cols' => json_encode(array(
+							'pricing' => array(
+								'highlight-col' => __( 'Highlight column', 'fw' ),
+								'desc-col'      => __( 'Description column', 'fw' ),
+								'center-col'    => __( 'Center text column', 'fw' )
+							),
+							'tabular' => array(
+								''              => __( 'Default column', 'fw' ),
+								'desc-col'      => __( 'Description column', 'fw' ),
+							)
+						)),
+					)
+				),
+			),
 			'row_options'     => array(
 				'name' => array(
 					'type'    => 'select',
