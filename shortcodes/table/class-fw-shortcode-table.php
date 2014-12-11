@@ -37,7 +37,7 @@ class FW_Shortcode_Table extends FW_Shortcode {
 
 	private function enqueue_button_shortcode_static(){
 		$button = fw_ext( 'shortcodes' )->get_shortcode( 'button' );
-		if ($button) {
+		if ( $button ) {
 			$static_file = $button->locate_path('/static.php');
 			if ($static_file) {
 				require_once $static_file;

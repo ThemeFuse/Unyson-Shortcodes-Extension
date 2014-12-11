@@ -179,11 +179,11 @@ class FW_Option_Type_Table extends FW_Option_Type {
 					'desc'    => __( 'Choose table styling options', 'fw' ),
 					'choices' => array(
 						'pricing' => __( 'Use the table as a pricing table', 'fw' ),
-						'tabular' => __( 'Use the table to display tabular data', 'fw' )
+						'tabular' => __( 'Use the table to display tabular data', 'fw' ),
 					),
 					'value' => 'pricing',
 					'attr' => array(
-						'data-rows' => json_encode(array(
+						'data-allowed-rows' => json_encode(array(
 							'pricing' => array(
 								'default-row' => __( 'Default row', 'fw' ),
 								'heading-row' => __( 'Heading row', 'fw' ),
@@ -196,11 +196,11 @@ class FW_Option_Type_Table extends FW_Option_Type {
 								'heading-row' => __( 'Heading row', 'fw' ),
 							)
 						)),
-						'data-cols' => json_encode(array(
+						'data-allowed-cols' => json_encode(array(
 							'pricing' => array(
+								'center-col'    => __( 'Center text column', 'fw' ),
 								'highlight-col' => __( 'Highlight column', 'fw' ),
-								'desc-col'      => __( 'Description column', 'fw' ),
-								'center-col'    => __( 'Center text column', 'fw' )
+								'desc-col'      => __( 'Description column', 'fw' )
 							),
 							'tabular' => array(
 								''              => __( 'Default column', 'fw' ),

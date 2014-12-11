@@ -231,3 +231,13 @@ table th[class*="col-"] {
 	white-space: normal;
 }
 /** end button**/
+
+.fw-pricing .fw-price-icon-no:before {
+	content: "\f068";
+	color: #cb1e1b;
+}
+
+.fw-pricing .fw-price-icon-yes:before {
+	content: "\f058";
+	color: #06cb00;
+}

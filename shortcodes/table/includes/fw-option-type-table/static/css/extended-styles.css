@@ -40,3 +40,7 @@
 .fw-table {
 	padding: 24px 27px 21px;
 }
+
+.fw-option-type-table .pricing-row .fw-cell-option-wrapper {
+	padding: 0 5px;
+}

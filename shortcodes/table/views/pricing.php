@@ -34,16 +34,16 @@ $class_width = 'fw-col-sm-' . floor(12 / count($atts['table']['cols']));
 								<?php echo fw_render_view(  $button->locate_path( '/views/view.php' ), array( 'atts' => $atts['table']['content'][ $row_key ][ $col_key ]['button'] ) ); ?>
 							</div>
 						<?php endif; ?>
-					<?php elseif ($row['name'] === 'switch-row'): ?>
+					<?php elseif ($row['name'] === 'switch-row') : ?>
 						<div class="fw-switch-row">
 							<?php $value = $atts['table']['content'][$row_key][$col_key]['switch']; ?>
 							<span>
-								<?php echo ($value === 'yes') ? '+' : '-' ?>
+								<i class="fa fw-price-icon-<?php echo $value ?>"></i>
 							</span>
 						</div>
-					<?php else : ?>
-						<div class="col-row">
-							<?php echo $atts['table']['content'][$row_key][$col_key]['textarea']; ?>
+					<?php elseif ($row['name'] === 'default-row') : ?>
+						<div class="fw-default-row">
+							<?php $value = $atts['table']['content'][$row_key][$col_key]['textarea']; ?>
 						</div>
 					<?php endif; ?>
 				<?php endforeach; ?>

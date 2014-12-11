@@ -38,6 +38,12 @@
 						colHtml  = process.generateOptionsHtml(allowedCols),
 						rowHtml = process.generateOptionsHtml(allowedRows);
 
+					if (typeof allowedCols === 'undefined' || typeof allowedRows === 'undefined' ) {
+						$table.hide();
+						return;
+					}else{
+						$table.show();
+					}
 
 					$table.find('select.fw-table-builder-row-style').each(function(){
 						var value = $(this).val();
@@ -72,14 +78,14 @@
 
 				getAllowedCols: function(){
 					var $viewChooser = $tableBuilder.find('#fw-edit-options-modal-table-header-optionstable_purpose'),
-						allowedColumns = $viewChooser.data('cols');
+						allowedColumns = $viewChooser.data('allowed-cols');
 
 					return allowedColumns[$viewChooser.val()];
 				},
 
 				getAllowedRows: function(){
 					var $viewChooser = $tableBuilder.find('#fw-edit-options-modal-table-header-optionstable_purpose'),
-						allowedRows = $viewChooser.data('rows');
+						allowedRows = $viewChooser.data('allowed-rows');
 
 					return allowedRows[$viewChooser.val()];
 				},
