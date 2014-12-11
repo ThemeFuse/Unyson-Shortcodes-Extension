@@ -22,18 +22,43 @@
 				worksheetRowsSelector = '.fw-table-row:not(.fw-table-col-options, .fw-template-row, .fw-table-cols-delete)',
 				$currentCell = false,
 				isAllowedTabMove = true,
+				colClassNames = $table.find('.fw-table-row:eq(0) .fw-table-cell:eq(1) .fw-table-builder-col-style').find('option').map(function () {
+					return this.value
+				}).get().join(" "),
+				rowClassNames = $table.find('.fw-table-row:eq(1) .fw-table-cell:eq(0) .fw-table-builder-row-style').find('option').map(function () {
+					return this.value
+				}).get().join(" "),
 				htmlWorksheetCell;
 
 
 			var process = {
 				updateTable: function() {
-					var colHtml  = process.generateOptionsHtml(process.getAllowedCols()),
-						rowHtml = process.generateOptionsHtml(process.getAllowedRows());
+					var allowedRows = process.getAllowedRows(),
+						allowedCols = process.getAllowedCols(),
+						colHtml  = process.generateOptionsHtml(allowedCols),
+						rowHtml = process.generateOptionsHtml(allowedRows);
 
-					$table.find('select.fw-table-builder-row-style').html(rowHtml).trigger('change');
-					setTimeout(function(){
-						$table.find('select.fw-table-builder-col-style').html(colHtml).trigger('change');
-					}, 500);
+
+					$table.find('select.fw-table-builder-row-style').each(function(){
+						var value = $(this).val();
+							$(this).html(rowHtml);
+							if ( typeof allowedRows[value] !== 'undefined' ) {
+								$(this).val(value);
+							} else {
+								$(this).trigger('change');
+							}
+					});
+
+					$table.find('select.fw-table-builder-col-style').each(function(){
+						var value = $(this).val();
+							$(this).html(colHtml);
+							if ( typeof allowedCols[value] !== 'undefined' ) {
+								$(this).val(value);
+							} else {
+								$(this).trigger('change');
+							}
+					});
+
 
 				},
 
@@ -118,9 +143,7 @@
 				changeTableRowStyle: function () {
 					var $select = $(this),
 						newClass = $select.val(),
-						classNames = $select.find('option').map(function () {
-							return this.value
-						}).get().join(" "),
+						classNames = rowClassNames,
 						$selectCell = $select.parent(),
 						$row = $selectCell.parent();
 
@@ -141,9 +164,7 @@
 				changeTableColumnStyle: function () {
 					var $select = $(this),
 						newClass = $select.val(),
-						classNames = $select.find('option').map(function () {
-							return this.value
-						}).get().join(" "),
+						classNames = colClassNames,
 						$cell = $select.parent(),
 						colId = parseInt($cell.data('col')),
 						$elements = $table.find('[data-col=' + colId + ']');
@@ -222,7 +243,7 @@
 						/**
 						 * set column default style
 						 */
-						clone2.find('select.fw-table-builder-col-style').html(process.getAllowedCols());
+						clone2.find('select.fw-table-builder-col-style').html(process.generateOptionsHtml(process.getAllowedCols()));
 						process.changeTableColumnStyle.apply(clone2.find('select.fw-table-builder-col-style'));
 
 						process.reinitOptions(clone2);
