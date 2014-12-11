@@ -22,7 +22,7 @@
 			);
 			?>
 
-			<?php $div_attr = isset( $options['attr'] ) ? $options['attr'] : array(); ?>
+			<?php $div_attr = isset( $options['wrapper_attr'] ) ? $options['wrapper_attr'] : array(); ?>
 			<?php $div_attr['class'] = isset( $div_attr['class'] ) ? $div_attr['class'] . ' fw-cell-option-wrapper ' : ' fw-cell-option-wrapper ' ?>
 
 			<div <?php echo fw_attr_to_html( $div_attr ) ?>>

@@ -197,7 +197,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 						'type'  => 'textarea-cell',
 						'label' => false,
 						'desc'  => false,
-						'value' => ''
+						'value' => '',
 					)
 				),
 				'heading-row' => array(
@@ -205,7 +205,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 						'type'  => 'textarea-cell',
 						'label' => false,
 						'desc'  => false,
-						'value' => ''
+						'value' => '',
 					)
 				),
 				'pricing-row' => array(
@@ -214,8 +214,8 @@ class FW_Option_Type_Table extends FW_Option_Type {
 						'label' => false,
 						'desc'  => false,
 						'value' => '',
-						'attr'  => array(
-							'class' => 'fw-col-sm-6',
+						'wrapper_attr' => array(
+							'class' => 'fw-col-sm-6'
 						)
 					),
 					'description' => array(
@@ -223,8 +223,8 @@ class FW_Option_Type_Table extends FW_Option_Type {
 						'label' => false,
 						'desc'  => false,
 						'value' => '',
-						'attr'  => array(
-							'class' => 'fw-col-sm-6',
+						'wrapper_attr' => array(
+							'class' => 'fw-col-sm-6'
 						)
 					),
 				),
