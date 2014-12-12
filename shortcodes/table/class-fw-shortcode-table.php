@@ -18,7 +18,6 @@ class FW_Shortcode_Table extends FW_Shortcode {
 	}
 
 	protected function _render($atts, $content = null, $tag = '') {
-		$this->enqueue_button_shortcode_static();
 		$view_file = $this->locate_path('/views/' . $atts['table']['header_options']['table_purpose'] . '.php');
 		if (!$view_file) {
 			trigger_error(
@@ -33,16 +32,6 @@ class FW_Shortcode_Table extends FW_Shortcode {
 			'content' => $content,
 			'tag'     => $tag
 		) );
-	}
-
-	private function enqueue_button_shortcode_static(){
-		$button = fw_ext( 'shortcodes' )->get_shortcode( 'button' );
-		if ( $button ) {
-			$static_file = $button->locate_path('/static.php');
-			if ($static_file) {
-				require_once $static_file;
-			}
-		}
 	}
 
 }

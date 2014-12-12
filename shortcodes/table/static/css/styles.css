@@ -138,6 +138,14 @@ table th[class*="col-"] {
 		border-bottom: 0;
 	}
 }
+
+.fw-table .desc-col {
+	text-align: right;
+	font-weight: bold;
+}
+
+
+
 /* Price Table */
 /* -------------------------------------------------- */
 .fw-pricing {

@@ -5,7 +5,7 @@
 /**
  * @var array $atts
  */
-$class_width = 'fw-col-sm-' . floor(12 / count($atts['table']['cols']));
+$class_width = 'fw-col-sm-' . ceil(12 / count($atts['table']['cols']));
 
 ?>
 <div class="fw-pricing">
@@ -29,11 +29,13 @@ $class_width = 'fw-col-sm-' . floor(12 / count($atts['table']['cols']));
 						</div>
 					<?php elseif ( $row['name'] == 'button-row' ) : ?>
 						<?php $button = fw_ext( 'shortcodes' )->get_shortcode( 'button' ); ?>
-						<?php if ( false === empty( $atts['table']['content'][ $row_key ][ $col_key ]['button'] ) and false === empty($button) ) : ?>
 							<div class="fw-button-row">
-								<?php echo fw_render_view(  $button->locate_path( '/views/view.php' ), array( 'atts' => $atts['table']['content'][ $row_key ][ $col_key ]['button'] ) ); ?>
+								<?php if ( false === empty( $atts['table']['content'][ $row_key ][ $col_key ]['button'] ) and false === empty($button) ) : ?>
+									<?php echo $button->render($atts['table']['content'][ $row_key ][ $col_key ]['button']); ?>
+								<?php else : ?>
+									<span>&nbsp;</span>
+								<?php endif; ?>
 							</div>
-						<?php endif; ?>
 					<?php elseif ($row['name'] === 'switch-row') : ?>
 						<div class="fw-switch-row">
 							<?php $value = $atts['table']['content'][$row_key][$col_key]['switch']; ?>

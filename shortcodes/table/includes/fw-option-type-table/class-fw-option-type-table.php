@@ -216,8 +216,8 @@ class FW_Option_Type_Table extends FW_Option_Type {
 					'desc'    => false,
 					'choices' => array(
 						'default-col'   => __( 'Default column', 'fw' ),
-						'highlight-col' => __( 'Highlight column', 'fw' ),
 						'desc-col'      => __( 'Description column', 'fw' ),
+						'highlight-col' => __( 'Highlight column', 'fw' ),
 						'center-col'    => __( 'Center text column', 'fw' )
 					),
 				)
