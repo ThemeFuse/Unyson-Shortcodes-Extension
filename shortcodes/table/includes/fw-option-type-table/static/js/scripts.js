@@ -23,20 +23,41 @@
 				$currentCell = false,
 				isAllowedTabMove = true,
 				colClassNames = $table.find('.fw-table-row:eq(0) .fw-table-cell:eq(1) .fw-table-builder-col-style').find('option').map(function () {
-					return this.value
-				}).get().join(" "),
+					var text = $(this).text(),
+						obj = {};
+						obj.value = this.value;
+						obj.text = text;
+				return obj;
+				}).get(),
 				rowClassNames = $table.find('.fw-table-row:eq(1) .fw-table-cell:eq(0) .fw-table-builder-row-style').find('option').map(function () {
-					return this.value
-				}).get().join(" "),
+					var text = $(this).text(),
+						obj = {};
+					obj.value = this.value;
+					obj.text = text;
+					return obj;
+				}).get(),
 				htmlWorksheetCell;
-
 
 			var process = {
 				updateTable: function() {
 					var allowedRows = process.getAllowedRows(),
-						allowedCols = process.getAllowedCols(),
-						colHtml  = process.generateOptionsHtml(allowedCols),
-						rowHtml = process.generateOptionsHtml(allowedRows);
+						allowedCols = process.getAllowedCols();
+
+					var rowList = [], colList = [];
+					for (var i in rowClassNames) {
+						if (allowedRows.indexOf(rowClassNames[i].value) != -1 ){
+							rowList.push(rowClassNames[i]);
+						}
+					}
+
+					for (var i in colClassNames) {
+						if (allowedCols.indexOf(colClassNames[i].value) != -1 ){
+							colList.push(colClassNames[i]);
+						}
+					}
+
+					var colHtml  = process.generateOptionsHtml(colList),
+						rowHtml = process.generateOptionsHtml(rowList);
 
 					if (typeof allowedCols === 'undefined' || typeof allowedRows === 'undefined' ) {
 						$table.hide();
@@ -48,8 +69,9 @@
 					$table.find('select.fw-table-builder-row-style').each(function(){
 						var value = $(this).val();
 							$(this).html(rowHtml);
-							if ( typeof allowedRows[value] !== 'undefined' ) {
-								$(this).val(value);
+							//todo: regex check
+							if ( allowedRows.indexOf(value) != -1 ) {
+								$(this).val(value); //fixme
 							} else {
 								$(this).trigger('change');
 							}
@@ -71,7 +93,7 @@
 				generateOptionsHtml: function(items){
 					var html = '';
 					for ( var i in items ) {
-						html += '<option value="' + i + '">' + items[i] + '</option>';
+						html += '<option value="' + items[i].value + '">' + items[i].text + '</option>';
 					}
 					return html;
 				},
@@ -149,7 +171,9 @@
 				changeTableRowStyle: function () {
 					var $select = $(this),
 						newClass = $select.val(),
-						classNames = rowClassNames,
+						classNames = rowClassNames.map(function (item) {
+							return item.value;
+						}).join(" "),
 						$selectCell = $select.parent(),
 						$row = $selectCell.parent();
 
@@ -170,7 +194,9 @@
 				changeTableColumnStyle: function () {
 					var $select = $(this),
 						newClass = $select.val(),
-						classNames = colClassNames,
+						classNames = colClassNames.map(function (item) {
+							return item.value;
+						}).join(" "),
 						$cell = $select.parent(),
 						colId = parseInt($cell.data('col')),
 						$elements = $table.find('[data-col=' + colId + ']');
@@ -249,7 +275,16 @@
 						/**
 						 * set column default style
 						 */
-						clone2.find('select.fw-table-builder-col-style').html(process.generateOptionsHtml(process.getAllowedCols()));
+
+						var allowedCols = process.getAllowedCols(),
+							colList = [];
+						for (var i in colClassNames) {
+							if (allowedCols.indexOf(colClassNames[i].value) != -1 ){
+								colList.push(colClassNames[i]);
+							}
+						}
+
+						clone2.find('select.fw-table-builder-col-style').html(process.generateOptionsHtml(colList));
 						process.changeTableColumnStyle.apply(clone2.find('select.fw-table-builder-col-style'));
 
 						process.reinitOptions(clone2);

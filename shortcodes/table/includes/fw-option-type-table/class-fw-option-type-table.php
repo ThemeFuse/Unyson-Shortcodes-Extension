@@ -92,8 +92,8 @@ class FW_Option_Type_Table extends FW_Option_Type {
 		$option['row_options']                              = $defaults['row_options'];
 		$option['columns_options']                          = $defaults['columns_options'];
 		$option['content_options']                          = $defaults['content_options'];
-		$option['row_options']['name']['attr']['class']     = isset($option['row_options']['name']['attr']['class']) ? $option['row_options']['name']['attr']['class'] . ' fw-table-builder-row-style' : 'fw-table-builder-row-style';
-		$option['columns_options']['name']['attr']['class'] = isset($option['columns_options']['name']['attr']['class']) ? $option['columns_options']['name']['attr']['class'] . ' fw-table-builder-col-style' : 'fw-table-builder-col-style';
+		$option['row_options']['name']['attr']['class']     = isset( $option['row_options']['name']['attr']['class'] ) ? $option['row_options']['name']['attr']['class'] . ' fw-table-builder-row-style' : 'fw-table-builder-row-style';
+		$option['columns_options']['name']['attr']['class'] = isset( $option['columns_options']['name']['attr']['class'] ) ? $option['columns_options']['name']['attr']['class'] . ' fw-table-builder-col-style' : 'fw-table-builder-col-style';
 	}
 
 	/**
@@ -136,7 +136,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 				$value['cols'] = array_values( $input_value['cols'] );
 			}
 
-			if (isset($input_value['header_options']) and is_array($input_value['header_options'])) {
+			if ( isset( $input_value['header_options'] ) and is_array( $input_value['header_options'] ) ) {
 				$value['header_options'] = $input_value['header_options'];
 			}
 
@@ -171,44 +171,29 @@ class FW_Option_Type_Table extends FW_Option_Type {
 	 */
 	protected function _get_defaults() {
 		return array(
-			'header_options' => array(
+			'header_options'  => array(
 				'table_purpose' => array(
 					'type'    => 'select',
 					'label'   => __( 'Table Styling', 'fw' ),
-					'help'    => __('There you can select some styling for your table.', 'fw'),
+					'help'    => __( 'There you can select some styling for your table.', 'fw' ),
 					'desc'    => __( 'Choose table styling options', 'fw' ),
 					'choices' => array(
 						'pricing' => __( 'Use the table as a pricing table', 'fw' ),
 						'tabular' => __( 'Use the table to display tabular data', 'fw' ),
 					),
-					'value' => 'pricing',
-					'attr' => array(
-						'data-allowed-rows' => json_encode(array(
-							'pricing' => array(
-								'default-row' => __( 'Default row', 'fw' ),
-								'heading-row' => __( 'Heading row', 'fw' ),
-								'pricing-row' => __( 'Pricing row', 'fw' ),
-								'button-row'  => __( 'Button row', 'fw' ),
-								'switch-row'  => __( 'Row switch', 'fw' )
-							),
-							'tabular' => array(
-								'default-row' => __( 'Default row', 'fw' ),
-								'heading-row' => __( 'Heading row', 'fw' ),
+					'value'   => 'pricing',
+					'attr'    => array(
+						'data-allowed-rows' => json_encode( array(
+								'pricing' => 'default-row heading-row pricing-row button-row switch-row',
+								'tabular' => 'default-row heading-row'
 							)
-						)),
-						'data-allowed-cols' => json_encode(array(
-							'pricing' => array(
-								'center-col'    => __( 'Center text column', 'fw' ),
-								'highlight-col' => __( 'Highlight column', 'fw' ),
-								'desc-col'      => __( 'Description column', 'fw' )
-							),
-							'tabular' => array(
-								''              => __( 'Default column', 'fw' ),
-								'desc-col'      => __( 'Description column', 'fw' ),
-							)
-						)),
+						),
+						'data-allowed-cols' => json_encode( array(
+							'pricing' => 'center-col highlight-col desc-col',
+							'tabular' => 'default-col desc-col'
+						) ),
 					)
-				),
+				)
 			),
 			'row_options'     => array(
 				'name' => array(
@@ -230,7 +215,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 					'label'   => false,
 					'desc'    => false,
 					'choices' => array(
-						''              => __( 'Default column', 'fw' ),
+						'default-col'   => __( 'Default column', 'fw' ),
 						'highlight-col' => __( 'Highlight column', 'fw' ),
 						'desc-col'      => __( 'Description column', 'fw' ),
 						'center-col'    => __( 'Center text column', 'fw' )
@@ -256,19 +241,19 @@ class FW_Option_Type_Table extends FW_Option_Type {
 				),
 				'pricing-row' => array(
 					'amount'      => array(
-						'type'  => 'text',
-						'label' => false,
-						'desc'  => false,
-						'value' => '',
+						'type'         => 'text',
+						'label'        => false,
+						'desc'         => false,
+						'value'        => '',
 						'wrapper_attr' => array(
 							'class' => 'fw-col-sm-6'
 						)
 					),
 					'description' => array(
-						'type'  => 'text',
-						'label' => false,
-						'desc'  => false,
-						'value' => '',
+						'type'         => 'text',
+						'label'        => false,
+						'desc'         => false,
+						'value'        => '',
 						'wrapper_attr' => array(
 							'class' => 'fw-col-sm-6'
 						)
@@ -296,7 +281,11 @@ class FW_Option_Type_Table extends FW_Option_Type {
 
 			),
 			'value'           => array(
-				'cols'    => array( array( 'name' => '' ), array( 'name' => '' ), array( 'name' => '' ) ),
+				'cols'    => array(
+					array( 'name' => 'default-col' ),
+					array( 'name' => 'default-col' ),
+					array( 'name' => 'default-col' )
+				),
 				'rows'    => array(
 					array( 'name' => 'default-row' ),
 					array( 'name' => 'default-row' ),
