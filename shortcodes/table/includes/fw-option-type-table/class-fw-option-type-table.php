@@ -132,7 +132,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 				$value['rows'] = array_values( $input_value['rows'] );
 			}
 
-			if ( isset( $input_value['cols'] ) ) {
+			if ( isset( $input_value['cols'] ) && is_array($input_value['cols']) ) {
 				$value['cols'] = array_values( $input_value['cols'] );
 			}
 

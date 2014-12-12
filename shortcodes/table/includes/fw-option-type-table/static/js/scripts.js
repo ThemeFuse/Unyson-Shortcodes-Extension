@@ -71,7 +71,7 @@
 							$(this).html(rowHtml);
 							//todo: regex check
 							if ( allowedRows.indexOf(value) != -1 ) {
-								$(this).val(value); //fixme
+								$(this).val(value);
 							} else {
 								$(this).trigger('change');
 							}
@@ -80,13 +80,13 @@
 					$table.find('select.fw-table-builder-col-style').each(function(){
 						var value = $(this).val();
 							$(this).html(colHtml);
-							if ( typeof allowedCols[value] !== 'undefined' ) {
+							//todo: regex check
+							if (  allowedCols.indexOf(value) != -1  ) {
 								$(this).val(value);
 							} else {
 								$(this).trigger('change');
 							}
 					});
-
 
 				},
 
