@@ -168,6 +168,10 @@ table th[class*="col-"] {
 	background: #000000;
 	color: #ffffff;
 }
+
+.fw-package .fw-pricing-row{
+	min-height: 100px;
+}
 .fw-package .fw-heading-row span,
 .fw-package .fw-pricing-row span {
 	display: block;
@@ -182,11 +186,7 @@ table th[class*="col-"] {
 .fw-package .fw-pricing-row span {
 	font-size: 28px;
 }
-.fw-package .col-row {
-	padding: 10px 0;
-	color: #666666;
-	font-weight: bold;
-}
+
 .fw-package .col-row:nth-child(2n+1) {
 	background: #f7f7f7;
 }
@@ -198,7 +198,7 @@ table th[class*="col-"] {
 }
 
 .fw-pricing .fw-package-wrap.highlight-col .fw-default-row {
-	padding: 14px 0;
+	padding: 10px 0;
 }
 
 .fw-pricing .fw-package-wrap.desc-col {
