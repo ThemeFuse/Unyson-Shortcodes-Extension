@@ -44,3 +44,7 @@
 .fw-option-type-table .pricing-row .fw-cell-option-wrapper {
 	padding: 0 5px;
 }
+
+.fw-option-type-table .pricing-row .fw-table-cell-worksheet {
+	padding: 10px 5px 10px 3px;
+}
