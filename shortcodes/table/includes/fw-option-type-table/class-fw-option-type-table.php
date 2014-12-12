@@ -254,6 +254,9 @@ class FW_Option_Type_Table extends FW_Option_Type {
 						'label'        => false,
 						'desc'         => false,
 						'value'        => '',
+						'attr' => array(
+							'placeholder' => __('per month', 'fw')
+						),
 						'wrapper_attr' => array(
 							'class' => 'fw-col-sm-6'
 						)
