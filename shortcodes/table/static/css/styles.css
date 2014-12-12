@@ -138,6 +138,14 @@ table th[class*="col-"] {
 		border-bottom: 0;
 	}
 }
+
+.fw-table .desc-col {
+	text-align: right;
+	font-weight: bold;
+}
+
+
+
 /* Price Table */
 /* -------------------------------------------------- */
 .fw-pricing {
@@ -160,6 +168,10 @@ table th[class*="col-"] {
 	background: #000000;
 	color: #ffffff;
 }
+
+.fw-package .fw-pricing-row{
+	min-height: 100px;
+}
 .fw-package .fw-heading-row span,
 .fw-package .fw-pricing-row span {
 	display: block;
@@ -174,50 +186,49 @@ table th[class*="col-"] {
 .fw-package .fw-pricing-row span {
 	font-size: 28px;
 }
-.fw-package .col-row {
-	padding: 10px 0;
-	color: #666666;
-	font-weight: bold;
-}
+
 .fw-package .col-row:nth-child(2n+1) {
 	background: #f7f7f7;
 }
-.fw-package.highlight-col {
-	width: 285px;
-	top: 0;
-}
-.fw-package.highlight-col .fw-heading-row,
-.fw-package.highlight-col .fw-pricing-row {
+
+
+.fw-pricing .fw-package-wrap.highlight-col .fw-heading-row,
+.fw-pricing .fw-package-wrap.highlight-col .fw-pricing-row {
 	background: #f17e12;
 }
-.fw-package.highlight-col .col-row {
-	padding: 14px 0;
+
+.fw-pricing .fw-package-wrap.highlight-col .fw-default-row {
+	padding: 10px 0;
 }
-.fw-package.highlight-col .type-price .type,
-.fw-package.highlight-col .type-price .price {
-	padding: 16px 0;
-}
-.fw-package.desc-col {
+
+.fw-pricing .fw-package-wrap.desc-col {
 	text-align: right;
 	border: none;
 	box-sizing: border-box;
 	margin: 0;
-	width: 225px;
+	max-width: 225px;
 }
-.fw-package.desc-col .fw-heading-row,
-.fw-package.desc-col .fw-pricing-row {
-	background: none;
+
+.fw-pricing .fw-package-wrap.desc-col .fw-heading-row,
+.fw-pricing .fw-package-wrap.desc-col .fw-pricing-row {
+	background: #cccccc;
+	padding-right: 5px;
+/*	background: none;
 	color: transparent;
-	visibility: hidden;
+	visibility: hidden;*/
 }
-.fw-package.desc-col .col-row {
+.fw-pricing .fw-package-wrap.desc-col .fw-default-row {
 	background: none;
-	border-top: 1px solid #eee;
+	/*border-top: 1px solid #eee;*/
 	padding-top: 9px;
-	padding-right: 15px;
+	padding-right: 5px;
 }
-.fw-package.desc-col .col-row:last-child {
+.fw-pricing .fw-package-wrap.desc-col .col-row:last-child {
 	border-bottom: 1px solid #eee;
+}
+
+.fw-pricing .fw-package-wrap.desc-col .fw-switch-row {
+	text-align: center;
 }
 
 /** button **/
@@ -231,3 +242,13 @@ table th[class*="col-"] {
 	white-space: normal;
 }
 /** end button**/
+
+.fw-pricing .fw-price-icon-no:before {
+	content: "\f068";
+	color: #cb1e1b;
+}
+
+.fw-pricing .fw-price-icon-yes:before {
+	content: "\f058";
+	color: #06cb00;
+}

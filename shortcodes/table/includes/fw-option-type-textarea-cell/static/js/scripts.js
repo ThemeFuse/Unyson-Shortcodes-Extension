@@ -6,6 +6,10 @@
 			$container.find('.fw-textarea-tab.content').text($(this).val());
 		});
 
+		$container.find('.fw-textarea-tab.control textarea').on('blur', function(){
+			$container.trigger('deactivate');
+		});
+
 		$container.on('deactivate', function(){
 			$container.find('.fw-textarea-tab.control').addClass('closed');
 			$container.find('.fw-textarea-tab.content').removeClass('closed');

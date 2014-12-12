@@ -22,10 +22,95 @@
 				worksheetRowsSelector = '.fw-table-row:not(.fw-table-col-options, .fw-template-row, .fw-table-cols-delete)',
 				$currentCell = false,
 				isAllowedTabMove = true,
+				colClassNames = $table.find('.fw-table-row:eq(0) .fw-table-cell:eq(1) .fw-table-builder-col-style').find('option').map(function () {
+					var text = $(this).text(),
+						obj = {};
+						obj.value = this.value;
+						obj.text = text;
+				return obj;
+				}).get(),
+				rowClassNames = $table.find('.fw-table-row:eq(1) .fw-table-cell:eq(0) .fw-table-builder-row-style').find('option').map(function () {
+					var text = $(this).text(),
+						obj = {};
+					obj.value = this.value;
+					obj.text = text;
+					return obj;
+				}).get(),
 				htmlWorksheetCell;
 
-
 			var process = {
+				updateTable: function() {
+					var allowedRows = process.getAllowedRows(),
+						allowedCols = process.getAllowedCols();
+
+					var rowList = [], colList = [];
+					for (var i in rowClassNames) {
+						if (allowedRows.indexOf(rowClassNames[i].value) != -1 ){
+							rowList.push(rowClassNames[i]);
+						}
+					}
+
+					for (var i in colClassNames) {
+						if (allowedCols.indexOf(colClassNames[i].value) != -1 ){
+							colList.push(colClassNames[i]);
+						}
+					}
+
+					var colHtml  = process.generateOptionsHtml(colList),
+						rowHtml = process.generateOptionsHtml(rowList);
+
+					if (typeof allowedCols === 'undefined' || typeof allowedRows === 'undefined' ) {
+						$table.hide();
+						return;
+					}else{
+						$table.show();
+					}
+
+					$table.find('select.fw-table-builder-row-style').each(function(){
+						var value = $(this).val();
+							$(this).html(rowHtml);
+							//todo: regex check
+							if ( allowedRows.indexOf(value) != -1 ) {
+								$(this).val(value);
+							} else {
+								$(this).trigger('change');
+							}
+					});
+
+					$table.find('select.fw-table-builder-col-style').each(function(){
+						var value = $(this).val();
+							$(this).html(colHtml);
+							//todo: regex check
+							if (  allowedCols.indexOf(value) != -1  ) {
+								$(this).val(value);
+							} else {
+								$(this).trigger('change');
+							}
+					});
+
+				},
+
+				generateOptionsHtml: function(items){
+					var html = '';
+					for ( var i in items ) {
+						html += '<option value="' + items[i].value + '">' + items[i].text + '</option>';
+					}
+					return html;
+				},
+
+				getAllowedCols: function(){
+					var $viewChooser = $tableBuilder.find('#fw-edit-options-modal-table-header-optionstable_purpose'),
+						allowedColumns = $viewChooser.data('allowed-cols');
+
+					return allowedColumns[$viewChooser.val()];
+				},
+
+				getAllowedRows: function(){
+					var $viewChooser = $tableBuilder.find('#fw-edit-options-modal-table-header-optionstable_purpose'),
+						allowedRows = $viewChooser.data('allowed-rows');
+
+					return allowedRows[$viewChooser.val()];
+				},
 
 				readTemplateCell: function(){
 					_self.htmlWorksheetCell = $table.find('.fw-cell-template').data('worksheet-cell-template');
@@ -34,6 +119,7 @@
 				},
 
 				initialize: function () {
+					process.updateTable();
 					process.tableBuilderEvents();
 					process.readTemplateCell();
 					process.reInitSortable();
@@ -85,9 +171,9 @@
 				changeTableRowStyle: function () {
 					var $select = $(this),
 						newClass = $select.val(),
-						classNames = $select.find('option').map(function () {
-							return this.value
-						}).get().join(" "),
+						classNames = rowClassNames.map(function (item) {
+							return item.value;
+						}).join(" "),
 						$selectCell = $select.parent(),
 						$row = $selectCell.parent();
 
@@ -108,9 +194,9 @@
 				changeTableColumnStyle: function () {
 					var $select = $(this),
 						newClass = $select.val(),
-						classNames = $select.find('option').map(function () {
-							return this.value
-						}).get().join(" "),
+						classNames = colClassNames.map(function (item) {
+							return item.value;
+						}).join(" "),
 						$cell = $select.parent(),
 						colId = parseInt($cell.data('col')),
 						$elements = $table.find('[data-col=' + colId + ']');
@@ -189,7 +275,17 @@
 						/**
 						 * set column default style
 						 */
-						process.changeTableColumnStyle.apply(clone2.find('select'));
+
+						var allowedCols = process.getAllowedCols(),
+							colList = [];
+						for (var i in colClassNames) {
+							if (allowedCols.indexOf(colClassNames[i].value) != -1 ){
+								colList.push(colClassNames[i]);
+							}
+						}
+
+						clone2.find('select.fw-table-builder-col-style').html(process.generateOptionsHtml(colList));
+						process.changeTableColumnStyle.apply(clone2.find('select.fw-table-builder-col-style'));
 
 						process.reinitOptions(clone2);
 						process.reinitOptions($insertedWorksheetCell);
@@ -304,6 +400,8 @@
 					$table.on('click', '.fw-table-cell-worksheet', function(e){
 						process.cellTriggerManager(e, $(this));
 					});
+
+					$tableBuilder.find('#fw-edit-options-modal-table-header-optionstable_purpose').on('change', process.updateTable);
 
 					$table.on('click', '.fw-table-col-delete-btn', process.removeTableColumn );
 					$table.on('click', '.fw-table-row-delete-btn', process.removeTableRow);

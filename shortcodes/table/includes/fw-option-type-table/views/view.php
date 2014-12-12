@@ -15,12 +15,23 @@ unset(
 	$wrapper_attr['name'],
 	$wrapper_attr['value']
 );
+
 ?>
 
 <?php $header_cell_template = fw_ext( 'shortcodes' )->get_shortcode( 'table' )->get_declared_path() . '/includes/fw-option-type-table/views/cell-head-template.php'; ?>
 <?php $worksheet_cell_template = fw_ext( 'shortcodes' )->get_shortcode( 'table' )->get_declared_path() . '/includes/fw-option-type-table/views/cell-worksheet-template.php'; ?>
 
 <div <?php echo fw_attr_to_html( $wrapper_attr ) ?>>
+
+		<?php $data_header = array(
+			'name_prefix' => $option['attr']['name'] . '[header_options]',
+			'id_prefix' => $option['attr']['id'] . '-header-options',
+		) ?>
+
+		<?php $values_header = isset($data['value']['header_options']) ? $data['value']['header_options'] : array() ?>
+
+	<?php echo fw()->backend->render_options($option['header_options'], $values_header, $data_header ) ?>
+
 	<div class="fw-table">
 		<br class="fw-cell-template"
 		    data-worksheet-cell-template='<?php echo fw_htmlspecialchars( fw_render_view( $worksheet_cell_template, array(

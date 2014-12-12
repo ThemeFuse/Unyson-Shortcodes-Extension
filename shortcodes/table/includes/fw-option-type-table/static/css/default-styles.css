@@ -3,6 +3,7 @@
 /** table start **/
 .fw-option-type-table .fw-table {
 	width: 100%;
+	box-sizing: border-box;
 	display: table;
 	table-layout: fixed;
 }

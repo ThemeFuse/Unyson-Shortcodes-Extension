@@ -5,8 +5,7 @@
 /**
  * @var array $atts
  */
-
-$class_width = 'fw-col-sm-' . floor(12 / count($atts['table']['cols']));
+$class_width = 'fw-col-sm-' . ceil(12 / count($atts['table']['cols']));
 
 ?>
 <div class="fw-pricing">
@@ -23,28 +22,35 @@ $class_width = 'fw-col-sm-' . floor(12 / count($atts['table']['cols']));
 						</div>
 					<?php elseif ($row['name'] === 'pricing-row'): ?>
 						<div class="fw-pricing-row">
-							<?php $value = $atts['table']['content'][$row_key][$col_key]['amount'] . $atts['table']['content'][$row_key][$col_key]['description']; ?>
+							<?php $amount = $atts['table']['content'][$row_key][$col_key]['amount'] ?>
+							<?php $desc   = $atts['table']['content'][$row_key][$col_key]['description']; ?>
 							<span>
-								<?php echo (empty($value) && $col['name'] === 'desc-col') ? '&nbps;' : $value; ?>
+								<?php echo (empty($value) && $col['name'] === 'desc-col') ? '&nbps;' : $amount; ?>
 							</span>
+							<small>
+								<?php echo (empty($value) && $col['name'] === 'desc-col') ? '&nbps;' : $desc; ?>
+							</small>
 						</div>
 					<?php elseif ( $row['name'] == 'button-row' ) : ?>
 						<?php $button = fw_ext( 'shortcodes' )->get_shortcode( 'button' ); ?>
-						<?php if ( false === empty( $atts['table']['content'][ $row_key ][ $col_key ]['button'] ) and false === empty($button) ) : ?>
 							<div class="fw-button-row">
-								<?php echo fw_render_view(  $button->locate_path( '/views/view.php' ), array( 'atts' => $atts['table']['content'][ $row_key ][ $col_key ]['button'] ) ); ?>
+								<?php if ( false === empty( $atts['table']['content'][ $row_key ][ $col_key ]['button'] ) and false === empty($button) ) : ?>
+									<?php echo $button->render($atts['table']['content'][ $row_key ][ $col_key ]['button']); ?>
+								<?php else : ?>
+									<span>&nbsp;</span>
+								<?php endif; ?>
 							</div>
-						<?php endif; ?>
-					<?php elseif ($row['name'] === 'switch-row'): ?>
+					<?php elseif ($row['name'] === 'switch-row') : ?>
 						<div class="fw-switch-row">
 							<?php $value = $atts['table']['content'][$row_key][$col_key]['switch']; ?>
 							<span>
-								<?php echo ($value === 'yes') ? '+' : '-' ?>
+								<i class="fa fw-price-icon-<?php echo $value ?>"></i>
 							</span>
 						</div>
-					<?php else : ?>
-						<div class="col-row">
-							<?php echo $atts['table']['content'][$row_key][$col_key]['textarea']; ?>
+					<?php elseif ($row['name'] === 'default-row') : ?>
+						<div class="fw-default-row">
+							<?php $value = $atts['table']['content'][$row_key][$col_key]['textarea']; ?>
+							<?php echo $value ?>
 						</div>
 					<?php endif; ?>
 				<?php endforeach; ?>
