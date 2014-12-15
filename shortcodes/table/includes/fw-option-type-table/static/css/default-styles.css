@@ -3,6 +3,7 @@
 /** table start **/
 .fw-option-type-table .fw-table {
 	width: 100%;
+	box-sizing: border-box;
 	display: table;
 	table-layout: fixed;
 }
@@ -30,7 +31,7 @@
 	display: table-cell;
 	border-left: 1px solid #e1e1e1;
 	border-bottom: 1px solid #e1e1e1;
-	padding: 10px;
+	padding: 10px 10px 10px 9px;
 	background: #fff;
 	height: 18px;
 	vertical-align: middle;
