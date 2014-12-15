@@ -1,0 +1,3 @@
+[submodule "extensions/page-builder"]
+	path = extensions/page-builder
+	url = git@github.com:ThemeFuse/Unyson-PageBuilder-Extension.git
