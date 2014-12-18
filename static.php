@@ -7,8 +7,4 @@ if (!is_admin()) {
 		array(),
 		fw()->manifest->get_version()
 	);
-	wp_register_style(
-		'fw-main',
-		fw_get_framework_directory_uri('/extensions/shortcodes/static/css/fw-main.css')
-	);
 }

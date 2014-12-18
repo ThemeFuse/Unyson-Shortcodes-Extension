@@ -1,3 +1,3 @@
 <?php if (!defined('FW')) die('Forbidden');
 
-wp_enqueue_style('fw-main');
+wp_enqueue_style('fw-ext-builder-frontend-grid');
