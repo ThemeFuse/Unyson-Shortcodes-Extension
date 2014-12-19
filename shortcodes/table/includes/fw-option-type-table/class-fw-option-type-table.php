@@ -189,7 +189,7 @@ class FW_Option_Type_Table extends FW_Option_Type {
 							)
 						),
 						'data-allowed-cols' => json_encode( array(
-							'pricing' => 'center-col highlight-col desc-col',
+							'pricing' => 'default-col highlight-col desc-col',
 							'tabular' => 'default-col desc-col'
 						) ),
 					)
@@ -284,6 +284,9 @@ class FW_Option_Type_Table extends FW_Option_Type {
 
 			),
 			'value'           => array(
+				'header_options' => array(
+					'table_purpose' => 'pricing',
+				),
 				'cols'    => array(
 					array( 'name' => 'default-col' ),
 					array( 'name' => 'default-col' ),
@@ -303,7 +306,13 @@ class FW_Option_Type_Table extends FW_Option_Type {
 		$result = array();
 		for ( $i = 0; $i < $rows; $i ++ ) {
 			for ( $j = 0; $j < $cols; $j ++ ) {
-				$result[ $i ][ $j ] = array();
+				$result[ $i ][ $j ] = array(
+					'textarea' => '',
+					'amount' => '',
+					'description' => '',
+					'switch' => 'no',
+					'button' => '',
+				);
 			}
 		}
 
