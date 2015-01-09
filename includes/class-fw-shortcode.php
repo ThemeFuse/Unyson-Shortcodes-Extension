@@ -152,7 +152,7 @@ class FW_Shortcode
 	{
 		$static_file = $this->locate_path('/static.php');
 		if ($static_file) {
-			require_once $static_file;
+			fw_include_file_isolated($static_file);
 		}
 	}
 }
