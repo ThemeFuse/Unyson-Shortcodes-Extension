@@ -175,7 +175,6 @@ class FW_Option_Type_Table extends FW_Option_Type {
 				'table_purpose' => array(
 					'type'    => 'select',
 					'label'   => __( 'Table Styling', 'fw' ),
-					'help'    => __( 'There you can select some styling for your table.', 'fw' ),
 					'desc'    => __( 'Choose table styling options', 'fw' ),
 					'choices' => array(
 						'pricing' => __( 'Use the table as a pricing table', 'fw' ),
