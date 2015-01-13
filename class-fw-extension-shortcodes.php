@@ -33,7 +33,6 @@ class FW_Extension_Shortcodes extends FW_Extension
 	 */
 	protected function _init()
 	{
-
 		/*
 		 * load shortcodes when on frontend or
 		 * if it was requested via ajax
@@ -47,6 +46,7 @@ class FW_Extension_Shortcodes extends FW_Extension
 			)
 		) {
 			add_action('fw_extensions_init', array($this, '_action_fw_extensions_init'));
+			add_action('wp_enqueue_scripts', array($this, '_action_enqueue_shortcodes_static_in_frontend_head'));
 		}
 	}
 
@@ -75,5 +75,21 @@ class FW_Extension_Shortcodes extends FW_Extension
 		foreach ($this->shortcodes as $tag => $instance) {
 			add_shortcode($tag, array($instance, 'render'));
 		}
+	}
+
+	/**
+	 * Make sure to enqueue shortcodes static in <head> (not in <body>)
+	 * @internal
+	 */
+	public function _action_enqueue_shortcodes_static_in_frontend_head()
+	{
+		/** @var WP_Post $post */
+		global $post;
+
+		if (!$post) {
+			return;
+		}
+
+		do_shortcode($post->post_content);
 	}
 }
