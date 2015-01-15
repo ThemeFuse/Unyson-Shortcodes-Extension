@@ -33,20 +33,21 @@ class FW_Extension_Shortcodes extends FW_Extension
 	 */
 	protected function _init()
 	{
-		/*
-		 * load shortcodes when on frontend or
-		 * if it was requested via ajax
-		 */
-		if (
-			!is_admin() ||
-			(
-				defined('DOING_AJAX') &&
-				DOING_AJAX === true   &&
-				FW_Request::POST('fw_load_shortcodes')
-			)
-		) {
+		if (!is_admin()) {
+
+			// loads the shortcodes
 			add_action('fw_extensions_init', array($this, '_action_fw_extensions_init'));
+
+			// renders the shortcodes so that css will get in <head>
 			add_action('wp_enqueue_scripts', array($this, '_action_enqueue_shortcodes_static_in_frontend_head'));
+		} elseif (
+			defined('DOING_AJAX') &&
+			DOING_AJAX === true   &&
+			FW_Request::POST('fw_load_shortcodes')
+		) {
+
+			// load the shortcodes if this was requested via ajax
+			add_action('fw_extensions_init', array($this, '_action_fw_extensions_init'));
 		}
 	}
 
