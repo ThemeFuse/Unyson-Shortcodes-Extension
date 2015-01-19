@@ -23,9 +23,10 @@ class FW_Shortcode_Calendar extends FW_Shortcode
 				'custom' => array(
 					'callback' => false,
 					'label'    => __('Custom', 'fw'),
+					'desc'     => 'Add events to your calendar',
 					'options'  => array(
 						'custom_events' => array(
-							'label' => __('Date & Time', 'fw'),
+							'label' => __('Events', 'fw'),
 							'popup-title' => __('Add/Edit Date & Time', 'fw'),
 							'type' => 'addable-popup',
 							'desc' => false,
@@ -34,17 +35,17 @@ class FW_Shortcode_Calendar extends FW_Shortcode
 								'title' => array(
 									'type' => 'text',
 									'label' =>__('Event Title','fw'),
-									'desc' => __('Set event title', 'fw'),
+									'desc' => __('Enter the event title', 'fw'),
 								),
 								'url' => array(
 									'type' => 'text',
 									'label' =>__('Event Url','fw'),
-									'desc' => __('Set evnt url (Ex: http://example.com)', 'fw'),
+									'desc' => __('Enter the event url (Ex: http://your-domain.com/event)', 'fw'),
 								),
 								'calendar_date_range' => array(
 									'type'  => 'datetime-range',
 									'label' => __('Date & Time','fw'),
-									'desc'  => __('Set start and end calendar datetime','fw'),
+									'desc'  => __('Enter the event date & time of the event','fw'),
 									'datetime-pickers' => array(
 										'from' => array(
 											'maxDate' => '2038/01/19',
