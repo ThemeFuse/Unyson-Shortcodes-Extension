@@ -39,13 +39,13 @@ class FW_Shortcode_Calendar extends FW_Shortcode
 								),
 								'url' => array(
 									'type' => 'text',
-									'label' =>__('Event Url','fw'),
+									'label' =>__('Event URL','fw'),
 									'desc' => __('Enter the event URL (Ex: http://your-domain.com/event)', 'fw'),
 								),
 								'calendar_date_range' => array(
 									'type'  => 'datetime-range',
 									'label' => __('Date & Time','fw'),
-									'desc'  => __('Enter the event date & time of the event','fw'),
+									'desc'  => __('Enter the event date & time','fw'),
 									'datetime-pickers' => array(
 										'from' => array(
 											'maxDate' => '2038/01/19',
