@@ -29,7 +29,7 @@ class FW_Shortcode_Calendar extends FW_Shortcode
 							'label' => __('Events', 'fw'),
 							'popup-title' => __('Add/Edit Date & Time', 'fw'),
 							'type' => 'addable-popup',
-							'desc' => false,
+							'desc' => 'Add events to your calendar',
 							'template' => '{{  if (calendar_date_range.from !== "") {  print(calendar_date_range.from + " - " + calendar_date_range.to)} else { print("' . __('Note: Please set start & end event datetime', 'fw') . '")} }}',
 							'popup-options' => array(
 								'title' => array(
@@ -40,7 +40,7 @@ class FW_Shortcode_Calendar extends FW_Shortcode
 								'url' => array(
 									'type' => 'text',
 									'label' =>__('Event Url','fw'),
-									'desc' => __('Enter the event url (Ex: http://your-domain.com/event)', 'fw'),
+									'desc' => __('Enter the event URL (Ex: http://your-domain.com/event)', 'fw'),
 								),
 								'calendar_date_range' => array(
 									'type'  => 'datetime-range',
