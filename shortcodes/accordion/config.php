@@ -6,6 +6,6 @@ $cfg = array();
 
 $cfg['page_builder'] = array(
 	'title'       => __( 'Accordion', 'fw' ),
-	'description' => __( 'Create an accordion on the fly', 'fw' ),
+	'description' => __( 'Add an Accordion', 'fw' ),
 	'tab'         => __( 'Content Elements', 'fw' ),
 );

@@ -6,6 +6,6 @@ $cfg = array();
 
 $cfg['page_builder'] = array(
 	'title'       => __( 'Widget Area', 'fw' ),
-	'description' => __( 'Displays one of the registered Widget Areas of the theme', 'fw' ),
+	'description' => __( 'Add a Widget Area', 'fw' ),
 	'tab'         => __( 'Content Elements', 'fw' ),
 );

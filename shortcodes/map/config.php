@@ -6,6 +6,6 @@ $cfg = array();
 
 $cfg['page_builder'] = array(
 	'title'       => __( 'Map', 'fw' ),
-	'description' => __( 'A very awesome map', 'fw' ),
+	'description' => __( 'Add a Map', 'fw' ),
 	'tab'         => __( 'Content Elements', 'fw' )
 );

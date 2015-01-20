@@ -6,6 +6,6 @@ $cfg = array();
 
 $cfg['page_builder'] = array(
 	'title'       => __( 'Text Block', 'fw' ),
-	'description' => __( 'A very awesome text block', 'fw' ),
+	'description' => __( 'Add a Text Block', 'fw' ),
 	'tab'         => __( 'Content Elements', 'fw' ),
 );

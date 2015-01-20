@@ -4,6 +4,6 @@ $cfg = array();
 
 $cfg['page_builder'] = array(
 	'title'         => __('Special Heading', 'fw'),
-	'description'   => __('Make special headings', 'fw'),
+	'description'   => __('Add a Special Heading', 'fw'),
 	'tab'           => __('Content Elements', 'fw'),
 );

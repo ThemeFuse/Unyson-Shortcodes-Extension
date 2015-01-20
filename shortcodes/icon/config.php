@@ -4,6 +4,6 @@ $cfg = array();
 
 $cfg['page_builder'] = array(
 	'title'         => __('Icon', 'fw'),
-	'description'   => __('A very awesome icon', 'fw'),
+	'description'   => __('Add an Icon', 'fw'),
 	'tab'           => __('Content Elements', 'fw'),
 );

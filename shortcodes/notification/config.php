@@ -6,6 +6,6 @@ $cfg = array();
 
 $cfg['page_builder'] = array(
 	'title'       => __( 'Notification', 'fw' ),
-	'description' => __( 'A very awesome notification', 'fw' ),
+	'description' => __( 'Add a Notification Box', 'fw' ),
 	'tab'         => __( 'Content Elements', 'fw' ),
 );

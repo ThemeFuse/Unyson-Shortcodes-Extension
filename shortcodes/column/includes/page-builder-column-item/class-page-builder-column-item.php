@@ -87,7 +87,7 @@ class Page_Builder_Column_Item extends Page_Builder_Item
 			$column_thumbnails[$key] = array(
 				'tab'         => __('Layout Elements', 'fw'),
 				'title'       => $value['title'],
-				'description' => __("Creates a {$value['title']} column" ,'fw'),
+				'description' => __("Add a {$value['title']} column" ,'fw'),
 				'image'       => $column_shortcode->locate_URI("/includes/page-builder-column-item/static/img/{$key}.png"),
 				'data'        => array(
 					'width'   => $key

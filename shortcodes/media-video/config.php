@@ -4,6 +4,6 @@ $cfg = array();
 
 $cfg['page_builder'] = array(
 	'title'         => __('Video', 'fw'),
-	'description'   => __('Embed Video', 'fw'),
+	'description'   => __('Add a Video', 'fw'),
 	'tab'           => __('Media Elements', 'fw'),
 );
