@@ -37,7 +37,7 @@
 							'<div class="controls">' +
 
 								'<% if (hasOptions) { %>' +
-								'<i class="dashicons dashicons-welcome-write-blog edit-options"></i>' +
+								'<i class="dashicons dashicons-edit edit-options"></i>' +
 								'<%  } %>' +
 
 								'<i class="dashicons dashicons-admin-page column-item-clone"></i>' +
@@ -55,18 +55,22 @@
 				this.widthChangerView.delegateEvents();
 			},
 			events: {
+				'click': 'editOptions',
 				'click .edit-options': 'editOptions',
 				'click .column-item-clone': 'cloneItem',
 				'click .column-item-delete': 'removeItem'
 			},
 			editOptions: function (e) {
 				e.stopPropagation();
+
 				if (!this.modal) {
 					return;
 				}
 				this.modal.open();
 			},
-			cloneItem: function() {
+			cloneItem: function(e) {
+				e.stopPropagation();
+
 				var index = this.model.collection.indexOf(this.model),
 					attributes = this.model.toJSON(),
 					_items = attributes['_items'],
@@ -78,7 +82,9 @@
 				this.model.collection.add(clonedColumn, {at: index + 1});
 				clonedColumn.get('_items').reset(_items);
 			},
-			removeItem: function() {
+			removeItem: function(e) {
+				e.stopPropagation();
+
 				this.remove();
 				this.model.collection.remove(this.model);
 			}
