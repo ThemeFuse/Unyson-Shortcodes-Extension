@@ -178,7 +178,7 @@ class FW_Shortcode_Calendar extends FW_Shortcode
 
 					$event_sources[$key]['start'] = $start->format('U');
 					$event_sources[$key]['end']   = $end->format('U');
-					$event_sources[$key]['title'] = $row['title'];
+					$event_sources[$key]['title'] = htmlspecialchars_decode($row['title']);
 					$event_sources[$key]['url']   = $row['url'];
 					$key++;
 				}
