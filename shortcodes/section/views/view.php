@@ -13,7 +13,7 @@ if (!empty($atts['background_image']['data']['icon'])) {
 $bg_video_data_attr    = '';
 $section_extra_classes = '';
 if (!empty($atts['video'])) {
-	$bg_video_data_attr     = 'data-wallpaper-options=' . json_encode(array('source' => array('video' => $atts['video'])));
+	$bg_video_data_attr     = 'data-wallpaper-options="' . fw_htmlspecialchars(json_encode(array('source' => array('video' => $atts['video'])))) .'"';
 	$section_extra_classes .= ' background-video';
 }
 
