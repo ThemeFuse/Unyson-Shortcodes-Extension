@@ -1,3 +1,4 @@
-.fw-main-row.background-video .fw-container {
+.fw-main-row.background-video .fw-container,
+.fw-main-row.background-video .fw-container-fluid {
 	z-index: 1;
 }
