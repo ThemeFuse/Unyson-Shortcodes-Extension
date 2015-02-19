@@ -16,8 +16,8 @@ $bg_video_data_attr    = '';
 $section_extra_classes = '';
 if ( ! empty( $atts['video'] ) ) {
 	$filetype           = wp_check_filetype( $atts['video'] );
-	$filetypes          = array( 'mp4', 'ogg', 'webm' );
-	$filetype           = in_array( $filetype['ext'], $filetypes ) ? $filetype['ext'] : 'video';
+	$filetypes          = array( 'mp4' => 'mp4', 'ogv' => 'ogg', 'webm' => 'webm', 'jpg' => 'poster' );
+	$filetype           = array_key_exists( (string) $filetype['ext'], $filetypes ) ? $filetypes[ $filetype['ext'] ] : 'video';
 	$bg_video_data_attr = 'data-wallpaper-options="' . fw_htmlspecialchars( json_encode( array( 'source' => array( $filetype => $atts['video'] ) ) ) ) . '"';
 	$section_extra_classes .= ' background-video';
 }
