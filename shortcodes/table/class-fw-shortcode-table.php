@@ -24,10 +24,10 @@ class FW_Shortcode_Table extends FW_Shortcode {
 			|| ! isset( $atts['table']['header_options'] )
 			|| ! isset( $atts['table']['header_options']['table_purpose'] )
 		) {
-			$view_file = $this->get_declared_path( '/views/tabular.php' );
-		} else {
-			$view_file = $this->locate_path( '/views/' . $atts['table']['header_options']['table_purpose'] . '.php' );
+			return '';
 		}
+
+		$view_file = $this->locate_path( '/views/' . $atts['table']['header_options']['table_purpose'] . '.php' );
 
 		if ( ! $view_file ) {
 			$view_file = $this->get_declared_path( '/views/tabular.php' );
