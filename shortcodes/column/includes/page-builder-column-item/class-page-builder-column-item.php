@@ -72,7 +72,19 @@ class Page_Builder_Column_Item extends Page_Builder_Item
 	{
 		$transformed_options = array();
 		foreach ($options as $id => $option) {
-			$transformed_options[] = array($id => $option);
+			if (is_int($id)) {
+				/**
+				 * this happens when in options array are loaded external options using fw()->theme->get_options()
+				 * and the array looks like this
+				 * array(
+				 *    'hello' => array('type' => 'text'), // this has string key
+				 *    array('hi' => array('type' => 'text')) // this has int key
+				 * )
+				 */
+				$transformed_options[] = $option;
+			} else {
+				$transformed_options[] = array($id => $option);
+			}
 		}
 		return $transformed_options;
 	}
