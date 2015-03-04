@@ -111,6 +111,23 @@
 .fw-option-type-table .fw-table-col-options > :nth-last-child(2) > .fw-table-add-column {
 	display: inline-block;
 }
+
+.fw-option-type-table .fw-table-col-options .fw-table-add-column .text {
+	display: none;
+}
+
+.fw-option-type-table .fw-table-col-options > .fw-table-col-option:nth-child(2) > .fw-table-add-column .text,
+.fw-option-type-table .fw-table-col-options > .fw-table-col-option:nth-child(3) > .fw-table-add-column .text,
+.fw-option-type-table .fw-table-col-options > .fw-table-col-option:nth-child(4) > .fw-table-add-column .text {
+	display: inline;
+}
+
+.fw-option-type-table .fw-table-col-options > .fw-table-col-option:nth-child(2) > .fw-table-add-column .plus,
+.fw-option-type-table .fw-table-col-options > .fw-table-col-option:nth-child(3) > .fw-table-add-column .plus,
+.fw-option-type-table .fw-table-col-options > .fw-table-col-option:nth-child(4) > .fw-table-add-column .plus {
+	display: none;
+}
+
 /** end add column button **/
 
 /** start add row button **/
@@ -171,3 +188,5 @@
 /** row end **/
 /** table end **/
 /** tablebuilder end **/
+
+

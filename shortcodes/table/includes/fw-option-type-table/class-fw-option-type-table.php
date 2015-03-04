@@ -150,6 +150,10 @@ class FW_Option_Type_Table extends FW_Option_Type {
 						$row_name = $value['rows'][ $i ]['name'];
 
 						foreach ( $option['content_options'][ $row_name ] as $id => $options ) {
+							if ( $value['cols'][$column]['name'] == 'desc-col' ) {
+								$cols[ $j ][ 'textarea' ] = fw()->backend->option_type( 'textarea-cell' )->get_value_from_input( $options, $input_value_cols_data[ 'default-row' ][ 'textarea-' . $row . '-' . $column ] );
+								continue;
+							}
 							$cols[ $j ][ $id ] = fw()->backend->option_type( $options['type'] )->get_value_from_input( $options, $input_value_cols_data[ $row_name ][ $id . '-' . $row . '-' . $column ] );
 						}
 

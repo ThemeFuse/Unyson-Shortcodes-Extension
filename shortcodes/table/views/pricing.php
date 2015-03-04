@@ -5,6 +5,7 @@
 /**
  * @var array $atts
  */
+
 $class_width = 'fw-col-sm-' . ceil(12 / count($atts['table']['cols']));
 
 ?>
@@ -13,6 +14,12 @@ $class_width = 'fw-col-sm-' . ceil(12 / count($atts['table']['cols']));
 		<div class="fw-package-wrap <?php echo $class_width . ' ' . $col['name']; ?> ">
 			<div class="fw-package">
 				<?php foreach ($atts['table']['rows'] as $row_key => $row): ?>
+					<?php if( $col['name'] == 'desc-col' ) : ?>
+						<div class="fw-default-row">
+							<?php $value = $atts['table']['content'][$row_key][$col_key]['textarea']; ?>
+							<?php echo $value ?>
+						</div>
+					<?php continue; endif; ?>
 					<?php if ($row['name'] === 'heading-row'): ?>
 						<div class="fw-heading-row">
 							<?php $value = $atts['table']['content'][$row_key][$col_key]['textarea']; ?>

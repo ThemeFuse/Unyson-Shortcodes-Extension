@@ -180,8 +180,19 @@
 					$row.removeClass(classNames).addClass(newClass);
 					$selectCell.removeClass(classNames).addClass(newClass);
 
-					$row.find('.fw-table-cell-worksheet .fw-table-cell-content').removeClass('fw-active-content');
-					$row.find('.fw-table-cell-worksheet .' + newClass).addClass('fw-active-content');
+					$row.find('.fw-table-cell-worksheet').each(function () {
+						if (jQuery(this).hasClass('desc-col')) {
+
+							if ( newClass != 'default-row' || newClass != 'heading-row' ) {
+								$(this).children('.fw-table-cell-content').removeClass('fw-active-content');
+								$(this).children('.fw-table-cell-content.default-row').addClass('fw-active-content');
+							}
+							return;
+						}
+
+						$(this).children('.fw-table-cell-content').removeClass('fw-active-content');
+						$(this).children('.fw-table-cell-content.' + newClass).addClass('fw-active-content');
+					});
 
 					process.trigger('row:styling:changed', {$elements: $row});
 
@@ -405,8 +416,25 @@
 
 					$table.on('click', '.fw-table-col-delete-btn', process.removeTableColumn );
 					$table.on('click', '.fw-table-row-delete-btn', process.removeTableRow);
-					$table.on('change', 'select.fw-table-builder-col-style', process.changeTableColumnStyle);
-					$table.on('change', 'select.fw-table-builder-row-style', process.changeTableRowStyle);
+					/*$table.on('change', 'select.fw-table-builder-col-style', process.changeTableColumnStyle);
+					$table.on('change', 'select.fw-table-builder-row-style', process.changeTableRowStyle);*/
+
+					$table.on('change', function (e) {
+						jQuery(this).find('select.fw-table-builder-col-style').each(function () {
+							process.changeTableColumnStyle.apply(this);
+						});
+
+						jQuery(this).find('select.fw-table-builder-row-style').each(function () {
+							process.changeTableRowStyle.apply(this);
+						});
+					});
+
+					$tableBuilder.on('fw:option-type:table-builder:column:added', function () {
+						$table.find('select.fw-table-builder-row-style').each(function () {
+							process.changeTableRowStyle.apply(this);
+						});
+					});
+
 					$table.on('keydown', process.onTabKeyDown);
 					$table.on('keyup', process.onTabKeyUp);
 					$table.on('click', '.fw-table-add-column', process.addTableColumn);
@@ -425,7 +453,7 @@
 			};
 
 			process.initialize();
-		};
+		}
 
 		fwEvents.on('fw:options:init', function (data) {
 			data.$elements.find('.fw-option-type-table:not(.fw-option-initialized)').each(function () {
