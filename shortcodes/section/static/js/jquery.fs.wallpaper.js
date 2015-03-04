@@ -593,7 +593,7 @@
 							/* console.log("onApiChange", e); */
 						}
 					}
-		        });
+				});
 
 				// Resize
 				_onResize({ data: data });
