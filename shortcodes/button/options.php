@@ -15,19 +15,19 @@ $options = array(
 		'type'  => 'text',
 		'value' => '#'
 	),
-    'target' => array(
-        'type'  => 'switch',
+	'target' => array(
+		'type'  => 'switch',
 		'label'   => __( 'Open Link in New Window', 'fw' ),
 		'desc'    => __( 'Select here if you want to open the linked page in a new window', 'fw' ),
-        'right-choice' => array(
-            'value' => '_blank',
-            'label' => __('Yes', 'fw'),
-        ),
-        'left-choice' => array(
-            'value' => '_self',
-            'label' => __('No', 'fw'),
-        ),
-    ),
+		'right-choice' => array(
+			'value' => '_blank',
+			'label' => __('Yes', 'fw'),
+		),
+		'left-choice' => array(
+			'value' => '_self',
+			'label' => __('No', 'fw'),
+		),
+	),
 	'color'  => array(
 		'label'   => __( 'Button Color', 'fw' ),
 		'desc'    => __( 'Choose a color for your button', 'fw' ),

@@ -26,16 +26,16 @@ $options = array(
 		'value' => '#'
 	),
 	'button_target' => array(
-        'type'    => 'switch',
+		'type'    => 'switch',
 		'label'   => __( 'Open Link in New Window', 'fw' ),
 		'desc'    => __( 'Select here if you want to open the linked page in a new window', 'fw' ),
-        'right-choice' => array(
-            'value' => '_blank',
-            'label' => __('Yes', 'fw'),
-        ),
-        'left-choice' => array(
-            'value' => '_self',
-            'label' => __('No', 'fw'),
-        ),
-    ),
+		'right-choice' => array(
+			'value' => '_blank',
+			'label' => __('Yes', 'fw'),
+		),
+		'left-choice' => array(
+			'value' => '_self',
+			'label' => __('No', 'fw'),
+		),
+	),
 );

@@ -47,11 +47,11 @@ unset(
 				    )
 			    )
 		    ) ) ?>'
-		    data-header-cell-template='<?php echo fw_htmlspecialchars( fw_render_view( $header_cell_template, array(
-			    'option'           => $option,
-			    'j'                => '_template_key_col_',
-			    'data'             => array()
-		    ) ) ) ?>'
+			data-header-cell-template='<?php echo fw_htmlspecialchars( fw_render_view( $header_cell_template, array(
+				'option'           => $option,
+				'j'                => '_template_key_col_',
+				'data'             => array()
+			) ) ) ?>'
 			/>
 
 		<?php /** Start heading row */ ?>
@@ -63,7 +63,7 @@ unset(
 			<?php foreach ( $data['value']['cols'] as $col ) : ?>
 
 				<div class="fw-table-cell fw-table-col-option <?php echo $col['name'] ?>"
-				     data-col="<?php echo $j ?>">
+					 data-col="<?php echo $j ?>">
 					<?php echo fw_render_view( $header_cell_template, compact('option', 'data', 'j' ) ); ?>
 				</div>
 				<?php $j ++; ?>
@@ -87,7 +87,7 @@ unset(
 			);?>
 
 			<div class="fw-table-row <?php echo $current_row_name ?>"
-			     data-row="<?php echo $i ?>">
+				 data-row="<?php echo $i ?>">
 				<div
 					class='fw-table-cell fw-table-cell-options <?php echo $data['value']['rows'][ $key_row ]['name'] ?>'>
 					<i class="fa fa-unsorted fw-table-gripper"></i>
@@ -136,7 +136,7 @@ unset(
 
 			<?php for ( $j = 0; $j <= $last_col; $j ++ )  : ?>
 				<div class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $j ]['name'] ?>'
-				     data-col="<?php echo $j ?>"></div>
+					 data-col="<?php echo $j ?>"></div>
 			<?php endfor; ?>
 
 			<div class="fw-table-cell fw-table-row-delete">
@@ -156,7 +156,7 @@ unset(
 
 			<?php for ( $j = 0; $j <= $last_col; $j ++ )  : ?>
 				<div class="fw-table-cell fw-table-col-delete"
-				     data-col="<?php echo $j ?>">
+					 data-col="<?php echo $j ?>">
 					<i class="dashicons fw-x fw-table-col-delete-btn"></i>
 				</div>
 			<?php endfor; ?>
