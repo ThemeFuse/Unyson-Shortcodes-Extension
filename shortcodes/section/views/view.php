@@ -8,7 +8,7 @@ if ( ! empty( $atts['background_color'] ) ) {
 }
 
 $bg_image = '';
-if ( ! empty( $atts['background_image']['data']['icon'] ) ) {
+if ( ! empty( $atts['background_image'] ) && ! empty( $atts['background_image']['data']['icon'] ) ) {
 	$bg_image = 'background-image:url(' . $atts['background_image']['data']['icon'] . ');';
 }
 
