@@ -112,7 +112,7 @@ class FW_Shortcode_Map extends FW_Shortcode {
 			trigger_error(
 				__('No location provider specified for map shortcode', 'fw')
 			);
-			return '<b>Map Placeholder</b>';
+			return '<b>' . __( 'Map Placeholder', 'fw' ) . '</b>';
 		}
 
 		$this->load_data();
@@ -121,7 +121,7 @@ class FW_Shortcode_Map extends FW_Shortcode {
 			trigger_error(
 				sprintf(__('Unknown location provider "%s" specified for map shortcode', 'fw'), $provider)
 			);
-			return '<b>Map Placeholder</b>';
+			return '<b>' . __( 'Map Placeholder', 'fw' ) . '</b>';
 		}
 
 		/**
@@ -163,6 +163,21 @@ class FW_Shortcode_Map extends FW_Shortcode {
 			'data-map-type'   => strtoupper( fw_akg('map_type', $atts, 'roadmap') ),
 			'data-map-height' => fw_akg('map_height', $atts, false),
 		);
+
+		unset($atts['data_provider']);
+		unset($atts['map_type']);
+		unset($atts['map_height']);
+
+		foreach ( $atts as $key => $att ) {
+			$new_key = 'data-' . str_replace( '_', '-', $key );
+			if ( is_array( $att ) || is_object( $att ) ) {
+				$att = json_encode($att);
+			}
+
+			$map_data_attr[$new_key] = $att;
+		}
+
+
 		$this->enqueue_static();
 		return fw_render_view( $this->locate_path('/views/view.php'), compact('atts', 'content', 'tag', 'map_data_attr') );
 	}
