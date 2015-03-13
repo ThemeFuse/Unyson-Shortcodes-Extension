@@ -2,21 +2,9 @@
 	die( 'Forbidden' );
 }
 
-class FW_Option_Type_Table extends FW_Option_Type {
-
-	private $internal_options;
-
-	protected function _init() {
-		$button = fw()->extensions->get( 'shortcodes' )->get_shortcode( 'button' );
-		if ( $button ) {
-			$this->internal_options['button-options'] = array(
-				'type'          => 'popup',
-				'popup-title'   => __( 'Button', 'fw' ),
-				'button'        => __( 'Add', 'fw' ),
-				'popup-options' => $button->get_options()
-			);
-		}
-	}
+class FW_Option_Type_Table extends FW_Option_Type
+{
+	protected function _init() {}
 
 	public function get_type() {
 		return 'table';
@@ -266,7 +254,14 @@ class FW_Option_Type_Table extends FW_Option_Type {
 					),
 				),
 				'button-row'  => array(
-					'button' => $this->internal_options['button-options']
+					'button' => ($button = fw()->extensions->get( 'shortcodes' )->get_shortcode( 'button' ))
+						? array(
+							'type'          => 'popup',
+							'popup-title'   => __( 'Button', 'fw' ),
+							'button'        => __( 'Add', 'fw' ),
+							'popup-options' => $button->get_options()
+						)
+						: array()
 				),
 				'switch-row'  => array(
 					'switch' => array(

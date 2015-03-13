@@ -62,13 +62,25 @@ class FW_Extension_Shortcodes extends FW_Extension
 
 	public function load_shortcodes()
 	{
+		static $is_loading = false; // prevent recursion
+
+		if ($is_loading) {
+			trigger_error('Recursive shortcodes load', E_USER_WARNING);
+			return;
+		}
+
 		if ($this->shortcodes) {
 			return;
 		}
+
+		$is_loading = true;
+
 		$disabled_shortcodes = apply_filters('fw_ext_shortcodes_disable_shortcodes', array());
 		$this->shortcodes    = _FW_Shortcodes_Loader::load(array(
 			'disabled_shortcodes' => $disabled_shortcodes
 		));
+
+		$is_loading = false;
 	}
 
 	private function register_shortcodes()

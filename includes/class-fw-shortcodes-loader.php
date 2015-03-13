@@ -5,7 +5,6 @@
  */
 class _FW_Shortcodes_Loader
 {
-
 	/** @var FW_Shortcode[] $shortcodes */
 	private static $shortcodes = array();
 
@@ -153,8 +152,10 @@ class _FW_Shortcodes_Loader
 					$customizations_locations
 				);
 
-				$path = array_pop($customizations_locations['paths']);
-				$uri = array_pop($customizations_locations['uris']);
+				if ($customizations_locations) {
+					$path = array_pop($customizations_locations['paths']);
+					$uri = array_pop($customizations_locations['uris']);
+				}
 			} while($customizations_locations);
 		}
 	}
