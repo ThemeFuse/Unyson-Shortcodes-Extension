@@ -124,6 +124,15 @@ class FW_Shortcode
 		return $this->options;
 	}
 
+	/**
+	 * Used as an public alias method of enqueue_static
+	 *
+	 * @deprecated deprecated since version 1.3
+	 */
+	public function _enqueue_static() {
+		$this->enqueue_static();
+	}
+
 	final public function render($atts, $content = null, $tag = '')
 	{
 		$filtered_atts = apply_filters('fw_shortcode_atts', $atts, $content, $tag);
@@ -148,6 +157,11 @@ class FW_Shortcode
 		));
 	}
 
+	/**
+	 * Beginning with version 1.5 this method will be public
+	 *
+	 * @deprecated deprecated since version 1.5
+	 */
 	protected function enqueue_static()
 	{
 		$static_file = $this->locate_path('/static.php');

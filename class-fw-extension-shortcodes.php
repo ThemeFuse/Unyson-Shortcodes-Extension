@@ -103,6 +103,20 @@ class FW_Extension_Shortcodes extends FW_Extension
 			return;
 		}
 
-		do_shortcode($post->post_content);
+		$pattern = get_shortcode_regex();
+		preg_replace_callback( "/$pattern/s", array( $this, 'enqueue_shortcode_static'), $post->post_content );
+	}
+
+	private function enqueue_shortcode_static( $shortcode ) {
+		// allow [[foo]] syntax for escaping a tag
+		if ( $shortcode[1] == '[' && $shortcode[6] == ']' ) {
+			return;
+		}
+
+		$tag = $shortcode[2];
+
+		if ( ! is_null( $this->get_shortcode( $tag ) ) ) {
+			$this->get_shortcode( $tag )->_enqueue_static();
+		}
 	}
 }
