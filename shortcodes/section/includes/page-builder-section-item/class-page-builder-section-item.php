@@ -107,10 +107,33 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 
 		$options = $this->get_shortcode_options();
 		if (!empty($options)) {
-			$attributes['atts'] = fw_get_options_values_from_input(
-				$options,
-				empty($attributes['atts']) ? array() : $attributes['atts']
-			);
+			if (empty($attributes['atts'])) {
+				/**
+				 * The options popup was never opened and there are no attributes.
+				 * Extract options default values.
+				 */
+				$attributes['atts'] = fw_get_options_values_from_input(
+					$options, array()
+				);
+			} else {
+				/**
+				 * There are saved attributes.
+				 * But we need to execute the _get_value_from_input() method for all options,
+				 * because some of them may be (need to be) changed (auto-generated) https://github.com/ThemeFuse/Unyson/issues/275
+				 * Add the values to $option['value']
+				 */
+				$options = fw_extract_only_options($options);
+
+				foreach ($attributes['atts'] as $option_id => $option_value) {
+					if (isset($options[$option_id])) {
+						$options[$option_id]['value'] = $option_value;
+					}
+				}
+
+				$attributes['atts'] = fw_get_options_values_from_input(
+					$options, array()
+				);
+			}
 		}
 
 		return $attributes;
