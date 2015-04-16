@@ -105,18 +105,12 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 	{
 		$attributes['type'] = $this->get_type();
 
-		/*
-		 * when saving the modal, the options values go into the
-		 * 'atts' key, if it is not present it could be
-		 * because of two things:
-		 * 1. The shortcode does not have options
-		 * 2. The user did not open or save the modal (which will be more likely the case)
-		 */
-		if (!isset($attributes['atts'])) {
-			$options = $this->get_shortcode_options();
-			if (!empty($options)) {
-				$attributes['atts'] = fw_get_options_values_from_input($options, array());
-			}
+		$options = $this->get_shortcode_options();
+		if (!empty($options)) {
+			$attributes['atts'] = fw_get_options_values_from_input(
+				$options,
+				empty($attributes['atts']) ? array() : $attributes['atts']
+			);
 		}
 
 		return $attributes;
