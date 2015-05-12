@@ -95,8 +95,9 @@ class Page_Builder_Column_Item extends Page_Builder_Item {
 		foreach ( $builder_widths as $key => $value ) {
 			$column_thumbnails[ $key ] = array(
 				'tab'         => __( 'Layout Elements', 'fw' ),
-				'title'       => $value['title'],
-				'description' => sprintf( __( 'Add a %s column', 'fw' ), $value['title'] ),
+				'title'       => apply_filters( 'fw_ext_shortcodes_column_title', $value['title'], $key ),
+				'description' => apply_filters( 'fw_ext_shortcodes_column_description',
+					sprintf( __( 'Add a %s column', 'fw' ), $value['title'] ), $key ),
 				'image'       => $column_shortcode->locate_URI( "/includes/page-builder-column-item/static/img/{$key}.png" ),
 				'data'        => array(
 					'width' => $key
