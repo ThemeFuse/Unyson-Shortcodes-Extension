@@ -37,7 +37,7 @@
 							'<div class="controls">' +
 
 								'<% if (hasOptions) { %>' +
-								'<i class="dashicons dashicons-edit edit-options"></i>' +
+								'<i class="dashicons dashicons-admin-generic edit-options"></i>' +
 								'<%  } %>' +
 
 								'<i class="dashicons dashicons-admin-page column-item-clone"></i>' +
