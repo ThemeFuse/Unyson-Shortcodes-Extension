@@ -126,8 +126,6 @@ class FW_Shortcode
 
 	/**
 	 * Used as an public alias method of enqueue_static
-	 *
-	 * @deprecated deprecated since version 1.3
 	 */
 	public function _enqueue_static() {
 		$this->enqueue_static();
@@ -157,11 +155,6 @@ class FW_Shortcode
 		));
 	}
 
-	/**
-	 * Beginning with version 1.5 this method will be public
-	 *
-	 * @deprecated deprecated since version 1.5
-	 */
 	protected function enqueue_static()
 	{
 		$static_file = $this->locate_path('/static.php');
