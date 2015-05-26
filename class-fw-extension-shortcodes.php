@@ -131,6 +131,9 @@ class FW_Extension_Shortcodes extends FW_Extension
 				$enqueued_shortcodes[$tag] = true;
 			}
 
+			/** @var WP_Post $post */
+			global $post;
+
 			do_action('fw_ext_shortcodes_enqueue_static:'. $tag, array(
 				/**
 				 * Transform to array:
@@ -141,6 +144,7 @@ class FW_Extension_Shortcodes extends FW_Extension
 				 * because this action may be used very rare and only for a specific shortcode.
 				 */
 				'atts_string' => $shortcode[3],
+				'post' => $post,
 			));
 
 			$this->enqueue_shortcodes_static($shortcode[5]); // inner shortcodes

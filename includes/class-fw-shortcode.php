@@ -133,18 +133,30 @@ class FW_Shortcode
 		$this->enqueue_static();
 	}
 
+	/**
+	 * @param $atts
+	 * @param null $content
+	 * @param string $tag deprecated
+	 * @return string
+	 */
 	final public function render($atts, $content = null, $tag = '')
 	{
-		$filtered_atts = apply_filters('fw_shortcode_atts', $atts, $content, $tag);
-		return $this->_render($filtered_atts, $content, $tag);
+		$filtered_atts = apply_filters('fw_shortcode_atts', $atts, $content, $this->tag);
+		return $this->_render($filtered_atts, $content);
 	}
 
+	/**
+	 * @param $atts
+	 * @param null $content
+	 * @param string $tag deprecated
+	 * @return string
+	 */
 	protected function _render($atts, $content = null, $tag = '')
 	{
 		$view_file = $this->locate_path('/views/view.php');
 		if (!$view_file) {
 			trigger_error(
-				sprintf(__('No default view (views/view.php) found for shortcode: %s', 'fw'), $tag),
+				sprintf(__('No default view (views/view.php) found for shortcode: %s', 'fw'), $this->tag),
 				E_USER_ERROR
 			);
 		}
@@ -153,7 +165,7 @@ class FW_Shortcode
 		return fw_render_view($view_file, array(
 			'atts'    => $atts,
 			'content' => $content,
-			'tag'     => $tag
+			'tag'     => $this->tag
 		));
 	}
 

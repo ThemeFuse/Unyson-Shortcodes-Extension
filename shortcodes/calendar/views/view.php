@@ -2,7 +2,6 @@
 	die( 'Forbidden' );
 }
 /**
- *
  * @var $wrapper_atts
  * @var $default_template
  * @var $atts
