@@ -4,7 +4,7 @@ wp_enqueue_style('fw-ext-builder-frontend-grid');
 
 $shortcodes_extension = fw_ext('shortcodes');
 wp_enqueue_style(
-	'fw-shortcode-section-backround-video',
+	'fw-shortcode-section-background-video',
 	$shortcodes_extension->get_uri('/shortcodes/section/static/css/jquery.fs.wallpaper.css')
 );
 wp_enqueue_style(
@@ -13,8 +13,8 @@ wp_enqueue_style(
 );
 
 wp_enqueue_script(
-	'fw-shortcode-section-backround-video',
-	$shortcodes_extension->get_uri('/shortcodes/section/static/js/jquery.fs.wallpaper.js'),
+	'fw-shortcode-section-background-video',
+	$shortcodes_extension->get_declared_URI('/shortcodes/section/static/js/jquery.fs.wallpaper.min.js'),
 	array('jquery'),
 	false,
 	true
