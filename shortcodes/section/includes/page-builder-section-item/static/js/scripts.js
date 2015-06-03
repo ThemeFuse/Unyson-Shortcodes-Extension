@@ -31,11 +31,11 @@
 							'<div class="controls">' +
 
 								'<% if (hasOptions) { %>' +
-								'<i class="dashicons dashicons-admin-generic edit-options"></i>' +
+								'<i class="dashicons dashicons-admin-generic edit-options" data-hover-tip="<%- edit %>"></i>' +
 								'<%  } %>' +
 
-								'<i class="dashicons dashicons-admin-page custom-section-clone"></i>' +
-								'<i class="dashicons dashicons-no custom-section-delete"></i>' +
+								'<i class="dashicons dashicons-admin-page custom-section-clone" data-hover-tip="<%- duplicate %>"></i>' +
+								'<i class="dashicons dashicons-no custom-section-delete" data-hover-tip="<%- remove %>"></i>' +
 							'</div>' +
 						'</div>' +
 					'</div>' +
@@ -92,7 +92,10 @@
 					modalOptions: itemData.options,
 					modalSize: itemData.popup_size,
 					templateData: {
-						hasOptions: !!itemData.options
+						hasOptions: !!itemData.options,
+                        edit : itemData.l10n.edit,
+                        duplicate : itemData.l10n.duplicate,
+                        remove : itemData.l10n.remove
 					}
 				});
 

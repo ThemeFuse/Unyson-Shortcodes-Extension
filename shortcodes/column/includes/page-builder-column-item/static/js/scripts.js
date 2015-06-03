@@ -37,11 +37,11 @@
 							'<div class="controls">' +
 
 								'<% if (hasOptions) { %>' +
-								'<i class="dashicons dashicons-admin-generic edit-options"></i>' +
+								'<i class="dashicons dashicons-admin-generic edit-options" data-hover-tip="<%- edit %>"></i>' +
 								'<%  } %>' +
 
-								'<i class="dashicons dashicons-admin-page column-item-clone"></i>' +
-								'<i class="dashicons dashicons-no column-item-delete"></i>' +
+								'<i class="dashicons dashicons-admin-page column-item-clone" data-hover-tip="<%- duplicate %>"></i>' +
+								'<i class="dashicons dashicons-no column-item-delete" data-hover-tip="<%- remove %>"></i>' +
 							'</div>' +
 						'</div>' +
 					'</div>' +
@@ -102,13 +102,18 @@
 					this.set('width', width);
 				}
 
+                console.log( itemData );
+
 				this.view = new PageBuilderColumnItemView({
 					id: 'page-builder-item-'+ this.cid,
 					model: this,
 					modalOptions: itemData.options,
 					modalSize: itemData.popup_size,
 					templateData: {
-						hasOptions: !!itemData.options
+						hasOptions: !!itemData.options,
+                        edit : itemData.l10n.edit,
+                        duplicate : itemData.l10n.duplicate,
+                        remove : itemData.l10n.remove
 					}
 				});
 
