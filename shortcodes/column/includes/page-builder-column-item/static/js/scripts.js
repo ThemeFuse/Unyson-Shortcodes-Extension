@@ -102,8 +102,6 @@
 					this.set('width', width);
 				}
 
-                console.log( itemData );
-
 				this.view = new PageBuilderColumnItemView({
 					id: 'page-builder-item-'+ this.cid,
 					model: this,
