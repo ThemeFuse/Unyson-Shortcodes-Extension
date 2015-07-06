@@ -22,6 +22,7 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 				'tab'         => __('Layout Elements', 'fw'),
 				'title'       => __('Section', 'fw'),
 				'description' => __('Creates a section', 'fw'),
+				'title_template' => null,
 			),
 			is_array($config) ? $config : array()
 		);
@@ -64,9 +65,13 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 		}
 
 		$config = $this->get_shortcode_config();
+
 		if (isset($config['popup_size'])) {
 			$data['popup_size'] = $config['popup_size'];
 		}
+
+		$data['title'] = $config['title'];
+		$data['title_template'] = $config['title_template'];
 
 		$data['l10n'] = array(
 			'edit'      => __( 'Edit', 'fw' ),

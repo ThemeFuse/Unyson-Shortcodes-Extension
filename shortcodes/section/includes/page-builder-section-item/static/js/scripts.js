@@ -25,7 +25,7 @@
 				'<div class="pb-item-type-column pb-item custom-section">' +
 					'<div class="panel fw-row">' +
 						'<div class="panel-left fw-col-xs-6">' +
-							'<div class="column-title">Section</div>' +
+							'<div class="column-title"><%= title %></div>' +
 						'</div>' +
 						'<div class="panel-right fw-col-xs-6">' +
 							'<div class="controls">' +
@@ -43,7 +43,37 @@
 				'</div>'
 			),
 			render: function () {
-				this.defaultRender(this.templateData);
+				{
+					var title = this.templateData.title,
+						titleTemplate = itemData.title_template;
+
+					if (titleTemplate && this.model.get('atts')) {
+						try {
+							title = _.template(
+								jQuery.trim(titleTemplate),
+								{
+									o: this.model.get('atts'),
+									title: title
+								},
+								{
+									evaluate: /\{\{(.+?)\}\}/g,
+									interpolate: /\{\{=(.+?)\}\}/g,
+									escape: /\{\{-(.+?)\}\}/g
+								}
+							);
+						} catch (e) {
+							console.error('$cfg["page_builder"]["title_template"]', e.message);
+
+							title = _.template('<%- title %>', {title: title});
+						}
+					} else {
+						title = _.template('<%- title %>', {title: title});
+					}
+				}
+
+				this.defaultRender(
+					jQuery.extend({}, this.templateData, {title: title})
+				);
 			},
 			events: {
 				'click': 'editOptions',
@@ -95,7 +125,8 @@
 						hasOptions: !!itemData.options,
                         edit : itemData.l10n.edit,
                         duplicate : itemData.l10n.duplicate,
-                        remove : itemData.l10n.remove
+                        remove : itemData.l10n.remove,
+						title: itemData.title
 					}
 				});
 
