@@ -2,8 +2,15 @@
 
 class FW_Extension_Shortcodes extends FW_Extension
 {
-	/** @var  FW_Shortcode[] $shortcodes */
+	/**
+	 * @var FW_Shortcode[]
+	 */
 	private $shortcodes;
+
+	/**
+	 * @var FW_Ext_Shortcodes_Attr_Coder[]
+	 */
+	private $coders = array();
 
 	/**
 	 * Gets a certain shortcode by a given tag
@@ -158,6 +165,55 @@ class FW_Extension_Shortcodes extends FW_Extension
 			));
 
 			$this->enqueue_shortcodes_static($shortcode[5]); // inner shortcodes
+		}
+	}
+
+	/**
+	 * @param string $coder_id
+	 * @return null|FW_Ext_Shortcodes_Attr_Coder|FW_Ext_Shortcodes_Attr_Coder[]
+	 */
+	public function get_attr_coder($coder_id = null)
+	{
+		if (empty($this->coders)) {
+			if (!class_exists('FW_Ext_Shortcodes_Attr_Coder')) {
+				require_once dirname(__FILE__) . '/includes/coder/interface-fw-ext-shortcodes-attr-coder.php';
+			}
+
+			if (!class_exists('FW_Ext_Shortcodes_Attr_Coder_JSON')) {
+				require_once dirname(__FILE__) . '/includes/coder/class-fw-ext-shortcodes-attr-coder-json.php';
+			}
+			$coder_json = new FW_Ext_Shortcodes_Attr_Coder_JSON();
+			$this->coders[ $coder_json->get_id() ] = $coder_json;
+
+			if (!class_exists('FW_Ext_Shortcodes_Attr_Coder_Post_Meta')) {
+				require_once dirname(__FILE__) . '/includes/coder/class-fw-ext-shortcodes-attr-coder-post-meta.php';
+			}
+			$coder_post_meta = new FW_Ext_Shortcodes_Attr_Coder_Post_Meta();
+			$this->coders[ $coder_post_meta->get_id() ] = $coder_post_meta;
+
+			foreach (apply_filters('fw_ext_shortcodes_coders', array()) as $coder) {
+				if (!($coder instanceof FW_Ext_Shortcodes_Attr_Coder)) {
+					trigger_error(get_class($coder) .' must implement FW_Ext_Shortcodes_Attr_Coder', E_USER_WARNING);
+					continue;
+				}
+
+				if (isset($this->coders[ $coder->get_id() ])) {
+					trigger_error('Coder id='. $coder->get_id() .' is already defined', E_USER_WARNING);
+					continue;
+				}
+
+				$this->coders[ $coder->get_id() ] = $coder;
+			}
+		}
+
+		if (is_null($coder_id)) {
+			return $this->coders;
+		} else {
+			if (isset($this->coders[$coder_id])) {
+				return $this->coders[$coder_id];
+			} else {
+				return null;
+			}
 		}
 	}
 }

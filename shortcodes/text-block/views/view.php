@@ -5,6 +5,5 @@
 /**
  * @var array $atts
  */
-
 ?>
 <?php echo do_shortcode( $atts['text'] ); ?>

@@ -9,5 +9,5 @@ $options = array(
 		'reinit' => true,
 		'label'  => __( 'Content', 'fw' ),
 		'desc'   => __( 'Enter some content for this texblock', 'fw' )
-	)
+	),
 );

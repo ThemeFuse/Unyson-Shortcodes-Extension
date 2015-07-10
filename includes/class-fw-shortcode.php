@@ -139,8 +139,33 @@ class FW_Shortcode
 	 */
 	final public function render($atts, $content = null, $tag = '')
 	{
-		$filtered_atts = apply_filters('fw_shortcode_atts', $atts, $content, $this->tag);
-		return $this->_render($filtered_atts, $content);
+		if (empty($atts)) {
+			$atts = array();
+		} else {
+			if (version_compare(fw_ext('shortcodes')->manifest->get_version(), '1.3.0', '>=')) {
+				/**
+				 * @var WP_Post $post
+				 */
+				global $post;
+
+				if (!$post) {
+					return '<p>Shortcode attributes decode error: Global $post is required.</p>';
+				}
+
+				$atts = fw_ext_shortcodes_decode_attr($atts, $this->tag, $post->ID);
+
+				if (is_wp_error($atts)) {
+					return '<p>Shortcode attributes decode error: ' . $atts->get_error_message() . '</p>';
+				}
+			} else {
+				/**
+				 * @deprecated Since Shortcodes 1.3.0
+				 */
+				$atts = apply_filters('fw_shortcode_atts', $atts, $content, $this->tag);
+			}
+		}
+
+		return $this->_render($atts, $content);
 	}
 
 	/**
