@@ -4,18 +4,19 @@
 			return str.trim().length;
 		}
 		return 0;
-	}
+	};
 
 	var init = function($mapWrapper){
-
-		var maxZoom      = 16,
+		var maxZoom    = 16,
 			$mapCanvas   = $mapWrapper.find('.fw-map-canvas'),
 			mapCanvasOY  = isNaN(parseInt($mapWrapper.data('map-height'))) ? parseInt($mapCanvas.width() * 0.66) : parseInt($mapWrapper.data('map-height')),
 			locations    = $mapWrapper.data('locations'),
 			mapType      = $mapWrapper.data('map-type'),
+			disableScroll = ($mapWrapper.data('disable-scrolling') ? true : false),
 			mapOptions   = {
 				center: ( 'undefined' !== locations && locations.length) ? calculateCenter(locations) :  new google.maps.LatLng(-34, 150),
-				mapTypeId: google.maps.MapTypeId[mapType]
+				mapTypeId: google.maps.MapTypeId[mapType],
+				scrollwheel: disableScroll
 			},
 			markerBounds = new google.maps.LatLngBounds(),
 			map          = new google.maps.Map($mapCanvas.get(0), mapOptions);
@@ -70,7 +71,6 @@
 				});
 			}
 
-
 			//change "zoom"
 			map.fitBounds(markerBounds);
 
@@ -82,7 +82,7 @@
 
 			$mapCanvas.height(mapCanvasOY);
 			$mapCanvas.data('map', map);
-	}
+	};
 
 	var calculateCenter = function(locations) {
 		var Lng,Hyp,Lat,
@@ -111,8 +111,8 @@
 		Hyp = Math.sqrt(X * X + Y * Y);
 		Lat = Math.atan2(Z, Hyp);
 
-		return { lng: (Lng * 180 / Math.PI), lat: (Lat * 180 / Math.PI) }
-	}
+		return { lng: (Lng * 180 / Math.PI), lat: (Lat * 180 / Math.PI) };
+	};
 
 	$(document).ready(function(){
 		$('.fw-map').each(function(){
