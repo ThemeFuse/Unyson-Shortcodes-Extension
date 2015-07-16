@@ -19,5 +19,5 @@ function fw_ext_shortcodes_decode_attr(array $attributes, $shortcode_tag, $post_
 		}
 	}
 
-	return new WP_Error('coder_not_found', 'No decoder found');
+	return $attributes;
 }
