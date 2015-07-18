@@ -34,5 +34,19 @@ $options = array(
 		'label' => __('Map Height', 'fw'),
 		'desc'  => __('Set map height (Ex: 300)', 'fw'),
 		'type'  => 'text'
-	)
+	),
+	'disable_scrolling' => array(
+		'type'  => 'switch',
+		'value' => false,
+		'label' => __('Disable zoom on scroll', 'fw'),
+		'desc'  => __('Prevent the map from zooming when scrolling until clicking on the map', 'fw'),
+		'left-choice' => array(
+			'value' => false,
+			'label' => __('Yes', 'fw'),
+		),
+		'right-choice' => array(
+			'value' => true,
+			'label' => __('No', 'fw'),
+		),
+	),
 );
