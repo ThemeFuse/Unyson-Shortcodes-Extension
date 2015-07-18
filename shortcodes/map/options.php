@@ -49,4 +49,10 @@ $options = array(
 			'label' => __('No', 'fw'),
 		),
 	),
+	'map_style' => array(
+		'label' => __('Map Style', 'fw'),
+		'desc'  => __('Change the map appearance by <a href="https://snazzymaps.com/" target="_blank">pasting in a config</a>', 'fw'),
+		'help'  => __('Change the map appearance by pasting in a style array. Many styles can be found <a href="https://snazzymaps.com/" target="_blank">here</a>.<br>The config looks a little like this: [{ ... }]', 'fw'),
+		'type'  => 'text'
+	)
 );
