@@ -17,7 +17,7 @@ $options = array(
 			)
 		),
 		'choices' => $map_shortcode->_get_picker_choices(),
-		'show_borders' => true,
+		'show_borders' => false,
 	),
 	'map_type' => array(
 		'type'  => 'select',
