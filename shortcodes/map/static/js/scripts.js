@@ -20,6 +20,10 @@
 			},
 			markerBounds = new google.maps.LatLngBounds(),
 			map          = new google.maps.Map($mapCanvas.get(0), mapOptions);
+			var mapStyle = $mapWrapper.data('map-style');
+			if (mapStyle) {
+				map.setOptions({styles: mapStyle});
+			}
 
 			if ('undefined' !== locations && locations.length) {
 				locations.forEach(function(location){
