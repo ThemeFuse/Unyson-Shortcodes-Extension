@@ -16,7 +16,7 @@
 
 				if (options.modalOptions) {
 					this.modal = new fw.OptionsModal({
-						title: 'Column', // TODO: make translatable
+						title: itemData.l10n.title,
 						options: options.modalOptions,
 						values: this.model.get('atts'),
 						size: options.modalSize
@@ -36,9 +36,11 @@
 						'<div class="panel-right fw-col-xs-6">' +
 							'<div class="controls">' +
 
+								'<i class="dashicons dashicons-carrot column-item-save-template" data-hover-tip="<%- save_template %>"></i>' +
+
 								'<% if (hasOptions) { %>' +
 								'<i class="dashicons dashicons-admin-generic edit-options" data-hover-tip="<%- edit %>"></i>' +
-								'<%  } %>' +
+								'<% } %>' +
 
 								'<i class="dashicons dashicons-admin-page column-item-clone" data-hover-tip="<%- duplicate %>"></i>' +
 								'<i class="dashicons dashicons-no column-item-delete" data-hover-tip="<%- remove %>"></i>' +
@@ -58,7 +60,8 @@
 				'click': 'editOptions',
 				'click .edit-options': 'editOptions',
 				'click .column-item-clone': 'cloneItem',
-				'click .column-item-delete': 'removeItem'
+				'click .column-item-delete': 'removeItem',
+				'click .column-item-save-template': 'saveTemplate'
 			},
 			editOptions: function (e) {
 				e.stopPropagation();
@@ -87,6 +90,10 @@
 
 				this.remove();
 				this.model.collection.remove(this.model);
+			},
+			saveTemplate: function(e) {
+				e.stopPropagation();
+				console.log(builder);
 			}
 		});
 
@@ -111,7 +118,8 @@
 						hasOptions: !!itemData.options,
                         edit : itemData.l10n.edit,
                         duplicate : itemData.l10n.duplicate,
-                        remove : itemData.l10n.remove
+                        remove : itemData.l10n.remove,
+                        save_template : itemData.l10n.save_template
 					}
 				});
 

@@ -60,9 +60,11 @@ class Page_Builder_Column_Item extends Page_Builder_Item {
 		}
 
 		$data['l10n'] = array(
-			'edit'      => __( 'Edit', 'fw' ),
+			'edit' => __( 'Edit', 'fw' ),
 			'duplicate' => __( 'Duplicate', 'fw' ),
-			'remove'    => __( 'Remove', 'fw' ),
+			'remove' => __( 'Remove', 'fw' ),
+			'title' => __( 'Column', 'fw' ),
+			'save_template' => __( 'Save Template', 'fw' ),
 		);
 
 		return $data;
