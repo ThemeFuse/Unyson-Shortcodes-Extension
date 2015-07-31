@@ -8,12 +8,12 @@ class FW_Shortcode_Column extends FW_Shortcode
 	public function _init()
 	{
 		if (is_admin()) {
-			$this->load_item_type();
-		}
-	}
+			require $this->get_declared_path('/includes/page-builder-column-item/class-page-builder-column-item.php');
 
-	private function load_item_type()
-	{
-		require $this->get_declared_path('/includes/page-builder-column-item/class-page-builder-column-item.php');
+			/**
+			 * Note: A file is required from framework/extensions/shortcodes/includes/shortcode-template-components.php
+			 * because the shortcodes don't have includes/ functionality
+			 */
+		}
 	}
 }

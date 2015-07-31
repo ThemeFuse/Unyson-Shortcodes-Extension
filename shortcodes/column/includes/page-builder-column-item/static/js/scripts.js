@@ -36,8 +36,6 @@
 						'<div class="panel-right fw-col-xs-6">' +
 							'<div class="controls">' +
 
-								'<i class="dashicons dashicons-carrot column-item-save-template" data-hover-tip="<%- save_template %>"></i>' +
-
 								'<% if (hasOptions) { %>' +
 								'<i class="dashicons dashicons-admin-generic edit-options" data-hover-tip="<%- edit %>"></i>' +
 								'<% } %>' +
@@ -55,6 +53,15 @@
 
 				this.$('.width-changer').append(this.widthChangerView.$el);
 				this.widthChangerView.delegateEvents();
+
+				/**
+				 * Other scripts can append/prepend other control $elements
+				 */
+				fwEvents.trigger('fw:page-builder:shortcode:column:controls', {
+					$controls: this.$('.controls:first'),
+					model: this.model,
+					builder: builder
+				});
 			},
 			events: {
 				'click': 'editOptions',

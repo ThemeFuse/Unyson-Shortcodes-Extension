@@ -64,7 +64,6 @@ class Page_Builder_Column_Item extends Page_Builder_Item {
 			'duplicate' => __( 'Duplicate', 'fw' ),
 			'remove' => __( 'Remove', 'fw' ),
 			'title' => __( 'Column', 'fw' ),
-			'save_template' => __( 'Save Template', 'fw' ),
 		);
 
 		return $data;
