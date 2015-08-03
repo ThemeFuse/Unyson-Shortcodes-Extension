@@ -94,8 +94,8 @@
 
 	fwEvents.on('fw:page-builder:shortcode:column:controls', function(data){
 		data.$controls.prepend(
-			$('<i class="dashicons dashicons-carrot"></i>')
-				.attr('data-hover-tip', localized.l10n.save_template)
+			$('<i class="fa fa-floppy-o"></i>')
+				.attr('data-hover-tip', localized.l10n.save_template_tooltip)
 				.on('click', function(e){
 					e.stopPropagation();
 					e.preventDefault();

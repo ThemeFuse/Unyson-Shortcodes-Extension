@@ -29,11 +29,11 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 		}
 
 		if (empty($html)) {
-			$html = '<div class="fw-text-muted">'. __('No Column Templates Saved', 'fw') .'</div>';
+			$html = '<div class="fw-text-muted">'. __('No Templates Saved', 'fw') .'</div>';
 		} else {
 			$html =
-				'<p class="fw-text-muted load-template-title">'. __('Load Column Template', 'fw') .':</p>'
-				. '<ul>'. $html .'</ul>';
+				'<p class="fw-text-muted load-template-title">'. __('Load Template', 'fw') .':</p>'
+				. '<ul class="std">'. $html .'</ul>';
 		}
 
 		return $html;
@@ -66,6 +66,7 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 				'l10n' => array(
 					'template_name' => __('Template Name', 'fw'),
 					'save_template' => __('Save Column Template', 'fw'),
+					'save_template_tooltip' => __('Save as Template', 'fw'),
 				),
 			)
 		);
