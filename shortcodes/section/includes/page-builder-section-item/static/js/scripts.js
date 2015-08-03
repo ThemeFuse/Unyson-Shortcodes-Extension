@@ -74,6 +74,15 @@
 				this.defaultRender(
 					jQuery.extend({}, this.templateData, {title: title})
 				);
+
+				/**
+				 * Other scripts can append/prepend other control $elements
+				 */
+				fwEvents.trigger('fw:page-builder:shortcode:section:controls', {
+					$controls: this.$('.controls:first'),
+					model: this.model,
+					builder: builder
+				});
 			},
 			events: {
 				'click': 'editOptions',

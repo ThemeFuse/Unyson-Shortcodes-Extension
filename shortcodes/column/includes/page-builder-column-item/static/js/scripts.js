@@ -125,8 +125,7 @@
 						hasOptions: !!itemData.options,
                         edit : itemData.l10n.edit,
                         duplicate : itemData.l10n.duplicate,
-                        remove : itemData.l10n.remove,
-                        save_template : itemData.l10n.save_template
+                        remove : itemData.l10n.remove
 					}
 				});
 

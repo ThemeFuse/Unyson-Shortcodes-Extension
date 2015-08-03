@@ -1,6 +1,6 @@
 (function($, localized){
-	var eventsNamespace = '.templates-column',
-		loadingId = 'fw-builder-templates-type-column',
+	var eventsNamespace = '.templates-section',
+		loadingId = 'fw-builder-templates-type-section',
 		modal = new fw.OptionsModal({
 			title: localized.l10n.save_template,
 			options: [
@@ -20,7 +20,7 @@
 			tooltipHideCallback = data.tooltipHideCallback,
 			tooltipRefreshCallback = data.tooltipRefreshCallback;
 
-		data.$elements.find('.fw-builder-templates-type-column')
+		data.$elements.find('.fw-builder-templates-type-section')
 			.off(eventsNamespace)
 			.on('click'+ eventsNamespace, 'a[data-load-template]', function(){
 				var templateId = $(this).attr('data-load-template');
@@ -32,7 +32,7 @@
 					dataType: 'json',
 					url: ajaxurl,
 					data: {
-						'action': 'fw_builder_templates_column_load',
+						'action': 'fw_builder_templates_section_load',
 						'builder_type': builder.get('type'),
 						'template_id': templateId
 					}
@@ -84,7 +84,7 @@
 					dataType: 'json',
 					url: ajaxurl,
 					data: {
-						'action': 'fw_builder_templates_column_delete',
+						'action': 'fw_builder_templates_section_delete',
 						'builder_type': builder.get('type'),
 						'template_id': templateId
 					}
@@ -107,7 +107,7 @@
 			});
 	});
 
-	fwEvents.on('fw:page-builder:shortcode:column:controls', function(data){
+	fwEvents.on('fw:page-builder:shortcode:section:controls', function(data){
 		data.$controls.prepend(
 			$('<i class="fa fa-floppy-o"></i>')
 				.attr('data-hover-tip', localized.l10n.save_template_tooltip)
@@ -129,9 +129,9 @@
 							dataType: 'json',
 							url: ajaxurl,
 							data: {
-								'action': 'fw_builder_templates_column_save',
+								'action': 'fw_builder_templates_section_save',
 								'template_name': values.template_name,
-								'column_json': JSON.stringify(data.model),
+								'section_json': JSON.stringify(data.model),
 								'builder_type': data.builder.get('type')
 							}
 						})
@@ -154,4 +154,4 @@
 				})
 		);
 	});
-})(jQuery, _fw_option_type_builder_templates_column);
+})(jQuery, _fw_option_type_builder_templates_section);
