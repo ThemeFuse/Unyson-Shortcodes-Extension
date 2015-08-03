@@ -7,6 +7,11 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 		return 'column';
 	}
 
+	public function get_title()
+	{
+		return __('Column Templates', 'fw');
+	}
+
 	public function _render($data)
 	{
 		$html = '';
