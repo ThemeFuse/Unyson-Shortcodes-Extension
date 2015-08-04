@@ -9,7 +9,7 @@ class FW_Ext_Builder_Templates_Component_Section extends FW_Ext_Builder_Template
 
 	public function get_title()
 	{
-		return __('Section Templates', 'fw');
+		return __('Sections', 'fw');
 	}
 
 	public function _render($data)
@@ -65,7 +65,7 @@ class FW_Ext_Builder_Templates_Component_Section extends FW_Ext_Builder_Template
 			array(
 				'l10n' => array(
 					'template_name' => __('Template Name', 'fw'),
-					'save_template' => __('Save Section Template', 'fw'),
+					'save_template' => __('Save Section', 'fw'),
 					'save_template_tooltip' => __('Save as Template', 'fw'),
 				),
 			)

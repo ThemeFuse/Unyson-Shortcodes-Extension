@@ -9,7 +9,7 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 
 	public function get_title()
 	{
-		return __('Column Templates', 'fw');
+		return __('Columns', 'fw');
 	}
 
 	public function _render($data)
@@ -65,7 +65,7 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 			array(
 				'l10n' => array(
 					'template_name' => __('Template Name', 'fw'),
-					'save_template' => __('Save Column Template', 'fw'),
+					'save_template' => __('Save Column', 'fw'),
 					'save_template_tooltip' => __('Save as Template', 'fw'),
 				),
 			)
