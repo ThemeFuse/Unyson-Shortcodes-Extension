@@ -1,14 +1,19 @@
 (function(fwe, _, itemData) {
 	fwe.on('fw-builder:' + 'page-builder' + ':register-items', function(builder) {
 		var PageBuilderColumnItem,
-			PageBuilderColumnItemView;
+			PageBuilderColumnItemView,
+			PageBuilderColumnItemViewWidthChanger;
+
+		PageBuilderColumnItemViewWidthChanger = FwBuilderComponents.ItemView.WidthChanger.extend({
+			widths: itemData.item_widths
+		});
 
 		PageBuilderColumnItemView = builder.classes.ItemView.extend({
 			initialize: function(options) {
 				this.defaultInitialize();
 
 				this.templateData = options.templateData;
-				this.widthChangerView = new FwBuilderComponents.ItemView.WidthChanger({
+				this.widthChangerView = new PageBuilderColumnItemViewWidthChanger({
 					model: this.model,
 					view: this,
 					modelAttribute: 'width'
@@ -67,8 +72,7 @@
 				'click': 'editOptions',
 				'click .edit-options': 'editOptions',
 				'click .column-item-clone': 'cloneItem',
-				'click .column-item-delete': 'removeItem',
-				'click .column-item-save-template': 'saveTemplate'
+				'click .column-item-delete': 'removeItem'
 			},
 			editOptions: function (e) {
 				e.stopPropagation();
@@ -97,10 +101,6 @@
 
 				this.remove();
 				this.model.collection.remove(this.model);
-			},
-			saveTemplate: function(e) {
-				e.stopPropagation();
-				console.log(builder);
 			}
 		});
 
