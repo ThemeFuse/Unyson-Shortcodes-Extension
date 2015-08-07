@@ -109,7 +109,7 @@
 
 	fwEvents.on('fw:page-builder:shortcode:section:controls', function(data){
 		data.$controls.prepend(
-			$('<i class="fa fa-floppy-o"></i>')
+			$('<i class="fw-shortcode-section-save"></i>')
 				.attr('data-hover-tip', localized.l10n.save_template_tooltip)
 				.on('click', function(e){
 					e.stopPropagation();
