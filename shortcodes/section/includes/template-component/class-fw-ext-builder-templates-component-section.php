@@ -14,6 +14,10 @@ class FW_Ext_Builder_Templates_Component_Section extends FW_Ext_Builder_Template
 
 	public function _render($data)
 	{
+		if ($data['builder_type'] !== 'page-builder') {
+			return;
+		}
+
 		$html = '';
 
 		foreach ($this->get_templates($data['builder_type']) as $template_id => $template) {
@@ -39,8 +43,12 @@ class FW_Ext_Builder_Templates_Component_Section extends FW_Ext_Builder_Template
 		return $html;
 	}
 
-	public function _enqueue()
+	public function _enqueue($data)
 	{
+		if ($data['builder_type'] !== 'page-builder') {
+			return;
+		}
+
 		$uri = fw_ext('shortcodes')->get_uri('/shortcodes/section/includes/template-component');
 		$version = fw_ext('shortcodes')->manifest->get_version();
 
