@@ -56,17 +56,20 @@
 						// scroll to the bottom of the builder
 						setTimeout(function(){
 							var $builderOption = builder.$input.closest('.fw-option-type-builder'),
-								scrollTop = (
-									$builderOption.offset().top
-									+
-									$builderOption.height()
-									-
-									Math.floor($(window).height() * .7)
-								);
+								$scrollParent = $builderOption.scrollParent();
 
-							// http://stackoverflow.com/a/16475234/1794248
-							$('html, body').animate({scrollTop: scrollTop}, '100', 'swing');
-						}, 100); // after tooltip hide animation finished, to prevent glitch on hide/scroll
+							if ($scrollParent.get(0) === document || $scrollParent.get(0) === document.body) {
+								$scrollParent = $(window);
+							}
+
+							$scrollParent.scrollTop(
+								$builderOption.offset().top
+								+
+								$builderOption.outerHeight()
+								-
+								$scrollParent.height()
+							);
+						}, 100);
 					})
 					.fail(function(xhr, status, error){
 						loading.hide();
