@@ -18,13 +18,24 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 			return;
 		}
 
+		if (version_compare(fw_ext('builder')->manifest->get_version(), '1.1.14', '<')) {
+			// some important changes were added in Builder v1.1.14
+			return;
+		}
+
 		$html = '';
 
 		foreach ($this->get_templates($data['builder_type']) as $template_id => $template) {
+			if (isset($template['type']) && $template['type'] === 'predefined') {
+				$delete_btn = '';
+			} else {
+				$delete_btn = '<a href="#" onclick="return false;" data-delete-template="'. fw_htmlspecialchars($template_id) .'"'
+				              . ' class="template-delete dashicons fw-x"></a>';
+			}
+
 			$html .=
 				'<li>'
-					. '<a href="#" onclick="return false;" data-delete-template="'. fw_htmlspecialchars($template_id) .'"'
-						. ' class="template-delete dashicons fw-x"></a>'
+					. $delete_btn
 					. '<a href="#" onclick="return false;" data-load-template="'. fw_htmlspecialchars($template_id) .'"'
 						. ' class="template-title">'
 						. fw_htmlspecialchars($template['title'])
@@ -49,18 +60,23 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 			return;
 		}
 
-		$uri = fw_ext('shortcodes')->get_uri('/shortcodes/column/includes/template-component');
+		if (version_compare(fw_ext('builder')->manifest->get_version(), '1.1.14', '<')) {
+			// some important changes were added in Builder v1.1.14
+			return;
+		}
+
+		$uri = fw_ext('shortcodes')->get_uri('/shortcodes/'. $this->get_type() .'/includes/template-component');
 		$version = fw_ext('shortcodes')->manifest->get_version();
 
 		wp_enqueue_style(
-			'fw-option-builder-templates-column',
+			'fw-option-builder-templates-'. $this->get_type(),
 			$uri .'/styles.css',
 			array('fw-option-builder-templates'),
 			$version
 		);
 
 		wp_enqueue_script(
-			'fw-option-builder-templates-column',
+			'fw-option-builder-templates-'. $this->get_type(),
 			$uri .'/scripts.js',
 			array('fw-option-builder-templates'),
 			$version,
@@ -68,8 +84,8 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 		);
 
 		wp_localize_script(
-			'fw-option-builder-templates-column',
-			'_fw_option_type_builder_templates_column',
+			'fw-option-builder-templates-'. $this->get_type(),
+			'_fw_option_type_builder_templates_'. $this->get_type(),
 			array(
 				'l10n' => array(
 					'template_name' => __('Template Name', 'fw'),
@@ -82,19 +98,17 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 
 	public function _init()
 	{
-		add_action('wp_ajax_fw_builder_templates_column_load',   array($this, '_action_ajax_load_template'));
-		add_action('wp_ajax_fw_builder_templates_column_save',   array($this, '_action_ajax_save_template'));
-		add_action('wp_ajax_fw_builder_templates_column_delete', array($this, '_action_ajax_delete_template'));
+		add_action('wp_ajax_fw_builder_templates_'. $this->get_type() .'_load',   array($this, '_action_ajax_load_template'));
+		add_action('wp_ajax_fw_builder_templates_'. $this->get_type() .'_save',   array($this, '_action_ajax_save_template'));
+		add_action('wp_ajax_fw_builder_templates_'. $this->get_type() .'_delete', array($this, '_action_ajax_delete_template'));
 	}
 
 	private function get_templates($builder_type)
 	{
-		return fw_get_db_extension_data('builder', 'templates:column/'. $builder_type, array());
-	}
-
-	private function set_templates($builder_type, $templates)
-	{
-		fw_set_db_extension_data('builder', 'templates:column/'. $builder_type, $templates);
+		return array_merge(
+			$this->get_db_templates($builder_type),
+			$this->get_predefined_templates($builder_type)
+		);
 	}
 
 	/**
@@ -142,7 +156,7 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 
 		$template = array(
 			'title' => trim((string)FW_Request::POST('template_name')),
-			'json' => trim((string)FW_Request::POST('column_json'))
+			'json' => trim((string)FW_Request::POST($this->get_type() .'_json'))
 		);
 
 		if (
@@ -152,7 +166,7 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 			||
 			!isset($decoded_json['type'])
 			||
-			$decoded_json['type'] !== 'column'
+			$decoded_json['type'] !== $this->get_type()
 		) {
 			wp_send_json_error();
 		}
@@ -163,12 +177,10 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 			$template['title'] = __('No Title', 'fw');
 		}
 
-		$templates = $this->get_templates($builder_type);
-
-		$template_id = md5($template['json']);
-		$templates[$template_id] = $template;
-
-		$this->set_templates($builder_type, $templates);
+		$this->set_templates(
+			$builder_type,
+			array(md5($template['json']) => $template) + $this->get_db_templates($builder_type)
+		);
 
 		wp_send_json_success();
 	}
@@ -188,7 +200,7 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 			wp_send_json_error();
 		}
 
-		$templates = $this->get_templates($builder_type);
+		$templates = $this->get_db_templates($builder_type);
 
 		$template_id = (string)FW_Request::POST('template_id');
 
