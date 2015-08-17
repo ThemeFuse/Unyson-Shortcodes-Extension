@@ -110,10 +110,12 @@
 			},
 			restrictedTypes: itemData.restrictedTypes,
 			initialize: function(atts, opts) {
-				var width = this.get('width') || opts.$thumb.find('.item-data').attr('data-width');
-
-				if (!this.get('width')) {
-					this.set('width', width);
+				if (
+					!this.get('width')
+					&&
+					(typeof opts != 'undefined' && typeof opts.$thumb != 'undefined')
+				) {
+					this.set('width', opts.$thumb.find('.item-data').attr('data-width'));
 				}
 
 				this.view = new PageBuilderColumnItemView({
