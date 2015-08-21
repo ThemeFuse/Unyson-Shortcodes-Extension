@@ -177,7 +177,7 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 			$template['title'] = __('No Title', 'fw');
 		}
 
-		$this->set_templates(
+		$this->set_db_templates(
 			$builder_type,
 			array(md5($template['json']) => $template) + $this->get_db_templates($builder_type)
 		);
@@ -210,7 +210,7 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 
 		unset($templates[$template_id]);
 
-		$this->set_templates($builder_type, $templates);
+		$this->set_db_templates($builder_type, $templates);
 
 		wp_send_json_success();
 	}
