@@ -214,4 +214,22 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 
 		wp_send_json_success();
 	}
+
+	/**
+	 * @param $builder_type
+	 * @return mixed|null
+	 */
+	private function get_db_templates($builder_type)
+	{
+		return fw_get_db_extension_data('builder', 'templates:'. $this->get_type() .'/'. $builder_type, array());
+	}
+
+	/**
+	 * @param $builder_type
+	 * @param $templates
+	 */
+	private function set_db_templates($builder_type, $templates)
+	{
+		fw_set_db_extension_data('builder', 'templates:'. $this->get_type() .'/'. $builder_type, $templates);
+	}
 }
