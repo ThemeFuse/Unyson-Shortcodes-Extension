@@ -105,10 +105,7 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 
 	private function get_templates($builder_type)
 	{
-		return array_merge(
-			$this->get_db_templates($builder_type),
-			$this->get_predefined_templates($builder_type)
-		);
+		return $this->get_db_templates($builder_type) + $this->get_predefined_templates($builder_type);
 	}
 
 	/**
