@@ -12,17 +12,30 @@ if ( empty( $atts['image'] ) ) {
 
 $width  = ( is_numeric( $atts['width'] ) && ( $atts['width'] > 0 ) ) ? $atts['width'] : '';
 $height = ( is_numeric( $atts['height'] ) && ( $atts['height'] > 0 ) ) ? $atts['height'] : '';
+
 if ( ! empty( $width ) && ! empty( $height ) ) {
 	$image = fw_resize( $atts['image']['attachment_id'], $width, $height, true );
 } else {
 	$image = $atts['image']['url'];
 }
-?>
 
-<?php if ( empty( $atts['link'] ) ) : ?>
-	<img src="<?php echo $image ?>" alt="<?php echo $image ?>" width="<?php echo $width ?>" height="<?php echo $height ?>"/>
-<?php else : ?>
-	<a href="<?php echo $atts['link'] ?>" target="<?php echo $atts['target'] ?>">
-		<img src="<?php echo $image ?>" alt="<?php echo $image ?>" width="<?php echo $width ?>" height="<?php echo $height ?>"/>
-	</a>
-<?php endif ?>
+$alt = get_post_meta($atts['image']['attachment_id'], '_wp_attachment_image_alt', true);
+
+if ( empty( $atts['link'] ) ) {
+	echo fw_html_tag('img', array(
+		'src' => $image,
+		'alt' => $alt ? $alt : $image,
+		'width' => $width,
+		'height' => $height,
+	));
+} else {
+	echo fw_html_tag('a', array(
+		'href' => $atts['link'],
+		'target' => $atts['target'],
+	), fw_html_tag('img', array(
+		'src' => $image,
+		'alt' => $alt ? $alt : $image,
+		'width' => $width,
+		'height' => $height,
+	)));
+}
