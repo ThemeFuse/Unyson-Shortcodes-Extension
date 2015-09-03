@@ -118,10 +118,9 @@ class FW_Shortcode_Map extends FW_Shortcode {
 		$this->load_data();
 		$provider = $atts['data_provider']['population_method'];
 		if (!isset($this->data[$provider])) {
-			trigger_error(
-				sprintf(__('Unknown location provider "%s" specified for map shortcode', 'fw'), $provider)
-			);
-			return '<b>' . __( 'Map Placeholder', 'fw' ) . '</b>';
+			return '<!-- WARNING: '
+			       . sprintf(__('Unknown location provider "%s" specified for map shortcode', 'fw'), $provider)
+			       . ' -->';
 		}
 
 		/**
