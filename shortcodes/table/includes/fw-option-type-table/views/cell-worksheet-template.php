@@ -21,7 +21,7 @@
 	}
 	?>
 
-	<div class="fw-table-cell-content <?php echo $row_name ?> <?php echo $current_row_name === $row_name ? 'fw-active-content' : '' ?>">
+	<div class="fw-table-cell-content <?php echo esc_attr($row_name) ?> <?php echo $current_row_name === $row_name ? 'fw-active-content' : '' ?>">
 
 		<?php foreach ( $option['content_options'][ $row_name ] as $key => $options ) : ?>
 			<?php

@@ -9,7 +9,7 @@ if ( empty( $atts['image'] ) ) {
 }
 ?>
 <div class="fw-team">
-	<div class="fw-team-image"><img src="<?php echo $image; ?>" alt="<?php echo $atts['name']; ?>"/></div>
+	<div class="fw-team-image"><img src="<?php echo esc_attr($image); ?>" alt="<?php echo esc_attr($atts['name']); ?>"/></div>
 	<div class="fw-team-inner">
 		<div class="fw-team-name">
 			<h3><?php echo $atts['name']; ?></h3>

@@ -11,7 +11,7 @@ $class_width = 'fw-col-sm-' . ceil(12 / count($atts['table']['cols']));
 ?>
 <div class="fw-pricing">
 	<?php foreach ($atts['table']['cols'] as $col_key => $col): ?>
-		<div class="fw-package-wrap <?php echo $class_width . ' ' . $col['name']; ?> ">
+		<div class="fw-package-wrap <?php echo esc_attr($class_width . ' ' . $col['name']); ?> ">
 			<div class="fw-package">
 				<?php foreach ($atts['table']['rows'] as $row_key => $row): ?>
 					<?php if( $col['name'] == 'desc-col' ) : ?>
@@ -51,7 +51,7 @@ $class_width = 'fw-col-sm-' . ceil(12 / count($atts['table']['cols']));
 						<div class="fw-switch-row">
 							<?php $value = $atts['table']['content'][$row_key][$col_key]['switch']; ?>
 							<span>
-								<i class="fa fw-price-icon-<?php echo $value ?>"></i>
+								<i class="fa fw-price-icon-<?php echo esc_attr($value) ?>"></i>
 							</span>
 						</div>
 					<?php elseif ($row['name'] === 'default-row') : ?>

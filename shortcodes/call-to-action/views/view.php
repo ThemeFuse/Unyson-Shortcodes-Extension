@@ -9,7 +9,7 @@
 		<p><?php echo $atts['message']; ?></p>
 	</div>
 	<div class="fw-action-btn">
-		<a href="<?php echo $atts['button_link']; ?>" class="fw-btn fw-btn-1" target="<?php echo $atts['button_target']; ?>">
+		<a href="<?php echo esc_attr($atts['button_link']); ?>" class="fw-btn fw-btn-1" target="<?php echo esc_attr($atts['button_target']); ?>">
 			<span><?php echo $atts['button_label']; ?></span>
 		</a>
 	</div>

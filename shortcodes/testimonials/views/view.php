@@ -6,13 +6,13 @@ $id = uniqid( 'testimonials-' );
 ?>
 <script>
 	jQuery(document).ready(function ($) {
-		$('#<?php echo $id ?>').carouFredSel({
+		$('#<?php echo esc_attr($id) ?>').carouFredSel({
 			swipe: {
 				onTouch: true
 			},
-			next : "#<?php echo $id ?>-next",
-			prev : "#<?php echo $id ?>-prev",
-			pagination : "#<?php echo $id ?>-controls",
+			next : "#<?php echo esc_attr($id) ?>-next",
+			prev : "#<?php echo esc_attr($id) ?>-prev",
+			pagination : "#<?php echo esc_attr($id) ?>-controls",
 			responsive: true,
 			infinite: false,
 			items: 1,
@@ -31,7 +31,7 @@ $id = uniqid( 'testimonials-' );
 		<h3 class="fw-testimonials-title"><?php echo $atts['title']; ?></h3>
 	<?php endif; ?>
 
-	<div class="fw-testimonials-list" id="<?php echo $id; ?>">
+	<div class="fw-testimonials-list" id="<?php echo esc_attr($id); ?>">
 		<?php foreach ($atts['testimonials'] as $testimonial): ?>
 			<div class="fw-testimonials-item clearfix">
 				<div class="fw-testimonials-text">
@@ -44,13 +44,13 @@ $id = uniqid( 'testimonials-' );
 											? $testimonial['author_avatar']['url']
 											: fw_get_framework_directory_uri('/static/img/no-image.png');
 						?>
-						<img src="<?php echo $author_image_url; ?>" alt="<?php echo $testimonial['author_name']; ?>"/>
+						<img src="<?php echo esc_attr($author_image_url); ?>" alt="<?php echo esc_attr($testimonial['author_name']); ?>"/>
 					</div>
 					<div class="fw-testimonials-author">
 						<span class="author-name"><?php echo $testimonial['author_name']; ?></span>
 						<em><?php echo $testimonial['author_job']; ?></em>
 						<span class="fw-testimonials-url">
-							<a href="<?php echo $testimonial['site_url']; ?>"><?php echo $testimonial['site_name']; ?></a>
+							<a href="<?php echo esc_attr($testimonial['site_url']); ?>"><?php echo $testimonial['site_name']; ?></a>
 						</span>
 					</div>
 				</div>
@@ -59,9 +59,9 @@ $id = uniqid( 'testimonials-' );
 	</div>
 
 	<div class="fw-testimonials-arrows">
-		<a class="prev" id="<?php echo $id; ?>-prev" href="#"><i class="fa"></i></a>
-		<a class="next" id="<?php echo $id; ?>-next" href="#"><i class="fa"></i></a>
+		<a class="prev" id="<?php echo esc_attr($id); ?>-prev" href="#"><i class="fa"></i></a>
+		<a class="next" id="<?php echo esc_attr($id); ?>-next" href="#"><i class="fa"></i></a>
 	</div>
 
-	<div class="fw-testimonials-pagination" id="<?php echo $id; ?>-controls"></div>
+	<div class="fw-testimonials-pagination" id="<?php echo esc_attr($id); ?>-controls"></div>
 </div>

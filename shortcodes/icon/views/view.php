@@ -7,7 +7,7 @@
  */
 ?>
 <span class="fw-icon">
-	<i class="<?php echo $atts['icon'] ?>"></i>
+	<i class="<?php echo esc_attr($atts['icon']); ?>"></i>
 	<?php if (!empty($atts['title'])): ?>
 		<br/>
 		<span class="list-title"><?php echo $atts['title'] ?></span>

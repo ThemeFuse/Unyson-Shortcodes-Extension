@@ -1,7 +1,7 @@
 <?php if ( ! defined( 'FW' ) ) {
 	die( 'Forbidden' );
 } ?>
-<div class="fw-alert fw-alert-<?php echo $atts['type']; ?>">
+<div class="fw-alert fw-alert-<?php echo esc_attr($atts['type']); ?>">
 	<?php
 	switch ( $atts['type'] ) {
 		case 'success' :

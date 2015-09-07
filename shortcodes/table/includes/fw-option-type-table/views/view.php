@@ -64,8 +64,8 @@ unset(
 			<?php $j = 0; ?>
 			<?php foreach ( $data['value']['cols'] as $col ) : ?>
 
-				<div class="fw-table-cell fw-table-col-option <?php echo $col['name'] ?>"
-				     data-col="<?php echo $j ?>">
+				<div class="fw-table-cell fw-table-col-option <?php echo esc_attr($col['name']) ?>"
+				     data-col="<?php echo esc_attr($j) ?>">
 					<?php echo fw_render_view( $header_cell_template, compact( 'option', 'data', 'j' ) ); ?>
 				</div>
 				<?php $j ++; ?>
@@ -88,10 +88,10 @@ unset(
 				'name_prefix' => $option['attr']['name'] . '[rows][' . $i . ']'
 			); ?>
 
-			<div class="fw-table-row <?php echo $current_row_name ?>"
-			     data-row="<?php echo $i ?>">
+			<div class="fw-table-row <?php echo esc_attr($current_row_name) ?>"
+			     data-row="<?php echo esc_attr($i) ?>">
 				<div
-					class='fw-table-cell fw-table-cell-options <?php echo $data['value']['rows'][ $key_row ]['name'] ?>'>
+					class='fw-table-cell fw-table-cell-options <?php echo esc_attr($data['value']['rows'][ $key_row ]['name']) ?>'>
 					<i class="fa fa-unsorted fw-table-gripper"></i>
 					<?php echo fw()->backend->option_type( 'select' )->render( 'name', $option['row_options']['name'],
 						$data_rows ); ?>
@@ -100,8 +100,8 @@ unset(
 				<?php $j = 0; ?>
 				<?php foreach ( $row as $key_col => $cell_value ): ?>
 					<div
-						class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $key_col ]['name']; ?>'
-						data-col="<?php echo $j ?>">
+						class='fw-table-cell fw-table-cell-worksheet <?php echo esc_attr($data['value']['cols'][ $key_col ]['name']); ?>'
+						data-col="<?php echo esc_attr($j) ?>">
 
 						<?php $desc_col = $data['value']['cols'][ $key_col ]['name'] == 'desc-col' ? $j : - 1 ?>
 
@@ -142,8 +142,8 @@ unset(
 			</div>
 
 			<?php for ( $j = 0; $j <= $last_col; $j ++ )  : ?>
-				<div class='fw-table-cell fw-table-cell-worksheet <?php echo $data['value']['cols'][ $j ]['name'] ?>'
-				     data-col="<?php echo $j ?>"></div>
+				<div class="fw-table-cell fw-table-cell-worksheet <?php echo esc_attr($data['value']['cols'][ $j ]['name']) ?>"
+				     data-col="<?php echo esc_attr($j) ?>"></div>
 			<?php endfor; ?>
 
 			<div class="fw-table-cell fw-table-row-delete">
@@ -163,7 +163,7 @@ unset(
 
 			<?php for ( $j = 0; $j <= $last_col; $j ++ )  : ?>
 				<div class="fw-table-cell fw-table-col-delete"
-				     data-col="<?php echo $j ?>">
+				     data-col="<?php echo esc_attr($j) ?>">
 					<i class="dashicons fw-x fw-table-col-delete-btn"></i>
 				</div>
 			<?php endfor; ?>
@@ -173,8 +173,8 @@ unset(
 		</div>
 		<?php /** End delete buttons row **/ ?>
 
-		<input type="hidden" class="fw-table-last-row" value="<?php echo $last_row ?>"/>
-		<input type="hidden" class="fw-table-last-col" value="<?php echo $last_col ?>"/>
+		<input type="hidden" class="fw-table-last-row" value="<?php echo fw_htmlspecialchars($last_row) ?>"/>
+		<input type="hidden" class="fw-table-last-col" value="<?php echo fw_htmlspecialchars($last_col) ?>"/>
 	</div>
 
 </div>

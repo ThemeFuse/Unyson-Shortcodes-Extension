@@ -11,9 +11,9 @@
  * `fw-iconbox-1`, `fw-iconbox-2` and `fw-iconbox-3`
  */
 ?>
-<div class="fw-iconbox clearfix <?php echo $atts['style']; ?>">
+<div class="fw-iconbox clearfix <?php echo esc_attr($atts['style']); ?>">
 	<div class="fw-iconbox-image">
-		<i class="<?php echo $atts['icon']; ?>"></i>
+		<i class="<?php echo esc_attr($atts['icon']); ?>"></i>
 	</div>
 	<div class="fw-iconbox-aside">
 		<div class="fw-iconbox-title">
