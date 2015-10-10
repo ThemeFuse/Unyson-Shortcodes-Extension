@@ -5,7 +5,7 @@
 	width: 100%;
 	box-sizing: border-box;
 	display: table;
-	table-layout: fixed;
+	table-layout: auto;
 }
 
 /** row start **/
