@@ -141,7 +141,7 @@
 				};
 
 				// in this event you can change data.allow by reference
-				fwEvents.trigger('fw:builder:column:filter:allow-incomming-type', data);
+				fwEvents.trigger('fw:builder:page-builder:column:filter:allow-incomming-type', data);
 
 				return data.allow;
 			}
