@@ -134,7 +134,16 @@
 				this.defaultInitialize();
 			},
 			allowIncomingType: function(type) {
-				return _.indexOf(this.restrictedTypes, type) === -1;
+				var data = {
+					allow: _.indexOf(this.restrictedTypes, type) === -1,
+					type: type,
+					model: this
+				};
+
+				// in this event you can change data.allow by reference
+				fwEvents.trigger('fw:builder:column:filter:allow-incomming-type', data);
+
+				return data.allow;
 			}
 		});
 
