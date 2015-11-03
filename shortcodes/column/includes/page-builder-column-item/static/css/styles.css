@@ -39,6 +39,10 @@
 	right: 0;
 	display: none;
 }
+body.rtl .pb-item-type-column > .panel .controls {
+	right: initial;
+	left: 0;
+}
 .pb-item-type-column:hover > .panel .controls {
 	display: block;
 }

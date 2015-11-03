@@ -27,6 +27,11 @@
 	cursor: pointer;
 }
 
+body.rtl .fw-option-type-table .fw-table-cell.fw-table-cell-worksheet {
+	border-right: 1px solid #e1e1e1;
+	border-left: none;
+}
+
 .fw-option-type-table .fw-table-cell {
 	display: table-cell;
 	border-left: 1px solid #e1e1e1;
@@ -63,6 +68,11 @@
 	position: relative;
 }
 
+body.rtl .fw-option-type-table .fw-table-row-delete {
+	border-left: none;
+	border-right: 1px solid #e1e1e1;
+}
+
 .fw-option-type-table .fw-table-col-delete,
 .fw-option-type-table .fw-table-cell-options {
 	border-left: none;
@@ -71,6 +81,10 @@
 
 .fw-option-type-table .empty-cell {
 	border: none;
+}
+
+body.rtl .fw-option-type-table .empty-cell {
+	border: none !important;
 }
 
 .fw-option-type-table .fw-table-col-delete {
@@ -106,6 +120,10 @@
 .fw-option-type-table .fw-table-add-column {
 	display: none;
 	float: right;
+}
+
+body.rtl .fw-option-type-table .fw-table-add-column {
+	float: left;
 }
 
 .fw-option-type-table .fw-table-col-options > :nth-last-child(2) > .fw-table-add-column {
@@ -145,8 +163,18 @@
 	padding-right: 0;
 }
 
+body.rtl .fw-option-type-table .fw-table-col-options > :nth-last-child(2) {
+	padding-right: 10px;
+	padding-left: 0;
+}
+
 .fw-option-type-table .fw-table-col-options > :nth-child(2) {
 	padding-left: 0;
+}
+
+body.rtl .fw-option-type-table .fw-table-col-options > :nth-child(2) {
+	padding-right: 0;
+	padding-left: 10px;
 }
 
 .fw-option-type-table .fw-table-row-delete-btn {
@@ -188,5 +216,3 @@
 /** row end **/
 /** table end **/
 /** tablebuilder end **/
-
-
