@@ -70,6 +70,10 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 			$data['popup_size'] = $config['popup_size'];
 		}
 
+		if (isset($config['header_elements'])) {
+			$data['header_elements'] = $config['header_elements'];
+		}
+
 		$data['title'] = $config['title'];
 		$data['title_template'] = $config['title_template'];
 
