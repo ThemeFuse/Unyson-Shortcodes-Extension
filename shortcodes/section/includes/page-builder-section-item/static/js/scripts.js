@@ -13,7 +13,8 @@
 						title: 'Section',
 						options: options.modalOptions,
 						values: this.model.get('atts'),
-						size: options.modalSize
+						size: options.modalSize,
+						headerElements: itemData.header_elements
 					});
 
 					this.listenTo(this.modal, 'change:values', function (modal, values) {
