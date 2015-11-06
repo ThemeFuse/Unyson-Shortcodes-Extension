@@ -22,16 +22,20 @@ class Page_Builder_Column_Item extends Page_Builder_Item {
 	}
 
 	public function enqueue_static() {
+		/**
+		 * @var FW_Shortcode $column_shortcode
+		 */
 		$column_shortcode = fw()->extensions->get( 'shortcodes' )->get_shortcode( 'column' );
+
 		wp_enqueue_style(
 			$this->get_builder_type() . '_item_type_' . $this->get_type(),
-			$column_shortcode->locate_URI( '/includes/page-builder-column-item/static/css/styles.css' ),
+			$column_shortcode->get_uri( '/includes/page-builder-column-item/static/css/styles.css' ),
 			array(),
 			fw()->theme->manifest->get_version()
 		);
 		wp_enqueue_script(
 			$this->get_builder_type() . '_item_type_' . $this->get_type(),
-			$column_shortcode->locate_URI( '/includes/page-builder-column-item/static/js/scripts.js' ),
+			$column_shortcode->get_uri( '/includes/page-builder-column-item/static/js/scripts.js' ),
 			array( 'fw-events', 'underscore' ),
 			fw()->theme->manifest->get_version(),
 			true
@@ -97,6 +101,9 @@ class Page_Builder_Column_Item extends Page_Builder_Item {
 	}
 
 	protected function get_thumbnails_data() {
+		/**
+		 * @var FW_Shortcode $column_shortcode
+		 */
 		$column_shortcode = fw_ext( 'shortcodes' )->get_shortcode( 'column' );
 		$builder_widths   = fw_ext_builder_get_item_width( $this->get_builder_type() );
 
@@ -107,7 +114,8 @@ class Page_Builder_Column_Item extends Page_Builder_Item {
 				'title'       => apply_filters( 'fw_ext_shortcodes_column_title', $value['title'], $key ),
 				'description' => apply_filters( 'fw_ext_shortcodes_column_description',
 					sprintf( __( 'Add a %s column', 'fw' ), $value['title'] ), $key ),
-				'icon'        => $column_shortcode->locate_URI( "/includes/page-builder-column-item/static/img/{$key}.png" ),
+				'icon'        => ($icon = $column_shortcode->locate_URI( "/thumbnails/{$key}.png" ))
+					? $icon : 'dashicons dashicons-align-none',
 				'data'        => array(
 					'width' => $key
 				)

@@ -65,6 +65,7 @@ class FW_Shortcode
 	final public function locate_path($rel_path = '')
 	{
 		$paths = array_merge($this->rewrite_paths, array($this->path));
+
 		foreach ($paths as $path) {
 			$actual_path = $path . $rel_path;
 			if (file_exists($actual_path)) {
@@ -72,6 +73,15 @@ class FW_Shortcode
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @param string $append
+	 * @return string
+	 * @since 1.3.5
+	 */
+	public function get_uri($append = '') {
+		return $this->uri . $append;
 	}
 
 	/**
