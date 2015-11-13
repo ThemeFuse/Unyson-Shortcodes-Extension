@@ -40,32 +40,24 @@ class FW_Extension_Shortcodes extends FW_Extension
 	 */
 	protected function _init()
 	{
-		if (!is_admin()) {
+		add_action('fw_extensions_init', array($this, '_action_fw_extensions_init'));
+		add_action('init', array($this, '_action_init'),
+			11 // register shortcodes later than other plugins (there were some problems with the `column` shortcode)
+		);
 
-			// loads the shortcodes
-			add_action('fw_extensions_init', array($this, '_action_fw_extensions_init'));
-
-			// renders the shortcodes so that css will get in <head>
-			add_action(
-				'wp_enqueue_scripts',
-				array($this, '_action_enqueue_shortcodes_static_in_frontend_head'),
-				/**
-				 * Enqueue later than theme styles
-				 * https://github.com/ThemeFuse/Theme-Includes/blob/b1467714c8a3125f077f1251f01ba6d6ca38640f/init.php#L41
-				 * to be able to wp_add_inline_style('theme-style-handle', ...) in 'fw_ext_shortcodes_enqueue_static:{name}' action
-				 * http://manual.unyson.io/en/latest/extension/shortcodes/index.html#enqueue-shortcode-dynamic-css-in-page-head
-				 * in case the shortcode doesn't have a style, needed in step 3.
-				 */
-				30
-			);
-		} elseif (
-			defined('DOING_AJAX') &&
-			DOING_AJAX === true   &&
-			FW_Request::POST('fw_load_shortcodes')
-		) {
-			// load the shortcodes if this was requested via ajax
-			add_action('fw_extensions_init', array($this, '_action_fw_extensions_init'));
-		}
+		// renders the shortcodes so that css will get in <head>
+		add_action(
+			'wp_enqueue_scripts',
+			array($this, '_action_enqueue_shortcodes_static_in_frontend_head'),
+			/**
+			 * Enqueue later than theme styles
+			 * https://github.com/ThemeFuse/Theme-Includes/blob/b1467714c8a3125f077f1251f01ba6d6ca38640f/init.php#L41
+			 * to be able to wp_add_inline_style('theme-style-handle', ...) in 'fw_ext_shortcodes_enqueue_static:{name}' action
+			 * http://manual.unyson.io/en/latest/extension/shortcodes/index.html#enqueue-shortcode-dynamic-css-in-page-head
+			 * in case the shortcode doesn't have a style, needed in step 3.
+			 */
+			30
+		);
 	}
 
 	/**
@@ -74,6 +66,9 @@ class FW_Extension_Shortcodes extends FW_Extension
 	public function _action_fw_extensions_init()
 	{
 		$this->load_shortcodes();
+	}
+
+	public function _action_init() {
 		$this->register_shortcodes();
 	}
 
