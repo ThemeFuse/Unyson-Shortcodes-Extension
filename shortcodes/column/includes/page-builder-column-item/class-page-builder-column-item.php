@@ -63,8 +63,8 @@ class Page_Builder_Column_Item extends Page_Builder_Item {
 			$data['popup_size'] = $config['popup_size'];
 		}
 
-		if (isset($config['header_elements'])) {
-			$data['header_elements'] = $config['header_elements'];
+		if (isset($config['popup_header_elements'])) {
+			$data['header_elements'] = $config['popup_header_elements'];
 		}
 
 		$data['item_widths'] = fw_ext_builder_get_item_widths_for_js($this->get_builder_type());
