@@ -20,13 +20,12 @@
 				});
 
 				if (options.modalOptions) {
-					var activeColumn = _.findWhere(itemData.item_widths, {id : this.model.get('width')});
 					this.modal = new fw.OptionsModal({
 						title: itemData.l10n.title,
 						options: options.modalOptions,
 						values: this.model.get('atts'),
 						size: options.modalSize,
-						headerElements: activeColumn.header_elements
+						headerElements: itemData.header_elements
 					});
 
 					this.listenTo(this.modal, 'change:values', function (modal, values) {
