@@ -26,10 +26,6 @@
 	cursor: pointer;
 	font-size: 16px;
 }
-.pb-item-type-column > .panel i.fa {
-	font-size: 14px;
-	margin: 2px 4px;
-}
 .pb-item-type-column > .panel i:hover {
 	color: #019aca;
 }
