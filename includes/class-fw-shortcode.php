@@ -147,11 +147,15 @@ class FW_Shortcode
 	 * @param string $tag deprecated
 	 * @return string
 	 */
-	final public function render($atts, $content = null, $tag = '')
+	final public function render($atts, $content = null, $tag = '', $options)
 	{
+		$options = wp_parse_args($options, array(
+			'skip_decoding' => false
+		));
+
 		if (empty($atts)) {
 			$atts = array();
-		} else {
+		} else if (! $options['skip_decoding']) {
 			if (version_compare(fw_ext('shortcodes')->manifest->get_version(), '1.3.0', '>=')) {
 				/**
 				 * @var WP_Post $post
