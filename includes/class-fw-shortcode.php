@@ -147,7 +147,7 @@ class FW_Shortcode
 	 * @param string $tag deprecated
 	 * @return string
 	 */
-	final public function render($atts, $content = null, $tag = '', $options)
+	final public function render($atts, $content = null, $tag = '', $options = array())
 	{
 		$options = wp_parse_args($options, array(
 			'skip_decoding' => false
