@@ -147,26 +147,24 @@ class FW_Shortcode
 	 * @param string $tag deprecated
 	 * @return string
 	 */
-	final public function render($atts, $content = null, $tag = '', $options = array())
+	final public function render($atts, $content = null, $tag = '')
 	{
-		$options = wp_parse_args($options, array(
-			'skip_decoding' => false
-		));
-
 		if (empty($atts)) {
 			$atts = array();
-		} else if (! $options['skip_decoding']) {
+		} else {
 			if (version_compare(fw_ext('shortcodes')->manifest->get_version(), '1.3.0', '>=')) {
 				/**
 				 * @var WP_Post $post
 				 */
 				global $post;
 
-				if (!$post) {
-					return '<p>Shortcode attributes decode error: Global $post is required.</p>';
-				}
-
-				$atts = fw_ext_shortcodes_decode_attr($atts, $this->tag, $post->ID);
+				$atts = fw_ext_shortcodes_decode_attr($atts, $this->tag,
+					/**
+					 * This was required, but sometimes the shortcode is rendered manually from code and
+					 * very often is used PageBuilder encoder which doesn't require/need post id
+					 */
+					$post ? $post->ID : 0
+				);
 
 				if (is_wp_error($atts)) {
 					return '<p>Shortcode attributes decode error: ' . $atts->get_error_message() . '</p>';
