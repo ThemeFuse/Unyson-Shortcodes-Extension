@@ -179,7 +179,11 @@ class _FW_Shortcodes_Loader
 			}
 		}
 
-		foreach (glob($paths['path'] .'/*', GLOB_ONLYDIR) as $shortcode_path) {
+		if ($dirs = glob($paths['path'] .'/*', GLOB_ONLYDIR)) {
+			return;
+		}
+
+		foreach ($dirs as $shortcode_path) {
 			$shortcode_dir = strtolower(basename($shortcode_path));
 			$shortcode_tag = str_replace('-', '_', $shortcode_dir);
 
