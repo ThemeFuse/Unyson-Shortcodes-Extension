@@ -180,6 +180,8 @@ class _FW_Shortcodes_Loader
 		}
 
 		if ($dirs = glob($paths['path'] .'/*', GLOB_ONLYDIR)) {
+			// ok
+		} else {
 			return;
 		}
 
