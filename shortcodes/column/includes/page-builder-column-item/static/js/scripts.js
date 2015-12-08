@@ -3,6 +3,24 @@
 		var PageBuilderColumnItem,
 			PageBuilderColumnItemView,
 			PageBuilderColumnItemViewWidthChanger,
+			triggerEvent = function(itemModel, event, eventData) {
+				event = 'fw:builder-type:{builder-type}:item-type:{item-type}:'
+					.replace('{builder-type}', builder.get('type'))
+					.replace('{item-type}', itemModel.get('type'))
+					+ event;
+
+				var data = {
+					modal: itemModel.view ? itemModel.view.modal : null,
+					item: itemModel,
+					itemView: itemModel.view,
+					shortcode: itemModel.get('shortcode')
+				};
+
+				fwEvents.trigger(event, eventData
+					? _.extend(eventData, data)
+					: data
+				);
+			},
 			getEventName = function(itemModel, event) {
 				return 'fw:builder-type:{builder-type}:item-type:{item-type}:'
 					.replace('{builder-type}', builder.get('type'))
@@ -27,13 +45,20 @@
 				});
 
 				if (options.modalOptions) {
+					var eventData = {modalSettings: {buttons: []}};
+
+					/**
+					 * eventData.modalSettings can be changed by reference
+					 */
+					triggerEvent(this.model, 'options-modal:settings', eventData);
+
 					this.modal = new fw.OptionsModal({
 						title: itemData.l10n.title,
 						options: options.modalOptions,
 						values: this.model.get('atts'),
 						size: options.modalSize,
 						headerElements: itemData.header_elements
-					});
+					}, eventData.modalSettings);
 
 					this.listenTo(this.modal, 'change:values', function (modal, values) {
 						this.model.set('atts', values);
