@@ -27,13 +27,20 @@
 				});
 
 				if (options.modalOptions) {
+					var eventData = {modalSettings: {buttons: []}};
+
+					/**
+					 * eventData.modalSettings can be changed by reference
+					 */
+					triggerEvent(this.model, 'options-modal:settings', eventData);
+
 					this.modal = new fw.OptionsModal({
 						title: itemData.l10n.title,
 						options: options.modalOptions,
 						values: this.model.get('atts'),
 						size: options.modalSize,
 						headerElements: itemData.header_elements
-					});
+					}, eventData.modalSettings);
 
 					this.listenTo(this.modal, 'change:values', function (modal, values) {
 						this.model.set('atts', values);
