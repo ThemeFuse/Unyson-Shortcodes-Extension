@@ -1,3 +1,10 @@
+/*
+ * A jQuery plugin for smooth-scaling image and video backgrounds. Part of the Formstone Library.
+ * http://classic.formstone.it/wallpaper/
+ *
+ * Copyright 2015 Ben Plum; MIT Licensed
+ */
+
 ;(function ($, window) {
 	"use strict";
 
