@@ -18,8 +18,6 @@ unset($div_attr['name'], $div_attr['value'], $div_attr['rows']);
 		<?php echo htmlspecialchars($option['value'], ENT_COMPAT, 'UTF-8') ?>
 	</div>
 	<div class="fw-textarea-tab control closed">
-		<textarea <?php echo fw_attr_to_html($option['attr']) ?> >
-		<?php echo htmlspecialchars($option['value'], ENT_COMPAT, 'UTF-8') ?>
-		</textarea>
+		<textarea <?php echo fw_attr_to_html($option['attr']) ?> ><?php echo htmlspecialchars($option['value'], ENT_COMPAT, 'UTF-8') ?></textarea>
 	</div>
 </div>
