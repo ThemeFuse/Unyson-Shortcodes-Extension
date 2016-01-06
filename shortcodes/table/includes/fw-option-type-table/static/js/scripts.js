@@ -246,7 +246,7 @@
 					lastCol++;
 
 					//max cols
-					if (columns.length <= 6) {
+					if (columns.length <= parseInt(localizeTableBuilder.maxCols) + 1) {
 						/**
 						 * Clone worksheet (data cells) and insert it before last row's cell
 						 */

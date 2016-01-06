@@ -41,7 +41,13 @@ class FW_Option_Type_Table extends FW_Option_Type
 			true
 		);
 
-		wp_localize_script( 'fw-option-' . $this->get_type(), 'localizeTableBuilder', array( 'msgEdit' => __( 'Edit', 'fw' ) ) );
+		$localization_array = array(
+			'msgEdit' => __( 'Edit', 'fw' ),
+			'maxCols' => apply_filters( 'fw_ext_shortcodes_table_max_columns', 6 )
+		);
+
+
+		wp_localize_script( 'fw-option-' . $this->get_type(), 'localizeTableBuilder', $localization_array );
 		fw()->backend->option_type( 'popup' )->enqueue_static();
 		fw()->backend->option_type( 'textarea-cell' )->enqueue_static();
 	}
