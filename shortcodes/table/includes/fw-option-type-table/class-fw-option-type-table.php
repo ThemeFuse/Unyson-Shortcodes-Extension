@@ -168,7 +168,7 @@ class FW_Option_Type_Table extends FW_Option_Type
 	 * @internal
 	 */
 	protected function _get_defaults() {
-		return array(
+		return apply_filters( 'fw_option_type_table_defaults', array(
 			'header_options'  => array(
 				'table_purpose' => array(
 					'type'    => 'select',
@@ -251,8 +251,8 @@ class FW_Option_Type_Table extends FW_Option_Type
 						'label'        => false,
 						'desc'         => false,
 						'value'        => '',
-						'attr' => array(
-							'placeholder' => __('per month', 'fw')
+						'attr'         => array(
+							'placeholder' => __( 'per month', 'fw' )
 						),
 						'wrapper_attr' => array(
 							'class' => 'fw-col-sm-6'
@@ -260,7 +260,7 @@ class FW_Option_Type_Table extends FW_Option_Type
 					),
 				),
 				'button-row'  => array(
-					'button' => ($button = fw()->extensions->get( 'shortcodes' )->get_shortcode( 'button' ))
+					'button' => ( $button = fw()->extensions->get( 'shortcodes' )->get_shortcode( 'button' ) )
 						? array(
 							'type'          => 'popup',
 							'popup-title'   => __( 'Button', 'fw' ),
@@ -291,19 +291,19 @@ class FW_Option_Type_Table extends FW_Option_Type
 				'header_options' => array(
 					'table_purpose' => 'pricing',
 				),
-				'cols'    => array(
+				'cols'           => array(
 					array( 'name' => 'default-col' ),
 					array( 'name' => 'default-col' ),
 					array( 'name' => 'default-col' )
 				),
-				'rows'    => array(
+				'rows'           => array(
 					array( 'name' => 'default-row' ),
 					array( 'name' => 'default-row' ),
 					array( 'name' => 'default-row' )
 				),
-				'content' => $this->_fw_generate_default_values()
+				'content'        => $this->_fw_generate_default_values()
 			)
-		);
+		) );
 	}
 
 	private function _fw_generate_default_values( $cols = 3, $rows = 3 ) {
