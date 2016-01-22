@@ -123,11 +123,11 @@ class FW_Option_Type_Table extends FW_Option_Type
 		$value = array();
 		if ( is_array( $input_value ) ) {
 			if ( isset( $input_value['rows'] ) ) {
-				$value['rows'] = array_values( $input_value['rows'] );
+				$value['rows'] =  $input_value['rows'] ;
 			}
 
 			if ( isset( $input_value['cols'] ) && is_array($input_value['cols']) ) {
-				$value['cols'] = array_values( $input_value['cols'] );
+				$value['cols'] =  $input_value['cols'] ;
 			}
 
 			if ( isset( $input_value['header_options'] ) and is_array( $input_value['header_options'] ) ) {
@@ -136,25 +136,21 @@ class FW_Option_Type_Table extends FW_Option_Type
 
 
 			if ( isset( $input_value['content'] ) && is_array( $input_value['content'] ) ) {
-				$i = 0;
 				foreach ( $input_value['content'] as $row => $input_value_rows_data ) {
 					$cols = array();
-					$j    = 0;
 					foreach ( $input_value_rows_data as $column => $input_value_cols_data ) {
-						$row_name = $value['rows'][ $i ]['name'];
+						$row_name = $value['rows'][ $row ]['name'];
 
 						foreach ( $option['content_options'][ $row_name ] as $id => $options ) {
 							if ( $value['cols'][$column]['name'] == 'desc-col' ) {
-								$cols[ $j ][ 'textarea' ] = fw()->backend->option_type( 'textarea-cell' )->get_value_from_input( $options, $input_value_cols_data[ 'default-row' ][ 'textarea-' . $row . '-' . $column ] );
+								$cols[ $column ][ 'textarea' ] = fw()->backend->option_type( 'textarea-cell' )->get_value_from_input( $options, $input_value_cols_data[ 'default-row' ][ 'textarea-' . $row . '-' . $column ] );
 								continue;
 							}
-							$cols[ $j ][ $id ] = fw()->backend->option_type( $options['type'] )->get_value_from_input( $options, $input_value_cols_data[ $row_name ][ $id . '-' . $row . '-' . $column ] );
+							$cols[ $column ][ $id ] = fw()->backend->option_type( $options['type'] )->get_value_from_input( $options, $input_value_cols_data[ $row_name ][ $id . '-' . $row . '-' . $column ] );
 						}
 
-						$j ++;
 					}
-					$value['content'][ $i ] = $cols;
-					$i ++;
+					$value['content'][ $row ] = $cols;
 				}
 			}
 
