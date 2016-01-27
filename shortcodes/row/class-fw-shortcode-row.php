@@ -7,7 +7,7 @@ class FW_Shortcode_Row extends FW_Shortcode
 	 */
 	public function _init()
 	{
-		if (is_admin() && fw_ext('page-builder')) {
+		if (fw_ext('page-builder')) {
 			require $this->get_declared_path('/includes/page-builder-row-item/class-page-builder-row-item.php');
 		}
 	}

@@ -7,9 +7,7 @@ class FW_Shortcode_Table extends FW_Shortcode {
 	 * @internal
 	 */
 	public function _init() {
-		if ( is_admin() ) {
-			$this->load_option_type();
-		}
+		$this->load_option_type();
 	}
 
 	private function load_option_type() {
