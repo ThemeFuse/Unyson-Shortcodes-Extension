@@ -197,11 +197,20 @@ class FW_Shortcode
 		}
 
 		$this->enqueue_static();
-		return apply_filters('fw_shortcode_render_view', fw_render_view($view_file, array(
-			'atts'    => $atts,
-			'content' => $content,
-			'tag'     => $this->tag
-		)), $atts, $this->tag);
+
+		$view_extra = apply_filters('fw_shortcode_render_view', array(
+			'before' => '',
+			'after' => '',
+		), $atts, $this->tag);
+
+		return
+			$view_extra['before'] .
+			fw_render_view($view_file, array(
+				'atts'    => $atts,
+				'content' => $content,
+				'tag'     => $this->tag
+			)) .
+			$view_extra['after'];
 	}
 
 	protected function enqueue_static()
