@@ -131,7 +131,7 @@ class FW_Shortcode
 				$this->options = $vars['options'];
 			}
 		}
-		return $this->options;
+		return apply_filters('fw_shortcode_get_options', $this->options, $this->tag);
 	}
 
 	/**
@@ -197,11 +197,11 @@ class FW_Shortcode
 		}
 
 		$this->enqueue_static();
-		return fw_render_view($view_file, array(
+		return apply_filters('fw_shortcode_render_view', fw_render_view($view_file, array(
 			'atts'    => $atts,
 			'content' => $content,
 			'tag'     => $this->tag
-		));
+		)), $atts, $this->tag);
 	}
 
 	protected function enqueue_static()
