@@ -203,6 +203,22 @@ class FW_Shortcode
 			'after' => '',
 		), $atts, $this->tag);
 
+		/**
+		 * If you want to somehow customise $atts before rendering $atts
+		 * you can listen to this filter like this:
+		 *
+		 * function change_atts( $atts ) {
+		 *   $tmp = $atts;
+		 * 
+		 *   // make your changes
+		 * 
+		 *   return $tmp;
+		 * }
+		 *
+		 * add_filter( 'fw_shortcode_render_view:atts', 'change_atts' );
+		 */
+		$atts = apply_filters('fw_shortcode_render_view:atts', $atts);
+
 		return
 			$view_extra['before'] .
 			fw_render_view($view_file, array(
