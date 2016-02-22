@@ -160,7 +160,25 @@
 				if (!this.modal) {
 					return;
 				}
-				this.modal.open();
+
+				var flow = {cancelModalOpening: false};
+
+				/**
+				 * Trigger before-open model just like we do this for
+				 * item-simple shortcodes.
+				 *
+				 * http://bit.ly/1KY6tpP
+				 */
+				fwEvents.trigger('fw:page-builder:shortcode:section:modal:before-open', {
+					modal: this.modal,
+					model: this.model,
+					builder: builder,
+					flow: flow
+				});
+
+				if (! flow.cancelModalOpening) {
+					this.modal.open();
+				}
 			},
 			cloneItem: function (e) {
 				e.stopPropagation();
