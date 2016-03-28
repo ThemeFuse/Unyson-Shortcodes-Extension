@@ -19,8 +19,9 @@ class FW_Ext_Shortcodes_Attr_Coder_JSON implements FW_Ext_Shortcodes_Attr_Coder 
 		$array_keys = array(); // remember which keys contains json encoded arrays
 
 		foreach ($attributes as $key => $value) {
-			// the WordPress shortcode parser doesn't work when
-			// using attributes with dashes
+			/**
+			 * The WordPress shortcode parser doesn't work when using attributes with dashes.
+			 */
 			$key = str_replace('-', '_', $key);
 
 			if (is_array($value)) {
