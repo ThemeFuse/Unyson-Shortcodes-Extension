@@ -52,16 +52,21 @@ class FW_Ext_Shortcodes_Attr_Coder_Post_Meta implements FW_Ext_Shortcodes_Attr_C
 			}
 		}
 
-		foreach (array_keys($attributes) as $key) {
-			/**
-			 * The WordPress shortcode parser doesn't work when using attributes with dashes.
-			 * (same as in json coder)
-			 */
-			$attributes[ str_replace('-', '_', $key) ] = $attributes[$key];
-			unset($attributes[$key]);
-		}
+		if (is_array($attributes)) {
+			$fixed_atts = array();
 
-		return $attributes;
+			foreach ( $attributes as $key => $value ) {
+				/**
+				 * The WordPress shortcode parser doesn't work when using attributes with dashes.
+				 * (same as in json coder)
+				 */
+				$fixed_atts[ str_replace( '-', '_', $key ) ] = $value;
+			}
+
+			return $fixed_atts;
+		} else {
+			return $attributes;
+		}
 	}
 
 	/**
