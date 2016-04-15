@@ -1,6 +1,8 @@
 <?php if (!defined('FW')) die('Forbidden');
 
-fw_ext('shortcodes')->get_shortcode('button')->_enqueue_static();
+if (fw_ext('shortcodes')->get_shortcode('button')) {
+	fw_ext('shortcodes')->get_shortcode('button')->_enqueue_static();
+}
 
 $shortcodes_extension = fw_ext('shortcodes');
 wp_enqueue_style(
