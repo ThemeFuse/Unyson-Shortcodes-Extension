@@ -19,7 +19,6 @@ $options = array(
 				'label' => __( 'Quote', 'fw' ),
 				'desc'  => __( 'Enter the testimonial here', 'fw' ),
 				'type'  => 'textarea',
-				'teeny' => true
 			),
 			'author_avatar' => array(
 				'label' => __( 'Image', 'fw' ),
