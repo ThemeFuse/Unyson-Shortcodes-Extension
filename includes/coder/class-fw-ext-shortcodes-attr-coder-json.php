@@ -49,8 +49,8 @@ class FW_Ext_Shortcodes_Attr_Coder_JSON implements FW_Ext_Shortcodes_Attr_Coder 
 		 * http://www.degraeve.com/reference/specialcharacters.php
 		 */
 		return str_replace(
-			array('[',     ']',     "\r\n"),
-			array('&#91;', '&#93;', '&#010;'),
+			array('[',     ']',     "\r\n",   '\\'),
+			array('&#91;', '&#93;', '&#010;', '&#92;'),
 			htmlentities($value, ENT_QUOTES, 'UTF-8')
 		);
 	}
