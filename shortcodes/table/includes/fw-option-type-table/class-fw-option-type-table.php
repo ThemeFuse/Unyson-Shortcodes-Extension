@@ -136,8 +136,10 @@ class FW_Option_Type_Table extends FW_Option_Type
 
 
 			if ( isset( $input_value['content'] ) && is_array( $input_value['content'] ) ) {
+				$row_count = 0;
 				foreach ( $input_value['content'] as $row => $input_value_rows_data ) {
 					$cols = array();
+
 					foreach ( $input_value_rows_data as $column => $input_value_cols_data ) {
 						$row_name = $value['rows'][ $row ]['name'];
 
@@ -150,7 +152,7 @@ class FW_Option_Type_Table extends FW_Option_Type
 						}
 
 					}
-					$value['content'][ $row ] = $cols;
+					$value['content'][ $row_count++ ] = $cols;
 				}
 			}
 
