@@ -23,9 +23,22 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 			return;
 		}
 
+		$templates = $this->get_templates($data['builder_type']);
+
+		{
+			$this->fake_created_value = 0;
+
+			$templates = array_map( // make this to keep elements order after applying uasort()
+				array($this, 'array_map_add_fake_created_key'),
+				$templates
+			);
+		}
+
+		uasort($templates, array($this, 'sort_templates'));
+
 		$html = '';
 
-		foreach ($this->get_templates($data['builder_type']) as $template_id => $template) {
+		foreach ($templates as $template_id => $template) {
 			if (isset($template['type']) && $template['type'] === 'predefined') {
 				$delete_btn = '';
 			} else {
@@ -153,7 +166,8 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 
 		$template = array(
 			'title' => trim((string)FW_Request::POST('template_name')),
-			'json' => trim((string)FW_Request::POST($this->get_type() .'_json'))
+			'json' => trim((string)FW_Request::POST($this->get_type() .'_json')),
+			'created' => time(),
 		);
 
 		if (
@@ -174,10 +188,26 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 			$template['title'] = __('No Title', 'fw');
 		}
 
-		$this->set_db_templates(
-			$builder_type,
-			array(md5($template['json']) => $template) + $this->get_db_templates($builder_type)
+		$template_id = md5($template['json']);
+
+		update_option(
+			$this->get_wp_option_prefix($builder_type) . $template_id,
+			$template,
+			false
 		);
+
+		/**
+		 * Remove from old storage (to prevent array key merge with old value on get)
+		 */
+		{
+			$old_templates = fw_get_db_extension_data('builder', 'templates:'. $this->get_type() .'/'. $builder_type, array());
+
+			unset($old_templates[$template_id]);
+
+			fw_set_db_extension_data('builder', 'templates:'. $this->get_type() .'/'. $builder_type, $old_templates);
+
+			unset($old_templates);
+		}
 
 		wp_send_json_success();
 	}
@@ -197,17 +227,22 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 			wp_send_json_error();
 		}
 
-		$templates = $this->get_db_templates($builder_type);
-
 		$template_id = (string)FW_Request::POST('template_id');
 
-		if (!isset($templates[$template_id])) {
-			wp_send_json_error();
+		delete_option($this->get_wp_option_prefix($builder_type) . $template_id);
+
+		/**
+		 * Remove from old storage (to prevent array key merge with old value on get)
+		 */
+		{
+			$old_templates = fw_get_db_extension_data('builder', 'templates:'. $this->get_type() .'/'. $builder_type, array());
+
+			unset($old_templates[$template_id]);
+
+			fw_set_db_extension_data('builder', 'templates:'. $this->get_type() .'/'. $builder_type, $old_templates);
+
+			unset($old_templates);
 		}
-
-		unset($templates[$template_id]);
-
-		$this->set_db_templates($builder_type, $templates);
 
 		wp_send_json_success();
 	}
@@ -215,18 +250,73 @@ class FW_Ext_Builder_Templates_Component_Column extends FW_Ext_Builder_Templates
 	/**
 	 * @param $builder_type
 	 * @return mixed|null
+	 *
+	 * Note: Templates can be very big and saving them in a single wp option can throw mysql error on update query
 	 */
-	private function get_db_templates($builder_type)
+	protected function get_db_templates($builder_type)
 	{
-		return fw_get_db_extension_data('builder', 'templates:'. $this->get_type() .'/'. $builder_type, array());
+		$templates = array();
+
+		/**
+		 * Note: 'prefix + name' max length should be 64
+		 */
+		$option_prefix = $this->get_wp_option_prefix($builder_type); // + md5 (length=32)
+
+		/**
+		 * @var WPDB $wpdb
+		 */
+		global $wpdb;
+
+		foreach ((array)$wpdb->get_results($wpdb->prepare(
+			"SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s",
+			$wpdb->esc_like( $option_prefix ) .'%'
+		), ARRAY_A) as $row) {
+			$templates[
+				// extract (suffix) md5 used as id
+				preg_replace('/^'. preg_quote($option_prefix, '/') .'/', '', $row['option_name'])
+			] = get_option($row['option_name']);
+		}
+
+		$templates +=
+			/**
+			 * Append old templates
+			 * This can't be removed because a lot of installations already use this
+			 */
+			fw_get_db_extension_data('builder', 'templates:'. $this->get_type() .'/'. $builder_type, array());
+
+		return $templates;
 	}
 
-	/**
-	 * @param $builder_type
-	 * @param $templates
-	 */
-	private function set_db_templates($builder_type, $templates)
+	private $fake_created_value;
+
+	private function array_map_add_fake_created_key($el)
 	{
-		fw_set_db_extension_data('builder', 'templates:'. $this->get_type() .'/'. $builder_type, $templates);
+		if (!isset($el['created'])) {
+			/**
+			 * Before 1.1.14 templates were appended
+			 * After 1.1.14 templates are prepended
+			 * So reverse old templates to be in the same order as the new ones
+			 */
+			$el['created'] = (++$this->fake_created_value);
+		}
+
+		return $el;
+	}
+
+	private function sort_templates($a, $b)
+	{
+		$at = isset($a['created']) ? $a['created'] : 0;
+		$bt = isset($b['created']) ? $b['created'] : 0;
+
+		if ($at == $bt) {
+			return 0;
+		}
+
+		return ($at > $bt) ? -1 : 1;
+	}
+
+	private function get_wp_option_prefix($builder_type)
+	{
+		return 'fw:bt:c:'. $builder_type .':';
 	}
 }
