@@ -15,6 +15,16 @@ if ( version_compare( $shortcodes_extension->manifest->get_version(), '1.3.9', '
 	 * jquery.fs.wallpaper.js, jquery.fs.wallpaper.min.js and scripts.js are @deprecated
 	 * they remains for backward compatibility.
 	 */
+
+	// fixes https://github.com/ThemeFuse/Unyson/issues/1552
+	{
+		global $is_safari;
+
+		if ($is_safari) {
+			wp_enqueue_script('youtube-iframe-api', 'https://www.youtube.com/iframe_api');
+		}
+	}
+
 	wp_enqueue_style(
 		'fw-shortcode-section-background-video',
 		$shortcodes_extension->get_uri( '/shortcodes/section/static/css/background.css' )
