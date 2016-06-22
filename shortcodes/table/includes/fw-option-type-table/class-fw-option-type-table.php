@@ -123,7 +123,11 @@ class FW_Option_Type_Table extends FW_Option_Type
 		$value = array();
 		if ( is_array( $input_value ) ) {
 			if ( isset( $input_value['rows'] ) ) {
-				$value['rows'] =  $input_value['rows'] ;
+				$i = 0;
+				foreach ($input_value['rows'] as $input_val) {
+					$value['rows'][$i] = $input_val;
+					$i++;
+				}
 			}
 
 			if ( isset( $input_value['cols'] ) && is_array($input_value['cols']) ) {
@@ -141,7 +145,7 @@ class FW_Option_Type_Table extends FW_Option_Type
 					$cols = array();
 
 					foreach ( $input_value_rows_data as $column => $input_value_cols_data ) {
-						$row_name = $value['rows'][ $row ]['name'];
+						$row_name = $input_value['rows'][ $row ]['name'];
 
 						foreach ( $option['content_options'][ $row_name ] as $id => $options ) {
 							if ( $value['cols'][$column]['name'] == 'desc-col' ) {
