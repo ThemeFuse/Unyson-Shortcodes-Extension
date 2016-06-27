@@ -9,7 +9,7 @@ wp_enqueue_style(
 $language = substr( get_locale(), 0, 2 );
 
 //Check if Map option type has the `api_key` method, as user may have a older Unyson version.
-//TODO: Remove in next versions ad came with a better solution
+//TODO: Remove in next versions and provide a better solution
 $key = method_exists('FW_Option_Type_Map', 'api_key') ? '&key=' . FW_Option_Type_Map::api_key() : '';
 
 wp_enqueue_script(
