@@ -19,13 +19,25 @@ $options = array(
 		'choices' => $map_shortcode->_get_picker_choices(),
 		'show_borders' => false,
 	),
-	'gmap-key' => array(
-		'label' => __( 'Goolge Maps API Key', 'fw' ),
-		'type'  => version_compare(fw()->manifest->get_version(), '2.5.7', '>=') ? 'gmap-key' : 'text',
-		'desc' => sprintf(
-			__( 'Create an application in %sGoogle Console%s and add the Key here.', 'fw' ),
-			'<a href="https://console.developers.google.com/flows/enableapi?apiid=places_backend,maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend&keyType=CLIENT_SIDE&reusekey=true">',
-			'</a>'
+	'gmap-key' => array_merge(
+		array(
+			'label' => __( 'Goolge Maps API Key', 'fw' ),
+			'desc' => sprintf(
+				__( 'Create an application in %sGoogle Console%s and add the Key here.', 'fw' ),
+				'<a href="https://console.developers.google.com/flows/enableapi?apiid=places_backend,maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend&keyType=CLIENT_SIDE&reusekey=true">',
+				'</a>'
+			),
+		),
+		version_compare(fw()->manifest->get_version(), '2.5.7', '>=')
+		? array(
+			'type' => 'gmap-key',
+		)
+		: array(
+			'type' => 'text',
+			'fw-storage' => array(
+				'type'      => 'wp-option',
+				'wp_option' => 'fw-option-types:gmap-key',
+			),
 		)
 	),
 	'map_type' => array(
