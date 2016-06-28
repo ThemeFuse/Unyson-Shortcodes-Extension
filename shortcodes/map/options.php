@@ -23,7 +23,7 @@ $options = array(
 		'label' => __( 'Goolge Maps API Key', 'fw' ),
 		'type'  => version_compare(fw()->manifest->get_version(), '2.5.7', '>=') ? 'gmap-key' : 'text',
 		'desc' => sprintf(
-			__( 'Create a application in %sGoogle Console%s and add the Key here.', 'fw' ),
+			__( 'Create an application in %sGoogle Console%s and add the Key here.', 'fw' ),
 			'<a href="https://console.developers.google.com/flows/enableapi?apiid=places_backend,maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend&keyType=CLIENT_SIDE&reusekey=true">',
 			'</a>'
 		)
