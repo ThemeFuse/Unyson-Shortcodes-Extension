@@ -19,6 +19,15 @@ $options = array(
 		'choices' => $map_shortcode->_get_picker_choices(),
 		'show_borders' => false,
 	),
+	'gmap-key' => array(
+		'label' => __( 'Goolge Maps API Key', 'fw' ),
+		'type'  => 'gmap-key',
+		'desc' => sprintf(
+			__( 'Create a application in %sGoogle Console%s and add the Key here.', 'fw' ),
+			'<a href="https://console.developers.google.com/flows/enableapi?apiid=places_backend,maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend&keyType=CLIENT_SIDE&reusekey=true">',
+			'</a>'
+		)
+	),
 	'map_type' => array(
 		'type'  => 'select',
 		'label' => __('Map Type', 'fw'),
