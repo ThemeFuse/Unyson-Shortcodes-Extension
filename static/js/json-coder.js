@@ -47,9 +47,44 @@ fwShortcodesJSONCoder = (function ($) {
 		);
 	}
 
-	function decode () {
-		throw 'decode operation is not implemented';
+	function decode (atts) {
+		if (! can_decode(atts)) {
+			return atts;
+		}
+
+		atts = _.omit(atts, '_made_with_builder');
+
+		var array_keys = {};
+
+		if (atts._array_keys) {
+			array_keys = JSON.parse(
+				decode_value(atts._array_keys)
+			);
+
+			atts = _.omit(atts, '_array_keys');
+		}
+
+		var decoded = {};
+
+		_.each(
+			atts,
+			function (value, key) {
+				decoded[key] = array_keys[key]
+					? JSON.parse(decode_value(value))
+					: decode_value(value);
+			}
+		);
+
+		return decoded;
 	}
+
+	function decode_value (encoded_value) {
+		return html_entity_decode(encoded_value, 'ENT_QUOTES', 'UTF-8');
+	}
+
+    function can_decode (atts) {
+		return atts._made_with_builder;
+    }
 
 	/////////////
 
@@ -355,5 +390,48 @@ fwShortcodesJSONCoder = (function ($) {
 		}
 
 		return hashMap
+	}
+
+	function html_entity_decode (string, quoteStyle) { // eslint-disable-line camelcase
+		//  discuss at: http://locutus.io/php/html_entity_decode/
+		// original by: john (http://www.jd-tech.net)
+		//    input by: ger
+		//    input by: Ratheous
+		//    input by: Nick Kolosov (http://sammy.ru)
+		// improved by: Kevin van Zonneveld (http://kvz.io)
+		// improved by: marc andreu
+		//  revised by: Kevin van Zonneveld (http://kvz.io)
+		//  revised by: Kevin van Zonneveld (http://kvz.io)
+		// bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
+		// bugfixed by: Brett Zamir (http://brett-zamir.me)
+		// bugfixed by: Fox
+		//   example 1: html_entity_decode('Kevin &amp; van Zonneveld')
+		//   returns 1: 'Kevin & van Zonneveld'
+		//   example 2: html_entity_decode('&amp;lt;')
+		//   returns 2: '&lt;'
+
+		var tmpStr = ''
+		var entity = ''
+		var symbol = ''
+		tmpStr = string.toString()
+
+		var hashMap = get_html_translation_table('HTML_ENTITIES', quoteStyle)
+		if (hashMap === false) {
+			return false
+		}
+
+		// @todo: &amp; problem
+		// http://locutus.io/php/get_html_translation_table:416#comment_97660
+		delete (hashMap['&'])
+		hashMap['&'] = '&amp;'
+
+		for (symbol in hashMap) {
+			entity = hashMap[symbol]
+			tmpStr = tmpStr.split(entity).join(symbol)
+		}
+
+		tmpStr = tmpStr.split('&#039;').join("'")
+
+		return tmpStr
 	}
 })();
