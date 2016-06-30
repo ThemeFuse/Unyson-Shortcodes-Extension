@@ -8,3 +8,13 @@ if (!is_admin()) {
 		fw()->manifest->get_version()
 	);
 }
+
+if (is_admin()) {
+	wp_enqueue_script(
+		'fw-ext-shortcodes-editor-integration',
+		fw_ext('shortcodes')->locate_js_URI('json-coder'),
+		array(),
+		fw_ext('shortcodes')->manifest->get('version'),
+		true
+	);
+}
