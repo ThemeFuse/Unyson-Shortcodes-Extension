@@ -44,6 +44,10 @@ class FW_Extension_Shortcodes extends FW_Extension
 		add_action('init', array($this, '_action_init'),
 			11 // register shortcodes later than other plugins (there were some problems with the `column` shortcode)
 		);
+		add_action(
+			'fw:option_type:wp-editor:editor_shortcodes_scripts',
+			array($this, '_action_editor_shortcodes')
+		);
 
 		// renders the shortcodes so that css will get in <head>
 		add_action(
@@ -66,6 +70,11 @@ class FW_Extension_Shortcodes extends FW_Extension
 	public function _action_fw_extensions_init()
 	{
 		$this->load_shortcodes();
+	}
+
+	public function _action_editor_shortcodes()
+	{
+		wp_enqueue_script('fw-ext-shortcodes-editor-integration');
 	}
 
 	public function _action_init() {
@@ -118,7 +127,7 @@ class FW_Extension_Shortcodes extends FW_Extension
 		$this->enqueue_shortcodes_static($post->post_content);
 	}
 
-	private function enqueue_shortcodes_static( $content ) {
+	public function enqueue_shortcodes_static( $content ) {
 		preg_replace_callback( '/'. get_shortcode_regex() .'/s', array( $this, 'enqueue_shortcode_static'), $content );
 	}
 
