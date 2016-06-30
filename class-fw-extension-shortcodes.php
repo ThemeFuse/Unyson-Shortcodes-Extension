@@ -45,7 +45,7 @@ class FW_Extension_Shortcodes extends FW_Extension
 			11 // register shortcodes later than other plugins (there were some problems with the `column` shortcode)
 		);
 		add_action(
-			'fw:option_type:wp-editor:editor_shortcodes_scripts',
+			'fw:option-type:wp-editor:enqueue-scripts',
 			array($this, '_action_editor_shortcodes')
 		);
 
