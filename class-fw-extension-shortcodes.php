@@ -127,6 +127,10 @@ class FW_Extension_Shortcodes extends FW_Extension
 		$this->enqueue_shortcodes_static($post->post_content);
 	}
 
+	/**
+	 * @see fw_ext_shortcodes_enqueue_shortcodes_static()
+	 * @param string $content
+	 */
 	public function enqueue_shortcodes_static( $content ) {
 		preg_replace_callback( '/'. get_shortcode_regex() .'/s', array( $this, 'enqueue_shortcode_static'), $content );
 	}
