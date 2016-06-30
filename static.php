@@ -8,3 +8,12 @@ if (!is_admin()) {
 		fw()->manifest->get_version()
 	);
 }
+
+wp_register_script(
+	'fw-ext-shortcodes-editor-integration',
+	fw_ext('shortcodes')->get_uri('/static/js/json-coder.js'),
+	array(),
+	fw_ext('shortcodes')->manifest->get('version'),
+	true
+);
+

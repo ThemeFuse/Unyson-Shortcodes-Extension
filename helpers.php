@@ -21,3 +21,10 @@ function fw_ext_shortcodes_decode_attr(array $attributes, $shortcode_tag, $post_
 
 	return $attributes;
 }
+/**
+ * Parse string, extract shortcodes and enqueue their static files
+ * @param string $content 'Hello [shortcode1 attr1="..."] World'
+ */
+function fw_ext_shortcodes_enqueue_shortcodes_static($content) {
+	fw_ext('shortcodes')->enqueue_shortcodes_static($content);
+}
