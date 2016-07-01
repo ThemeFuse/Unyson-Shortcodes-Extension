@@ -190,8 +190,16 @@ class FW_Extension_Shortcodes extends FW_Extension
 			if (!class_exists('FW_Ext_Shortcodes_Attr_Coder_JSON')) {
 				require_once dirname(__FILE__) . '/includes/coder/class-fw-ext-shortcodes-attr-coder-json.php';
 			}
+
+			if (!class_exists('FW_Ext_Shortcodes_Attr_Coder_Aggressive')) {
+				require_once dirname(__FILE__) . '/includes/coder/class-fw-ext-shortcodes-attr-coder-aggressive.php';
+			}
+
 			$coder_json = new FW_Ext_Shortcodes_Attr_Coder_JSON();
 			$this->coders[ $coder_json->get_id() ] = $coder_json;
+
+			$coder_aggressive = new FW_Ext_Shortcodes_Attr_Coder_Aggressive();
+			$this->coders[ $coder_aggressive->get_id() ] = $coder_aggressive;
 
 			if (!class_exists('FW_Ext_Shortcodes_Attr_Coder_Post_Meta')) {
 				require_once dirname(__FILE__) . '/includes/coder/class-fw-ext-shortcodes-attr-coder-post-meta.php';
