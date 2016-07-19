@@ -35,6 +35,8 @@
 	font-size: 15px;
 	padding: 7px 25px;
 	text-decoration: none;
+	border-bottom: none;
+	box-shadow: none;
 }
 .fw-tabs-container .fw-tabs ul li a:focus {
 	outline: medium none;
@@ -60,6 +62,12 @@
 	display: none;
 	margin-top: -1px;
 	padding: 20px 30px;
+}
+.fw-tabs-container.ui-tabs .fw-tab-content {
+	display: block;
+}
+.fw-tabs-container.ui-tabs .fw-tab-content.ui-tabs-hide {
+	display: none;
 }
 .fw-tabs-container .fw-tab-content img {
 	float: left;
