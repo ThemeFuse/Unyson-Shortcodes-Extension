@@ -84,7 +84,7 @@ class FW_Ext_Shortcodes_Attr_Coder_JSON implements FW_Ext_Shortcodes_Attr_Coder 
 		return $decoded;
 	}
 
-	private function decode_value($encoded_value) {
+	public function decode_value($encoded_value) {
 		return html_entity_decode($encoded_value, ENT_QUOTES, 'UTF-8');
 	}
 

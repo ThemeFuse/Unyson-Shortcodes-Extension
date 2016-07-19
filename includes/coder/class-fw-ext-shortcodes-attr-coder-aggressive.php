@@ -87,7 +87,7 @@ class FW_Ext_Shortcodes_Attr_Coder_Aggressive implements FW_Ext_Shortcodes_Attr_
 		return $decoded;
 	}
 
-	private function decode_value($value) {
+	public function decode_value($value) {
 		return str_replace(
 			$this->symbol_table['second'],
 			$this->symbol_table['first'],
