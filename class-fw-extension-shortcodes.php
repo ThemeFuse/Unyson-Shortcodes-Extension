@@ -173,6 +173,14 @@ class FW_Extension_Shortcodes extends FW_Extension
 			));
 
 			$this->enqueue_shortcodes_static($shortcode[5]); // inner shortcodes
+
+			/**
+			 * @since 1.3.18
+			 */
+			do_action(
+				'fw_ext_shortcodes:after_shortcode_enqueue_static',
+				$shortcode
+			);
 		}
 	}
 
