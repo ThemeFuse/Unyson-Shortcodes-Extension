@@ -9,10 +9,11 @@ class FW_Ext_Shortcodes_Attr_Coder_Aggressive implements FW_Ext_Shortcodes_Attr_
 
 	private $symbol_table = array(
 		'first' => array(
-			'[',        ']',        "\"",       '\'',       '&'
+			'[',        ']',        "\"",       '\'',       '&',         '=',         '\\'
 		),
+
 		'second' => array(
-			'__fwlb__', '__fwrb__', '__fwdq__', '__fwsq__', '__fwamp__'
+			'__fwlb__', '__fwrb__', '__fwdq__', '__fwsq__', '__fwamp__', '__fweql__', '__fwbck__'
 		)
 	);
 
@@ -67,6 +68,7 @@ class FW_Ext_Shortcodes_Attr_Coder_Aggressive implements FW_Ext_Shortcodes_Attr_
 		if (! $this->can_decode($attributes, $shortcode_tag, $post_id)) {
 			return $attributes;
 		}
+
 
 		unset($attributes['_fw_coder']);
 

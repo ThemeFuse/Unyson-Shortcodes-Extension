@@ -1,10 +1,10 @@
 fwShortcodesAggressiveCoder = (function ($) {
 	var SYMBOL_TABLE = {
 		first: [
-			'[',        ']',        "\"",       '\'',       '&'
+			'[',        ']',        "\"",       '\'',       '&',         '=',         '\\'
 		],
 		second: [
-			'__fwlb__', '__fwrb__', '__fwdq__', '__fwsq__', '__fwamp__'
+			'__fwlb__', '__fwrb__', '__fwdq__', '__fwsq__', '__fwamp__', '__fweql__', '__fwbck__'
 		]
 	};
 
