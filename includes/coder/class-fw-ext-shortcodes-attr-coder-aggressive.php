@@ -7,15 +7,21 @@ class FW_Ext_Shortcodes_Attr_Coder_Aggressive implements FW_Ext_Shortcodes_Attr_
 		return 'aggressive';
 	}
 
-	private $symbol_table = array(
-		'first' => array(
-			'[',        ']',        "\"",       '\'',       '&',         '=',         '\\'
-		),
+	private $symbol_table = array();
 
-		'second' => array(
-			'__fwlb__', '__fwrb__', '__fwdq__', '__fwsq__', '__fwamp__', '__fweql__', '__fwbck__'
-		)
-	);
+	public function __construct() {
+		foreach (array(
+			'['  => 'º',
+			']'  => '¹',
+			'"'  => '²',
+			"'"  => '³',
+			'&'  => '¯',
+			'='  => '´',
+			'\\' => 'ª',
+		) as $original => $encoded) {
+			$this->symbol_table[$original] = '‹¡'. $encoded .'¡›'; // Extended ASCII codes http://www.ascii-code.com/
+		}
+	}
 
 	/**
 	 * @param array $attributes
@@ -52,8 +58,8 @@ class FW_Ext_Shortcodes_Attr_Coder_Aggressive implements FW_Ext_Shortcodes_Attr_
 
 	private function encode_value($value) {
 		return str_replace(
-			$this->symbol_table['first'],
-			$this->symbol_table['second'],
+			array_keys($this->symbol_table),
+			array_values($this->symbol_table),
 			$value
 		);
 	}
@@ -91,8 +97,8 @@ class FW_Ext_Shortcodes_Attr_Coder_Aggressive implements FW_Ext_Shortcodes_Attr_
 
 	public function decode_value($value) {
 		return str_replace(
-			$this->symbol_table['second'],
-			$this->symbol_table['first'],
+			array_values($this->symbol_table),
+			array_keys($this->symbol_table),
 			$value
 		);
 	}
