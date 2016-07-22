@@ -1,11 +1,11 @@
 fwShortcodesAggressiveCoder = (function ($) {
 	var SYMBOL_TABLE = { // @see php class FW_Ext_Shortcodes_Attr_Coder_Aggressive
 		first: [
-			'[', ']', '"', "'", '&', '=', '\\'
+			'[', ']', '"', "'", '&', '=', '\\', '<', '>'
 		],
 		second: [
-			'º', '¹', '²', '³', '¯', '´', 'ª'
-		].map(function(val){ return '‹¡'+ val +'¡›'; })
+			'º', '¹', '²', '³', '¯', '´', 'ª', '¨', '˜'
+		].map(function(val){ return '‹'+ val +'›'; })
 	};
 
 	return {
@@ -74,7 +74,7 @@ fwShortcodesAggressiveCoder = (function ($) {
 					decode_value(atts._array_keys)
 				);
 			} catch (e) {
-				console.error('Shortcode attribute decode failed', atts, e);
+				console.error('Shortcode attribute decode failed', decode_value(atts._array_keys), e);
 				return {};
 			}
 
@@ -83,19 +83,19 @@ fwShortcodesAggressiveCoder = (function ($) {
 
 		var decoded = {};
 
-		try {
-			_.each(
-				atts,
-				function (value, key) {
-					decoded[key] = array_keys[key]
-						? JSON.parse(decode_value(value))
-						: decode_value(value);
+		_.each(
+			atts,
+			function (value, key) {
+				try {
+				decoded[key] = array_keys[key]
+					? JSON.parse(decode_value(value))
+					: decode_value(value);
+				} catch (e) {
+					console.error('Shortcode attribute decode failed', decode_value(value), e);
+					return {};
 				}
-			);
-		} catch (e) {
-			console.error('Shortcode attribute decode failed', atts, e);
-			return {};
-		}
+			}
+		);
 
 		return decoded;
 	}

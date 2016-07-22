@@ -18,8 +18,10 @@ class FW_Ext_Shortcodes_Attr_Coder_Aggressive implements FW_Ext_Shortcodes_Attr_
 			'&'  => '¯',
 			'='  => '´',
 			'\\' => 'ª',
+			'<'  => '¨',
+			'>'  => '˜',
 		) as $original => $encoded) {
-			$this->symbol_table[$original] = '‹¡'. $encoded .'¡›'; // Extended ASCII codes http://www.ascii-code.com/
+			$this->symbol_table[$original] = '‹'. $encoded .'›'; // Extended ASCII codes http://www.ascii-code.com/
 		}
 	}
 

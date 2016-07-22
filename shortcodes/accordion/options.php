@@ -15,7 +15,7 @@ $options = array(
 				'label' => __('Title', 'fw')
 			),
 			'tab_content' => array(
-				'type'  => 'textarea',
+				'type'  => 'wp-editor',
 				'label' => __('Content', 'fw')
 			)
 		)
