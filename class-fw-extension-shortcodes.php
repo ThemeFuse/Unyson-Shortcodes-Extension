@@ -44,8 +44,13 @@ class FW_Extension_Shortcodes extends FW_Extension
 		add_action('init', array($this, '_action_init'),
 			11 // register shortcodes later than other plugins (there were some problems with the `column` shortcode)
 		);
+
+		/**
+		 * We need aggressive only for wp-editor, at least for now.
+		 * https://github.com/ThemeFuse/Unyson/issues/1807#issuecomment-235243578
+		 */
 		add_action(
-			'fw:option-type:wp-editor:enqueue-scripts',
+			'wp_enqueue_editor',
 			array($this, '_action_editor_shortcodes')
 		);
 
