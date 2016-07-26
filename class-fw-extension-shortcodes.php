@@ -117,6 +117,8 @@ class FW_Extension_Shortcodes extends FW_Extension
 	 */
 	public function _action_enqueue_shortcodes_static_in_frontend_head()
 	{
+		do_action('fw:ext:shortcodes:enqueue_custom_content');
+
 		/** @var WP_Post $post */
 		global $post;
 
