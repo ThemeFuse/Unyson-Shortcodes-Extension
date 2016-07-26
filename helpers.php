@@ -35,3 +35,28 @@ function fw_ext_shortcodes_enqueue_shortcodes_static($content) {
 
 	$shortcodes_ext->enqueue_shortcodes_static($content);
 }
+
+/**
+ * Enqueue admin scripts for each shortcode
+ * @since 1.3.18
+ */
+function fw_ext_shortcodes_enqueue_shortcodes_admin_scripts() {
+	static $has_run = false;
+
+	if ($has_run) {
+		return;
+	}
+
+	$has_run = true;
+
+	/**
+	 * @var FW_Extension_Shortcodes $shortcodes_ext
+	 */
+	$shortcodes_ext = fw_ext('shortcodes');
+
+	foreach ($shortcodes_ext->get_shortcodes() as $shortcode) {
+		fw()->backend->enqueue_options_static($shortcode->get_options());
+	}
+
+	do_action('fw:ext:shortcodes:enqueue-shortcodes-admin-scripts');
+}
