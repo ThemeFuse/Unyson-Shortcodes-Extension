@@ -176,6 +176,9 @@
 				delete attributes['_items'];
 
 				clonedColumn = new PageBuilderColumnItem(attributes);
+
+				triggerEvent(clonedColumn, 'clone-item:before');
+
 				this.model.collection.add(clonedColumn, {at: index + 1});
 				clonedColumn.get('_items').reset(_items);
 			},
