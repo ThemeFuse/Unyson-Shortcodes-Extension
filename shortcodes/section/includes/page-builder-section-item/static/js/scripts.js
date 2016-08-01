@@ -101,6 +101,7 @@
 
 								'<i class="dashicons dashicons-admin-page custom-section-clone" data-hover-tip="<%- duplicate %>"></i>' +
 								'<i class="dashicons dashicons-no custom-section-delete" data-hover-tip="<%- remove %>"></i>' +
+								'<i class="dashicons dashicons-arrow-down custom-section-collapse" data-hover-tip="<%- collapse %>"></i>' +
 							'</div>' +
 						'</div>' +
 					'</div>' +
@@ -139,6 +140,13 @@
 				this.defaultRender(
 					jQuery.extend({}, this.templateData, {title: title})
 				);
+			
+				var collapse = this.model.get('fw-collapse');
+				if( collapse ) {
+				    this.$el.find('.builder-items:first').addClass('fw-hidden');
+				} else {
+				    this.$el.find('.builder-items:first').removeClass('fw-hidden');
+				}
 
 				/**
 				 * Other scripts can append/prepend other control $elements
@@ -153,7 +161,8 @@
 				'click': 'editOptions',
 				'click .edit-options': 'editOptions',
 				'click .custom-section-clone': 'cloneItem',
-				'click .custom-section-delete': 'removeItem'
+				'click .custom-section-delete': 'removeItem',
+				'click .custom-section-collapse': 'collapseItem'
 			},
 			editOptions: function (e) {
 				e.stopPropagation();
@@ -203,6 +212,17 @@
 
 				this.remove();
 				this.model.collection.remove(this.model);
+			},
+			collapseItem: function(e) {
+			    e.stopPropagation();
+			    var elements = this.$el.find('.builder-items:first');
+			    if( ! elements.hasClass('fw-hidden') ) {
+				elements.addClass('fw-hidden');
+				this.model.set('fw-collapse', true);
+			    } else {
+				elements.removeClass('fw-hidden');
+				this.model.set('fw-collapse', false);
+			    }
 			}
 		});
 
@@ -218,9 +238,10 @@
 					modalSize: itemData.popup_size,
 					templateData: {
 						hasOptions: !!itemData.options,
-                        edit : itemData.l10n.edit,
-                        duplicate : itemData.l10n.duplicate,
-                        remove : itemData.l10n.remove,
+						edit : itemData.l10n.edit,
+						duplicate : itemData.l10n.duplicate,
+						remove : itemData.l10n.remove,
+						collapse : itemData.l10n.collapse,
 						title: itemData.title
 					}
 				});

@@ -73,6 +73,7 @@ class Page_Builder_Column_Item extends Page_Builder_Item {
 			'edit' => __( 'Edit', 'fw' ),
 			'duplicate' => __( 'Duplicate', 'fw' ),
 			'remove' => __( 'Remove', 'fw' ),
+			'collapse' => __( 'Collapse', 'fw' ),
 			'title' => __( 'Column', 'fw' ),
 		);
 
