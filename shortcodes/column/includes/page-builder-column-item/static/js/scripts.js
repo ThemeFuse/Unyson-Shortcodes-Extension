@@ -126,10 +126,13 @@
 				this.widthChangerView.delegateEvents();
 
 				var collapse = this.model.get('fw-collapse');
+				var controls = this.$el.find('.controls .column-item-collapse:first');
 				if( collapse ) {
 				    this.$el.find('.builder-items:first').addClass('fw-hidden');
+				    controls.removeClass('dashicons-arrow-down').addClass('dashicons-arrow-up');
 				} else {
 				    this.$el.find('.builder-items:first').removeClass('fw-hidden');
+				    controls.removeClass('dashicons-arrow-up').addClass('dashicons-arrow-down');
 				}
 
 				/**
