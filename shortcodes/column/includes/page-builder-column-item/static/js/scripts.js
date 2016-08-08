@@ -17,10 +17,7 @@
 					builder: builder
 				};
 
-				fwEvents.trigger(event, eventData
-					? _.extend(eventData, data)
-					: data
-				);
+				fwEvents.trigger(event, eventData ? _.extend(eventData, data) : data);
 			},
 			getEventName = function(itemModel, event) {
 				return 'fw:builder-type:{builder-type}:item-type:{item-type}:'
@@ -99,24 +96,24 @@
 			},
 			template: _.template(
 				'<div class="pb-item-type-column pb-item <% if (hasOptions) { print(' + '"has-options"' + ')} %>">' +
-					'<div class="panel fw-row">' +
-						'<div class="panel-left fw-col-xs-6">' +
-							'<div class="width-changer"></div>' +
-						'</div>' +
-						'<div class="panel-right fw-col-xs-6">' +
-							'<div class="controls">' +
+				/**/'<div class="panel fw-row">' +
+				/**//**/'<div class="panel-left fw-col-xs-6">' +
+				/**//**//**/'<div class="width-changer"></div>' +
+				/**//**/'</div>' +
+				/**//**/'<div class="panel-right fw-col-xs-6">' +
+				/**//**//**/'<div class="controls">' +
 
-								'<% if (hasOptions) { %>' +
-								'<i class="dashicons dashicons-admin-generic edit-options" data-hover-tip="<%- edit %>"></i>' +
-								'<% } %>' +
+				/**//**//**//**/'<% if (hasOptions) { %>' +
+				/**//**//**//**/'<i class="dashicons dashicons-admin-generic edit-options" data-hover-tip="<%- edit %>"></i>' +
+				/**//**//**//**/'<% } %>' +
 
-								'<i class="dashicons dashicons-admin-page column-item-clone" data-hover-tip="<%- duplicate %>"></i>' +
-								'<i class="dashicons dashicons-no column-item-delete" data-hover-tip="<%- remove %>"></i>' +
-								'<i class="dashicons dashicons-arrow-down column-item-collapse" data-hover-tip="<%- collapse %>"></i>' +
-							'</div>' +
-						'</div>' +
-					'</div>' +
-					'<div class="builder-items"></div>' +
+				/**//**//**//**/'<i class="dashicons dashicons-admin-page column-item-clone" data-hover-tip="<%- duplicate %>"></i>' +
+				/**//**//**//**/'<i class="dashicons dashicons-no column-item-delete" data-hover-tip="<%- remove %>"></i>' +
+				/**//**//**//**/'<i class="dashicons dashicons-arrow-down column-item-collapse" data-hover-tip="<%- collapse %>"></i>' +
+				/**//**//**/'</div>' +
+				/**//**/'</div>' +
+				/**/'</div>' +
+				/**/'<div class="builder-items"></div>' +
 				'</div>'
 			),
 			render: function() {
@@ -125,15 +122,7 @@
 				this.$('.width-changer').append(this.widthChangerView.$el);
 				this.widthChangerView.delegateEvents();
 
-				var collapse = this.model.get('fw-collapse');
-				var controls = this.$el.find('.controls .column-item-collapse:first');
-				if( collapse ) {
-				    this.$el.find('.builder-items:first').addClass('fw-hidden');
-				    controls.removeClass('dashicons-arrow-down').addClass('dashicons-arrow-up');
-				} else {
-				    this.$el.find('.builder-items:first').removeClass('fw-hidden');
-				    controls.removeClass('dashicons-arrow-up').addClass('dashicons-arrow-down');
-				}
+				this.$el[this.model.get('fw-collapse') ? 'addClass' : 'removeClass']('pb-item-column-collapsed');
 
 				/**
 				 * Other scripts can append/prepend other control $elements
@@ -201,15 +190,8 @@
 				this.model.collection.remove(this.model);
 			},
 			collapseItem: function(e) {
-			    e.stopPropagation();
-			    var elements = this.$el.find('.builder-items:first');
-			    if( ! elements.hasClass('fw-hidden') ) {
-				elements.addClass('fw-hidden');
-				this.model.set('fw-collapse', true);
-			    } else {
-				elements.removeClass('fw-hidden');
-				this.model.set('fw-collapse', false);
-			    }
+				e.stopPropagation();
+				this.model.set('fw-collapse', !this.model.get('fw-collapse'));
 			}
 		});
 

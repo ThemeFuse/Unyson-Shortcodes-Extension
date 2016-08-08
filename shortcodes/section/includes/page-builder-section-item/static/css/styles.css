@@ -5,3 +5,16 @@
 .pb-item-type-column.pb-item .column-title {
 	margin-left: 6px;
 }
+
+
+/* collapsed */
+
+.builder-item.pb-item-section-collapsed > .pb-item-type-column > .panel .custom-section-collapse:before {
+	content: "\f142"; /* .dashicons-arrow-up */
+}
+
+.builder-item.pb-item-section-collapsed > .pb-item-type-column > .builder-items {
+	display: none;
+}
+
+/* end: collapsed */

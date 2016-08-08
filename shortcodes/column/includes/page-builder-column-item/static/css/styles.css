@@ -66,3 +66,16 @@ body.rtl .pb-item-type-column > .panel .controls {
 .builder-item.fw-builder-item-deny-incoming-type > .pb-item-type-column .ui-sortable-placeholder {
 	display: none;
 }
+
+
+/* collapsed */
+
+.builder-item.pb-item-column-collapsed > .pb-item-type-column > .panel .column-item-collapse:before {
+	content: "\f142"; /* .dashicons-arrow-up */
+}
+
+.builder-item.pb-item-column-collapsed > .pb-item-type-column > .builder-items {
+	display: none;
+}
+
+/* end: collapsed */

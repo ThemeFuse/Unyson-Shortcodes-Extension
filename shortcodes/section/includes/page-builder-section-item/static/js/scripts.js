@@ -88,24 +88,24 @@
 			},
 			template: _.template(
 				'<div class="pb-item-type-column pb-item custom-section">' +
-					'<div class="panel fw-row">' +
-						'<div class="panel-left fw-col-xs-6">' +
-							'<div class="column-title"><%= title %></div>' +
-						'</div>' +
-						'<div class="panel-right fw-col-xs-6">' +
-							'<div class="controls">' +
+				/**/'<div class="panel fw-row">' +
+				/**//**/'<div class="panel-left fw-col-xs-6">' +
+				/**//**//**//**/'<div class="column-title"><%= title %></div>' +
+				/**//**/'</div>' +
+				/**//**/'<div class="panel-right fw-col-xs-6">' +
+				/**//**//**/'<div class="controls">' +
 
-								'<% if (hasOptions) { %>' +
-								'<i class="dashicons dashicons-admin-generic edit-options" data-hover-tip="<%- edit %>"></i>' +
-								'<%  } %>' +
+				/**//**//**//**/'<% if (hasOptions) { %>' +
+				/**//**//**//**/'<i class="dashicons dashicons-admin-generic edit-options" data-hover-tip="<%- edit %>"></i>' +
+				/**//**//**//**/'<%  } %>' +
 
-								'<i class="dashicons dashicons-admin-page custom-section-clone" data-hover-tip="<%- duplicate %>"></i>' +
-								'<i class="dashicons dashicons-no custom-section-delete" data-hover-tip="<%- remove %>"></i>' +
-								'<i class="dashicons dashicons-arrow-down custom-section-collapse" data-hover-tip="<%- collapse %>"></i>' +
-							'</div>' +
-						'</div>' +
-					'</div>' +
-					'<div class="builder-items"></div>' +
+				/**//**//**//**/'<i class="dashicons dashicons-admin-page custom-section-clone" data-hover-tip="<%- duplicate %>"></i>' +
+				/**//**//**//**/'<i class="dashicons dashicons-no custom-section-delete" data-hover-tip="<%- remove %>"></i>' +
+				/**//**//**//**/'<i class="dashicons dashicons-arrow-down custom-section-collapse" data-hover-tip="<%- collapse %>"></i>' +
+				/**//**//**/'</div>' +
+				/**//**/'</div>' +
+				/**/'</div>' +
+				/**/'<div class="builder-items"></div>' +
 				'</div>'
 			),
 			render: function () {
@@ -140,16 +140,8 @@
 				this.defaultRender(
 					jQuery.extend({}, this.templateData, {title: title})
 				);
-			
-				var collapse = this.model.get('fw-collapse');
-				var controls = this.$el.find('.controls .custom-section-collapse:first');
-				if( collapse ) {
-				    this.$el.find('.builder-items:first').addClass('fw-hidden');
-				    controls.removeClass('dashicons-arrow-down').addClass('dashicons-arrow-up');
-				} else {
-				    this.$el.find('.builder-items:first').removeClass('fw-hidden');
-				    controls.removeClass('dashicons-arrow-up').addClass('dashicons-arrow-down');
-				}
+
+				this.$el[this.model.get('fw-collapse') ? 'addClass' : 'removeClass']('pb-item-section-collapsed');
 
 				/**
 				 * Other scripts can append/prepend other control $elements
@@ -216,16 +208,10 @@
 				this.remove();
 				this.model.collection.remove(this.model);
 			},
-			collapseItem: function(e) {
-			    e.stopPropagation();
-			    var elements = this.$el.find('.builder-items:first');
-			    if( ! elements.hasClass('fw-hidden') ) {
-				elements.addClass('fw-hidden');
-				this.model.set('fw-collapse', true);
-			    } else {
-				elements.removeClass('fw-hidden');
-				this.model.set('fw-collapse', false);
-			    }
+			collapseItem: function (e) {
+				e.stopPropagation();
+
+				this.model.set('fw-collapse', !this.model.get('fw-collapse'));
 			}
 		});
 
