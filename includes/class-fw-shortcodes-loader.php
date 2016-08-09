@@ -167,6 +167,22 @@ class _FW_Shortcodes_Loader
 			return;
 		}
 
+		if (class_exists('FW_File_Cache')) {
+			try {
+				$dirs = FW_File_Cache::get($cache_key = 'ext:shcd:ld:'. $ext_name .':'. $paths['path']);
+			} catch (FW_File_Cache_Not_Found_Exception $e) {
+				$dirs = glob($paths['path'] .'/*', GLOB_ONLYDIR);
+
+				FW_File_Cache::set($cache_key, $dirs);
+			}
+		} else {
+			$dirs = glob($paths['path'] .'/*', GLOB_ONLYDIR);
+		}
+
+		if (empty($dirs)) {
+			return;
+		}
+
 		// clean rewrite paths because it may contain nulls
 		if (isset($rewrites['paths'])) {
 			$cleared_rewrite_paths = array();
@@ -177,12 +193,6 @@ class _FW_Shortcodes_Loader
 					$cleared_rewrite_uris[]  = $rewrites['uris'][$key];
 				}
 			}
-		}
-
-		if ($dirs = glob($paths['path'] .'/*', GLOB_ONLYDIR)) {
-			// ok
-		} else {
-			return;
 		}
 
 		foreach ($dirs as $shortcode_path) {
