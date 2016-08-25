@@ -3,20 +3,20 @@
  *
  * Usage:
  *
- * fwUnysonShortcodesLoadData()
+ * fw.shortcodesLoadData()
  *   .then(function (response) {
  *     // actual data you want to use
  *     var shortcodes = response.data.shortcodes;
  *   }
  *
- *
  * @return jQuery.deferred
+ * @since 1.3.19
  */
-window.fwUnysonShortcodesLoadData = (function ($) {
+fw.shortcodesLoadData = (function ($) {
 	var promise = null;
 
 	return load;
-	
+
 	function load () {
 		if (promise) {
 			return promise;
@@ -36,14 +36,15 @@ window.fwUnysonShortcodesLoadData = (function ($) {
 })(jQuery);
 
 /**
- * Get underlying data from fwUnysonShortcodesLoadData() promise.
+ * Get underlying data from fw.shortcodesLoadData() promise.
  * Should be used only when you are 100% sure that promise from the first
  * function is already resolved. It will return null if promise is pending.
  *
  * @return object | null
+ * @since 1.3.19
  */
-function fwUnysonShortcodesData () {
-	var promise = fwUnysonShortcodesLoadData();
+fw.unysonShortcodesData = function fwUnysonShortcodesData () {
+	var promise = fw.shortcodesLoadData();
 	var data = null;
 
 	if (promise.state() === 'resolved') {

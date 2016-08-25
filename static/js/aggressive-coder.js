@@ -1,4 +1,7 @@
-fwShortcodesAggressiveCoder = (function ($) {
+/**
+ * @since 1.3.19
+ */
+fw.shortcodesAggressiveCoder = (function ($) {
 	var SYMBOL_TABLE = { // @see php class FW_Ext_Shortcodes_Attr_Coder_Aggressive
 		first: [
 			'[', ']', '"', "'", '&', '=', '\\', '<', '>'
