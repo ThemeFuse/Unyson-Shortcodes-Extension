@@ -4,10 +4,10 @@
 fw.shortcodesAggressiveCoder = (function ($) {
 	var SYMBOL_TABLE = { // @see php class FW_Ext_Shortcodes_Attr_Coder_Aggressive
 		first: [
-			'[', ']', '"', "'", '&', '=', '\\', '<', '>'
+			'‹', '[', ']', '"', "'", '&', '=', '\\', '<', '>'
 		],
 		second: [
-			'º', '¹', '²', '³', '¯', '´', 'ª', '¨', '˜'
+			'ˆ', 'º', '¹', '²', '³', '¯', '´',  'ª', '¨', '˜'
 		].map(function(val){ return '‹'+ val +'›'; })
 	};
 
@@ -26,22 +26,19 @@ fw.shortcodesAggressiveCoder = (function ($) {
 	 * Mainly used for dynamic encoding of values from fw.OptionsModal().
 	 */
 	function encode (atts) {
-		var encoded = {};
-		var array_keys = {};
+		var encoded = {},
+			array_keys = {};
 
-		_.each(
-			atts,
-			function (value, key) {
-				key = str_replace('-', '_', key);
+		_.each(atts, function (value, key) {
+			key = str_replace('-', '_', key);
 
-				if (_.isObject(value)) {
-					value = JSON.stringify(value);
-					array_keys[key] = key;
-				}
-
-				encoded[key] = encode_value(value);
+			if (_.isObject(value)) {
+				value = JSON.stringify(value);
+				array_keys[key] = key;
 			}
-		)
+
+			encoded[key] = encode_value(value);
+		});
 
 		if (! _.isEmpty(array_keys)) {
 			encoded['_array_keys'] = encode_value(
@@ -73,9 +70,7 @@ fw.shortcodesAggressiveCoder = (function ($) {
 
 		if (atts._array_keys) {
 			try {
-				array_keys = JSON.parse(
-					decode_value(atts._array_keys)
-				);
+				array_keys = JSON.parse(decode_value(atts._array_keys));
 			} catch (e) {
 				console.error('Shortcode attribute decode failed', decode_value(atts._array_keys), e);
 				return {};
@@ -86,27 +81,24 @@ fw.shortcodesAggressiveCoder = (function ($) {
 
 		var decoded = {};
 
-		_.each(
-			atts,
-			function (value, key) {
-				try {
+		_.each(atts, function (value, key) {
+			try {
 				decoded[key] = array_keys[key]
 					? JSON.parse(decode_value(value))
 					: decode_value(value);
-				} catch (e) {
-					console.error('Shortcode attribute decode failed', decode_value(value), e);
-					return {};
-				}
+			} catch (e) {
+				console.error('Shortcode attribute decode failed', decode_value(value), e);
+				return {};
 			}
-		);
+		});
 
 		return decoded;
 	}
 
 	function decode_value (encoded_value) {
 		return str_replace(
-			SYMBOL_TABLE.second,
-			SYMBOL_TABLE.first,
+			SYMBOL_TABLE.second.slice().reverse(), // note: .slice() used to prevent reverse the original array
+			SYMBOL_TABLE.first.slice().reverse(),
 			encoded_value
 		);
 	}

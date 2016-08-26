@@ -10,7 +10,16 @@ class FW_Ext_Shortcodes_Attr_Coder_Aggressive implements FW_Ext_Shortcodes_Attr_
 	private $symbol_table = array();
 
 	public function __construct() {
+		$before = '‹';
+		$after  = '›';
+
+		// Extended ASCII codes http://www.ascii-code.com/
 		foreach (array(
+			/**
+			 * Fixes https://github.com/ThemeFuse/Unyson-WP-Shortcodes-Extension/issues/2
+			 * Important! The order matters, it must be or first or last, and exactly the same must be in js coder
+			 */
+			$before  => 'ˆ',
 			'['  => 'º',
 			']'  => '¹',
 			'"'  => '²',
@@ -21,7 +30,7 @@ class FW_Ext_Shortcodes_Attr_Coder_Aggressive implements FW_Ext_Shortcodes_Attr_
 			'<'  => '¨',
 			'>'  => '˜',
 		) as $original => $encoded) {
-			$this->symbol_table[$original] = '‹'. $encoded .'›'; // Extended ASCII codes http://www.ascii-code.com/
+			$this->symbol_table[$original] = $before . $encoded . $after;
 		}
 	}
 
@@ -73,7 +82,7 @@ class FW_Ext_Shortcodes_Attr_Coder_Aggressive implements FW_Ext_Shortcodes_Attr_
 	 * @return array|WP_Error
 	 */
 	public function decode(array $attributes, $shortcode_tag, $post_id) {
-		if (! $this->can_decode($attributes, $shortcode_tag, $post_id)) {
+		if (!$this->can_decode($attributes, $shortcode_tag, $post_id)) {
 			return $attributes;
 		}
 
@@ -99,8 +108,8 @@ class FW_Ext_Shortcodes_Attr_Coder_Aggressive implements FW_Ext_Shortcodes_Attr_
 
 	public function decode_value($value) {
 		return str_replace(
-			array_values($this->symbol_table),
-			array_keys($this->symbol_table),
+			array_reverse(array_values($this->symbol_table)),
+			array_reverse(array_keys($this->symbol_table)),
 			$value
 		);
 	}
