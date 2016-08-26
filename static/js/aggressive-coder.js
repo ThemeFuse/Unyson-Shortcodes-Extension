@@ -1,5 +1,5 @@
 /**
- * @since 1.3.19
+ * @since 1.3.18
  */
 fw.shortcodesAggressiveCoder = (function ($) {
 	var SYMBOL_TABLE = { // @see php class FW_Ext_Shortcodes_Attr_Coder_Aggressive
