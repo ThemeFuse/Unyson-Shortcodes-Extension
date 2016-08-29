@@ -7,12 +7,14 @@ class FW_Shortcode_Table extends FW_Shortcode {
 	 * @internal
 	 */
 	public function _init() {
-		$this->load_option_type();
+		add_action('fw_option_types_init', array($this, '_action_load_option_type'));
 	}
 
-	private function load_option_type() {
-		require $this->locate_path( '/includes/fw-option-type-table/class-fw-option-type-table.php' );
-		require $this->locate_path( '/includes/fw-option-type-textarea-cell/class-fw-option-type-textarea-cell.php' );
+	public function _action_load_option_type() {
+		$dir = dirname(__FILE__);
+
+		require_once $dir .'/includes/fw-option-type-table/class-fw-option-type-table.php';
+		require_once $dir .'/includes/fw-option-type-textarea-cell/class-fw-option-type-textarea-cell.php';
 	}
 
 	protected function _render( $atts, $content = null, $tag = '' ) {
