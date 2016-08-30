@@ -11,10 +11,14 @@ class FW_Shortcode_Table extends FW_Shortcode {
 	}
 
 	public function _action_load_option_type() {
-		$dir = dirname(__FILE__);
-
-		require_once $dir .'/includes/fw-option-type-table/class-fw-option-type-table.php';
-		require_once $dir .'/includes/fw-option-type-textarea-cell/class-fw-option-type-textarea-cell.php';
+		/**
+		 * Important!
+		 * We can't replace here locate_path() with hardcoded path
+		 * because other theme developers already overwrote these in their themes
+		 * (it was a bad initial decision to allow this overwrite)
+		 */
+		require_once $this->locate_path('/includes/fw-option-type-table/class-fw-option-type-table.php');
+		require_once $this->locate_path('/includes/fw-option-type-textarea-cell/class-fw-option-type-textarea-cell.php');
 	}
 
 	protected function _render( $atts, $content = null, $tag = '' ) {
