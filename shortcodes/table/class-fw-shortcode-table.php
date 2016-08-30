@@ -8,6 +8,7 @@ class FW_Shortcode_Table extends FW_Shortcode {
 	 */
 	public function _init() {
 		add_action('fw_option_types_init', array($this, '_action_load_option_type'));
+		add_action('fw_ext_shortcodes_enqueue_static:table', array($this, '_action_enqueue_buttons'));
 	}
 
 	public function _action_load_option_type() {
@@ -21,8 +22,54 @@ class FW_Shortcode_Table extends FW_Shortcode {
 		require_once $this->locate_path('/includes/fw-option-type-textarea-cell/class-fw-option-type-textarea-cell.php');
 	}
 
-	protected function _render( $atts, $content = null, $tag = '' ) {
+	/**
+	 * Inside table shortcode can be added button shortcodes
+	 * these shortcodes can have custom options
+	 * and the action 'fw_ext_shortcodes_enqueue_static:button' must be executed for them
+	 * Fixes https://github.com/ThemeFuse/Unyson/issues/1936
+	 * @param array $data
+	 */
+	public function _action_enqueue_buttons ($data) {
+		$attr = fw_ext_shortcodes_decode_attr(
+			shortcode_parse_atts( $data['atts_string'] ),
+			'table', 0
+		);
 
+		if (is_wp_error($attr)) {
+			return;
+		}
+
+		/** @var FW_Extension_Shortcodes $shortcodes */
+		$shortcodes = fw_ext('shortcodes');
+
+		if ($button = $shortcodes->get_shortcode('button')) {
+			// Here is included `button/static.php` with `add_action('fw_ext_shortcodes_enqueue_static:button', ...`
+			$button->_enqueue_static();
+		} else {
+			return;
+		}
+
+		$coder = $shortcodes->get_attr_coder('json');
+
+		foreach ($attr['table']['rows'] as $ri => $row) {
+			if ('button-row' !== $row['name']) {
+				continue;
+			}
+
+			foreach ($attr['table']['content'][$ri] as $row) {
+				/**
+				 * Must be exactly the same as
+				 * https://github.com/ThemeFuse/Unyson-Shortcodes-Extension/blob/v1.3.19/class-fw-extension-shortcodes.php#L226-L237
+				 */
+				do_action('fw_ext_shortcodes_enqueue_static:button', array(
+					'atts_string' => fw_attr_to_html($coder->encode($row['button'], 'button', 0)),
+					'post' => $data['post'],
+				));
+			}
+		}
+	}
+
+	protected function _render( $atts, $content = null, $tag = '' ) {
 		if (
 			! isset( $atts['table'] )
 			|| ! isset( $atts['table']['header_options'] )
@@ -37,13 +84,10 @@ class FW_Shortcode_Table extends FW_Shortcode {
 			$view_file = $this->get_declared_path( '/views/tabular.php' );
 		}
 
-		$this->enqueue_static();
-
 		return fw_render_view( $view_file, array(
 			'atts'    => $atts,
 			'content' => $content,
 			'tag'     => $tag
 		) );
 	}
-
 }
