@@ -13,6 +13,7 @@ $options = array(
 				'label'   => __('Population Method', 'fw'),
 				'desc'    => __( 'Select calendar population method (Ex: events, custom)', 'fw' ),
 				'type'    => 'short-select',
+				'value'   => 'custom',
 				'choices' => $calendar_shortcode->_get_picker_dropdown_choices(),
 			)
 		),
@@ -23,6 +24,7 @@ $options = array(
 		'label'   => __('Calendar Type', 'fw' ),
 		'desc'    => __('Select calendar type', 'fw'),
 		'type'    => 'short-select',
+		'value'   => 'day',
 		'choices' => array(
 			'day'   => __('Daily', 'fw'),
 			'week'  => __('Weekly', 'fw'),
