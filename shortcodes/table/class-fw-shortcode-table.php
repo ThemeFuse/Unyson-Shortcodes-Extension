@@ -57,6 +57,10 @@ class FW_Shortcode_Table extends FW_Shortcode {
 			}
 
 			foreach ($attr['table']['content'][$ri] as $row) {
+				if (!isset($row['button'])) {
+					return;
+				}
+
 				/**
 				 * Must be exactly the same as
 				 * https://github.com/ThemeFuse/Unyson-Shortcodes-Extension/blob/v1.3.19/class-fw-extension-shortcodes.php#L226-L237
