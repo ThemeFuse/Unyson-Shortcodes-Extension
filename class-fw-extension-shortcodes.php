@@ -69,8 +69,33 @@ class FW_Extension_Shortcodes extends FW_Extension
 		);
 
 		add_action(
+			'admin_enqueue_scripts',
+			array($this, 'enqueue_admin_scripts')
+		);
+
+		add_action(
 			'wp_ajax_fw_ext_wp_shortcodes_data',
 			array($this, 'send_wp_shortcodes_data')
+		);
+	}
+
+	public function enqueue_admin_scripts() {
+		if (! is_admin()) return;
+
+		wp_register_script(
+			'fw-ext-shortcodes-editor-integration',
+			fw_ext('shortcodes')->get_uri('/static/js/aggressive-coder.js'),
+			array('fw'),
+			fw_ext('shortcodes')->manifest->get('version'),
+			true
+		);
+
+		wp_enqueue_script(
+			'fw-ext-shortcodes-load-shortcodes-data',
+			fw_ext('shortcodes')->get_uri('/static/js/load-shortcodes-data.js'),
+			array('fw'),
+			fw_ext('shortcodes')->manifest->get('version'),
+			true
 		);
 	}
 
