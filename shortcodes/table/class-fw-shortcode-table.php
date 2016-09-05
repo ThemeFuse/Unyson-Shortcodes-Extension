@@ -61,12 +61,17 @@ class FW_Shortcode_Table extends FW_Shortcode {
 					return;
 				}
 
+				$atts_string = '';
+				foreach ($coder->encode($row['button'], 'button', 0) as $attr_name => $attr_val) {
+					$atts_string .= $attr_name .'="'. $attr_val .'" ';
+				}
+
 				/**
 				 * Must be exactly the same as
 				 * https://github.com/ThemeFuse/Unyson-Shortcodes-Extension/blob/v1.3.19/class-fw-extension-shortcodes.php#L226-L237
 				 */
 				do_action('fw_ext_shortcodes_enqueue_static:button', array(
-					'atts_string' => fw_attr_to_html($coder->encode($row['button'], 'button', 0)),
+					'atts_string' => $atts_string,
 					'post' => $data['post'],
 				));
 			}
