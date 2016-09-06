@@ -41,17 +41,18 @@ class FW_Option_Type_Table extends FW_Option_Type
 			true
 		);
 
-		$localization_array = array(
-			'msgEdit' => __( 'Edit', 'fw' ),
-			'maxCols' => apply_filters( 'fw_ext_shortcodes_table_max_columns', 6 )
+		wp_localize_script(
+			'fw-option-' . $this->get_type(),
+			'localizeTableBuilder',
+			array(
+				'msgEdit' => __( 'Edit', 'fw' ),
+				'maxCols' => apply_filters( 'fw_ext_shortcodes_table_max_columns', 6 )
+			)
 		);
 
-
-		wp_localize_script( 'fw-option-' . $this->get_type(), 'localizeTableBuilder', $localization_array );
 		fw()->backend->option_type( 'popup' )->enqueue_static();
 		fw()->backend->option_type( 'textarea-cell' )->enqueue_static();
 	}
-
 
 	/**
 	 * @internal
@@ -71,6 +72,7 @@ class FW_Option_Type_Table extends FW_Option_Type
 		}
 
 		$this->replace_with_defaults( $option );
+
 		$view_path = $table_shortcode->get_declared_path() . '/includes/fw-option-type-table/views/view.php';
 
 		return fw_render_view( $view_path, array(
@@ -94,11 +96,37 @@ class FW_Option_Type_Table extends FW_Option_Type
 	 * @internal
 	 */
 	protected function _get_value_from_input( $option, $input_value ) {
-
 		if ( ! is_array( $input_value ) ) {
+			/**
+			 * Execute get_value_from_input() on custom options
+			 * because there may be `unique` option type that it must be updated
+			 */
+			foreach (array('button-row') as $row_type) {
+				if (isset($option['content_options'][$row_type])) {
+					$only_options = fw_extract_only_options($option['content_options'][$row_type]);
+
+					foreach ($option['value']['rows'] as $i => $row) {
+						if ($row['name'] !== $row_type) {
+							continue;
+						}
+
+						foreach ($option['value']['content'][$i] as &$row_values) {
+							/**
+							 * Move values in each $option['value'] because these values are in db format
+							 * not $inpute_value (html) format
+							 */
+							foreach ($only_options as $o_id => $o_o) {
+								$only_options[$o_id]['value'] = $row_values[$o_id];
+							}
+
+							$row_values = fw_get_options_values_from_input($only_options, array());
+						}
+					}
+				}
+			}
+
 			return $option['value'];
 		}
-
 
 		if ( ! isset( $input_value['content'] ) || empty( $input_value['content'] ) ) {
 			$input_value['content'] = $option['value']['content'];
@@ -121,6 +149,7 @@ class FW_Option_Type_Table extends FW_Option_Type
 		}
 
 		$value = array();
+
 		if ( is_array( $input_value ) ) {
 			if ( isset( $input_value['rows'] ) ) {
 				$i = 0;
@@ -138,7 +167,6 @@ class FW_Option_Type_Table extends FW_Option_Type
 				$value['header_options'] = $input_value['header_options'];
 			}
 
-
 			if ( isset( $input_value['content'] ) && is_array( $input_value['content'] ) ) {
 				$row_count = 0;
 				foreach ( $input_value['content'] as $row => $input_value_rows_data ) {
@@ -149,18 +177,24 @@ class FW_Option_Type_Table extends FW_Option_Type
 
 						foreach ( $option['content_options'][ $row_name ] as $id => $options ) {
 							if ( $value['cols'][$column]['name'] == 'desc-col' ) {
-								$cols[ $column ][ 'textarea' ] = fw()->backend->option_type( 'textarea-cell' )->get_value_from_input( $options, $input_value_cols_data[ 'default-row' ][ 'textarea-' . $row . '-' . $column ] );
+								$cols[ $column ][ 'textarea' ]
+									= fw()->backend->option_type( 'textarea-cell' )->get_value_from_input(
+										$options,
+										$input_value_cols_data[ 'default-row' ][ 'textarea-' . $row . '-' . $column ]
+									);
 								continue;
 							}
-							$cols[ $column ][ $id ] = fw()->backend->option_type( $options['type'] )->get_value_from_input( $options, $input_value_cols_data[ $row_name ][ $id . '-' . $row . '-' . $column ] );
+							$cols[ $column ][ $id ]
+								= fw()->backend->option_type( $options['type'] )->get_value_from_input(
+									$options,
+									$input_value_cols_data[ $row_name ][ $id . '-' . $row . '-' . $column ]
+								);
 						}
 
 					}
 					$value['content'][ $row_count++ ] = $cols;
 				}
 			}
-
-
 		}
 
 		return $value;
