@@ -102,25 +102,31 @@ class FW_Option_Type_Table extends FW_Option_Type
 			 * because there may be `unique` option type that it must be updated
 			 */
 			foreach (array('button-row') as $row_type) {
-				if (isset($option['content_options'][$row_type])) {
-					$only_options = fw_extract_only_options($option['content_options'][$row_type]);
+				if (empty($option['content_options'][$row_type])) {
+					continue;
+				}
 
-					foreach ($option['value']['rows'] as $i => $row) {
-						if ($row['name'] !== $row_type) {
-							continue;
-						}
+				$only_options = fw_extract_only_options($option['content_options'][$row_type]);
 
-						foreach ($option['value']['content'][$i] as &$row_values) {
-							/**
-							 * Move values in each $option['value'] because these values are in db format
-							 * not $inpute_value (html) format
-							 */
-							foreach ($only_options as $o_id => $o_o) {
+				foreach ($option['value']['rows'] as $i => $row) {
+					if ($row['name'] !== $row_type || empty($option['value']['content'][$i])) {
+						continue;
+					}
+
+					foreach ($option['value']['content'][$i] as &$row_values) {
+						/**
+						 * Move values in each $option['value'] because these values are in db format
+						 * not $inpute_value (html) format
+						 */
+						foreach ($only_options as $o_id => $o_o) {
+							if (isset($row_values[$o_id])) {
 								$only_options[$o_id]['value'] = $row_values[$o_id];
+							} else {
+								unset($only_options[$o_id]['value']);
 							}
-
-							$row_values = fw_get_options_values_from_input($only_options, array());
 						}
+
+						$row_values = fw_get_options_values_from_input($only_options, array());
 					}
 				}
 			}
