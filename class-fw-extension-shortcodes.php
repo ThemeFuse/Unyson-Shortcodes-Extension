@@ -369,6 +369,7 @@ class FW_Extension_Shortcodes extends FW_Extension
 						array(
 							'tab'         => '~',
 							'title'       => $tag,
+							'tag'	=> $tag,
 							'description' => '',
 							'localize' => array(
 								'edit' => __( 'Edit', 'fw' ),
@@ -391,9 +392,14 @@ class FW_Extension_Shortcodes extends FW_Extension
 
 					// if the shortcode has options we store them and then they are passed to the modal
 					$options = $shortcode->get_options();
+
 					if ($options) {
 						$item_data['options'] = $this->transform_options($options);
 						fw()->backend->enqueue_options_static($options);
+
+						$item_data['default_values'] = fw_get_options_values_from_input(
+							$options, array()
+						);
 					}
 
 					$builder_data[$tag] = $item_data;

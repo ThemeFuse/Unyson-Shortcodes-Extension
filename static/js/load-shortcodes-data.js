@@ -17,7 +17,11 @@ fw.shortcodesLoadData = (function ($) {
 
 	return load;
 
-	function load () {
+	function load (forceRewrite) {
+		if (forceRewrite) {
+		    promise = null;
+		}
+
 		if (promise) {
 			return promise;
 		}
@@ -43,8 +47,8 @@ fw.shortcodesLoadData = (function ($) {
  * @return object | null
  * @since 1.3.19
  */
-fw.unysonShortcodesData = function fwUnysonShortcodesData () {
-	var promise = fw.shortcodesLoadData();
+fw.unysonShortcodesData = function fwUnysonShortcodesData (forceRewrite) {
+	var promise = fw.shortcodesLoadData(forceRewrite);
 	var data = null;
 
 	if (promise.state() === 'resolved') {

@@ -74,6 +74,13 @@ class FW_Shortcode_Section extends FW_Shortcode
 			'collapse'	=> __( 'Collapse', 'fw' ),
 		);
 
+		$data['tag'] = 'section';
+		if ($options) {
+			$data['default_values'] = fw_get_options_values_from_input(
+				$options, array()
+			);
+		}
+
 		return $data;
 	}
 

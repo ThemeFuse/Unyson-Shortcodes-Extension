@@ -64,6 +64,13 @@ class FW_Shortcode_Column extends FW_Shortcode
 			'title' => __( 'Column', 'fw' ),
 		);
 
+		$data['tag'] = 'column';
+		if ($options) {
+			$data['default_values'] = fw_get_options_values_from_input(
+				$options, array()
+			);
+		}
+
 		return $data;
 	}
 
