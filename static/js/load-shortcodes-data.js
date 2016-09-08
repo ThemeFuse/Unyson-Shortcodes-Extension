@@ -49,7 +49,7 @@ fw.unysonShortcodesData = function fwUnysonShortcodesData () {
 
 	if (promise.state() === 'resolved') {
 		if (promise.responseJSON.success) {
-			return promise.responseJSON.data.shortcodes;
+			return promise.responseJSON.data;
 		}
 	}
 

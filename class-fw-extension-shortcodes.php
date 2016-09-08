@@ -79,6 +79,12 @@ class FW_Extension_Shortcodes extends FW_Extension
 		);
 	}
 
+	public function collect_shortcodes_data() {
+		$structure = array();
+		$structure = apply_filters( 'fw_ext:shortcodes:collect_shortcodes_data', $structure );
+		return $structure;
+	}
+
 	public function enqueue_admin_scripts() {
 		if (! is_admin()) return;
 
@@ -103,9 +109,9 @@ class FW_Extension_Shortcodes extends FW_Extension
 	 * @since 1.3.19
 	 */
 	public function send_wp_shortcodes_data() {
-		wp_send_json_success(array(
-			'shortcodes' => $this->build_shortcodes_list()
-		));
+		wp_send_json_success(
+			$this->collect_shortcodes_data()
+		);
 	}
 
 	/**
