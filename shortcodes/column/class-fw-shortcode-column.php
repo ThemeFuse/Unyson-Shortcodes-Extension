@@ -2,6 +2,8 @@
 
 class FW_Shortcode_Column extends FW_Shortcode
 {
+	private $restricted_types = array( 'column' );
+	
 	/**
 	 * @internal
 	 */
