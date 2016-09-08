@@ -68,6 +68,12 @@ class FW_Extension_Shortcodes extends FW_Extension
 			30
 		);
 
+		if( is_admin() && defined('DOING_AJAX') ) {
+			add_filter( 'fw_ext:shortcodes:collect_shortcodes_data', array(
+				$this, 'add_simple_shortcodes_data_to_filter'
+			) );
+		}
+
 		add_action(
 			'admin_enqueue_scripts',
 			array($this, 'enqueue_admin_scripts')
@@ -334,5 +340,96 @@ class FW_Extension_Shortcodes extends FW_Extension
 				return null;
 			}
 		}
+	}
+
+	public function get_builder_data()
+	{
+		static $builder_data = array();
+
+		if (empty($builder_data)) {
+			$shortcodes = $this->get_shortcodes();
+			foreach ($shortcodes as $tag => $shortcode) {
+				$config = $shortcode->get_config('page_builder');
+				if ($config) {
+
+					// check if the shortcode type is valid
+					$config = array_merge(array('type' => 'simple'), $config);
+					if ($config['type'] !== 'simple') {
+						continue;
+					}
+
+					if (!isset($config['tab'])) {
+						trigger_error(
+							sprintf(__("No Page Builder tab specified for shortcode: %s", 'fw'), $tag),
+							E_USER_WARNING
+						);
+					}
+
+					$item_data = array_merge(
+						array(
+							'tab'         => '~',
+							'title'       => $tag,
+							'description' => '',
+							'localize' => array(
+								'edit' => __( 'Edit', 'fw' ),
+								'remove' => __( 'Remove', 'fw' ),
+								'duplicate' => __( 'Duplicate', 'fw' ),
+							),
+							'icon' => null,
+							'title_template' => null,
+						),
+						$config
+					);
+
+					if (
+						!isset($item_data['icon'])
+						&&
+						($icon = $shortcode->locate_URI('/static/img/page_builder.png'))
+					) {
+						$item_data['icon'] = $icon;
+					}
+
+					// if the shortcode has options we store them and then they are passed to the modal
+					$options = $shortcode->get_options();
+					if ($options) {
+						$item_data['options'] = $this->transform_options($options);
+						fw()->backend->enqueue_options_static($options);
+					}
+
+					$builder_data[$tag] = $item_data;
+				}
+			}
+		}
+
+		return $builder_data;
+	}
+
+	public function add_simple_shortcodes_data_to_filter( $structure ) {
+		return array_merge( $structure, $this->get_builder_data() );
+	}
+
+	/*
+	 * Puts each option into a separate array
+	 * to keep it's order inside the modal dialog
+	 */
+	private function transform_options($options)
+	{
+		$new_options = array();
+		foreach ($options as $id => $option) {
+			if (is_int($id)) {
+				/**
+				 * this happens when in options array are loaded external options using fw()->theme->get_options()
+				 * and the array looks like this
+				 * array(
+				 *    'hello' => array('type' => 'text'), // this has string key
+				 *    array('hi' => array('type' => 'text')) // this has int key
+				 * )
+				 */
+				$new_options[] = $option;
+			} else {
+				$new_options[] = array($id => $option);
+			}
+		}
+		return $new_options;
 	}
 }
