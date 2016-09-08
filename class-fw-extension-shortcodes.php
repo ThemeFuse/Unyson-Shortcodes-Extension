@@ -68,7 +68,7 @@ class FW_Extension_Shortcodes extends FW_Extension
 			30
 		);
 
-		if( is_admin() && defined('DOING_AJAX') ) {
+		if( is_admin() && defined('DOING_AJAX') && DOING_AJAX ) {
 			add_filter( 'fw_ext:shortcodes:collect_shortcodes_data', array(
 				$this, 'add_simple_shortcodes_data_to_filter'
 			) );
