@@ -3,7 +3,7 @@
 class FW_Shortcode_Column extends FW_Shortcode
 {
 	private $restricted_types = array( 'column' );
-	
+
 	/**
 	 * @internal
 	 */
@@ -15,11 +15,14 @@ class FW_Shortcode_Column extends FW_Shortcode
 		);
 
 		add_filter( 'fw_ext:shortcodes:collect_shortcodes_data', array(
-			$this, 'add_column_data_to_filter'
+			$this, '_filter_add_column_data'
 		) );
 	}
 
-	public function add_column_data_to_filter( $structure ) {
+	/**
+	 * @internal
+	 */
+	public function _filter_add_column_data( $structure ) {
 		$data['column'] = $this->get_item_data();
 		return array_merge( $structure, $data );
 	}
@@ -36,7 +39,7 @@ class FW_Shortcode_Column extends FW_Shortcode
 		return $shortcode_instance->get_config( 'page_builder' );
 	}
 
-	private function get_item_data() {
+	public function get_item_data() {
 		$data = array(
 			'restrictedTypes' => $this->restricted_types,
 		);

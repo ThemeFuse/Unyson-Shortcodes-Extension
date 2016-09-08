@@ -13,26 +13,22 @@ class FW_Shortcode_Section extends FW_Shortcode
 		);
 
 		add_filter( 'fw_ext:shortcodes:collect_shortcodes_data', array(
-			$this, 'add_section_data_to_filter'
+			$this, '_filter_add_section_data'
 		) );
 	}
 
-	public function add_section_data_to_filter( $structure )
+	/**
+	 * @internal
+	 */
+	public function _filter_add_section_data( $structure )
 	{
 		$data['section'] = $this->get_item_data();
 		return array_merge( $structure, $data );
 	}
 
-	private function get_shortcode_options()
-	{
-		$shortcode_instance = fw_ext('shortcodes')->get_shortcode('section');
-		return $shortcode_instance->get_options();
-	}
-
 	private function get_shortcode_config()
 	{
-		$shortcode_instance = fw_ext('shortcodes')->get_shortcode('section');
-		$config = $shortcode_instance->get_config('page_builder');
+		$config = $this->get_config('page_builder');
 		return array_merge(
 			array(
 				'tab'         => __('Layout Elements', 'fw'),
@@ -44,14 +40,18 @@ class FW_Shortcode_Section extends FW_Shortcode
 		);
 	}
 
-	private function get_item_data()
+	public function get_item_data()
 	{
 		$data = array();
+		$options = $this->get_options();
 
-		$options = $this->get_shortcode_options();
 		if ($options) {
 			fw()->backend->enqueue_options_static($options);
 			$data['options'] = $this->transform_options($options);
+
+			$data['default_values'] = fw_get_options_values_from_input(
+				$options, array()
+			);
 		}
 
 		$config = $this->get_shortcode_config();
@@ -75,11 +75,6 @@ class FW_Shortcode_Section extends FW_Shortcode
 		);
 
 		$data['tag'] = 'section';
-		if ($options) {
-			$data['default_values'] = fw_get_options_values_from_input(
-				$options, array()
-			);
-		}
 
 		return $data;
 	}

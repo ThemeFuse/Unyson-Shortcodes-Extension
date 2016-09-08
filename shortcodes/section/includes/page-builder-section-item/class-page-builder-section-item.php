@@ -50,66 +50,8 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 		wp_localize_script(
 			$this->get_builder_type() . '_item_type_' . $this->get_type(),
 			str_replace('-', '_', $this->get_builder_type() . '_item_type_' . $this->get_type() . '_data'),
-			$this->get_item_data()
+			$shortcode_instance->get_item_data()
 		);
-	}
-
-	private function get_item_data()
-	{
-		$data    = array();
-
-		$options = $this->get_shortcode_options();
-		if ($options) {
-			fw()->backend->enqueue_options_static($options);
-			$data['options'] = $this->transform_options($options);
-		}
-
-		$config = $this->get_shortcode_config();
-
-		if (isset($config['popup_size'])) {
-			$data['popup_size'] = $config['popup_size'];
-		}
-
-		if (isset($config['popup_header_elements'])) {
-			$data['header_elements'] = $config['popup_header_elements'];
-		}
-
-		$data['title'] = $config['title'];
-		$data['title_template'] = $config['title_template'];
-
-		$data['l10n'] = array(
-			'edit'      => __( 'Edit', 'fw' ),
-			'duplicate' => __( 'Duplicate', 'fw' ),
-			'remove'    => __( 'Remove', 'fw' ),
-			'collapse'	=> __( 'Collapse', 'fw' ),
-		);
-
-		return $data;
-	}
-
-	/*
-	 * Puts each option into a separate array
-	 * to keep it's order inside the modal dialog
-	 */
-	private function transform_options($options)
-	{
-		$transformed_options = array();
-		foreach ($options as $id => $option) {
-			if (is_int($id)) {
-				/**
-				 * this happens when in options array are loaded external options using fw()->theme->get_options()
-				 * and the array looks like this
-				 * array(
-				 *    'hello' => array('type' => 'text'), // this has string key
-				 *    array('hi' => array('type' => 'text')) // this has int key
-				 * )
-				 */
-				$transformed_options[] = $option;
-			} else {
-				$transformed_options[] = array($id => $option);
-			}
-		}
-		return $transformed_options;
 	}
 
 	protected function get_thumbnails_data()
