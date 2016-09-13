@@ -378,6 +378,7 @@ class FW_Extension_Shortcodes extends FW_Extension
 							),
 							'icon' => null,
 							'title_template' => null,
+							'popup_size' => 'small'
 						),
 						$config
 					);

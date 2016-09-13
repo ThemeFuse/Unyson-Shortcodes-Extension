@@ -32,6 +32,7 @@ class Page_Builder_Column_Item extends Page_Builder_Item {
 			array(),
 			fw()->theme->manifest->get_version()
 		);
+
 		wp_enqueue_script(
 			$this->get_builder_type() . '_item_type_' . $this->get_type(),
 			$column_shortcode->get_uri( '/includes/page-builder-column-item/static/js/scripts.js' ),
@@ -39,11 +40,7 @@ class Page_Builder_Column_Item extends Page_Builder_Item {
 			fw()->theme->manifest->get_version(),
 			true
 		);
-		wp_localize_script(
-			$this->get_builder_type() . '_item_type_' . $this->get_type(),
-			str_replace( '-', '_', $this->get_builder_type() ) . '_item_type_' . $this->get_type() . '_data',
-			$column_shortcode->get_item_data()
-		);
+
 	}
 
 	protected function get_thumbnails_data() {

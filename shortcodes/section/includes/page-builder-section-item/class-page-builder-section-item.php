@@ -34,23 +34,20 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 	public function enqueue_static()
 	{
 		$shortcode_instance = fw_ext('shortcodes')->get_shortcode('section');
+
 		wp_enqueue_style(
 			$this->get_builder_type() . '_item_type_' . $this->get_type(),
 			$shortcode_instance->locate_URI('/includes/page-builder-section-item/static/css/styles.css'),
 			array(),
 			fw()->theme->manifest->get_version()
 		);
+
 		wp_enqueue_script(
 			$this->get_builder_type() . '_item_type_' . $this->get_type(),
 			$shortcode_instance->locate_URI('/includes/page-builder-section-item/static/js/scripts.js'),
 			array('fw-events', 'underscore'),
 			fw()->theme->manifest->get_version(),
 			true
-		);
-		wp_localize_script(
-			$this->get_builder_type() . '_item_type_' . $this->get_type(),
-			str_replace('-', '_', $this->get_builder_type() . '_item_type_' . $this->get_type() . '_data'),
-			$shortcode_instance->get_item_data()
 		);
 	}
 
