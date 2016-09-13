@@ -39,6 +39,10 @@ fw.shortcodesLoadData = (function ($) {
 	}
 })(jQuery);
 
+fwEvents.on('fw:option-type:builder:delay-init-promise', function (data) {
+	data.push(fw.shortcodesLoadData());
+});
+
 /**
  * Get underlying data from fw.shortcodesLoadData() promise.
  * Should be used only when you are 100% sure that promise from the first
