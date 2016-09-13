@@ -40,6 +40,11 @@ class FW_Shortcode_Section extends FW_Shortcode
 		);
 	}
 
+	/**
+	 * Adds data about section to be pushed further to the frontend.
+	 *
+	 * @since 1.3.21
+	 */
 	public function get_item_data()
 	{
 		$data = array();

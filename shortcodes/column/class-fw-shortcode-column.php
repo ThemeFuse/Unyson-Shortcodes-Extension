@@ -39,6 +39,11 @@ class FW_Shortcode_Column extends FW_Shortcode
 		return $shortcode_instance->get_config( 'page_builder' );
 	}
 
+	/**
+	 * Adds data about column to be pushed further to the frontend.
+	 *
+	 * @since 1.3.21
+	 */
 	public function get_item_data() {
 		$data = array(
 			'restrictedTypes' => $this->restricted_types,

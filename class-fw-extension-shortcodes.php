@@ -85,6 +85,9 @@ class FW_Extension_Shortcodes extends FW_Extension
 		);
 	}
 
+	/**
+	 * @since 1.3.21
+	 */
 	public function collect_shortcodes_data() {
 		$structure = array();
 		$structure = apply_filters( 'fw_ext:shortcodes:collect_shortcodes_data', $structure );
@@ -342,6 +345,9 @@ class FW_Extension_Shortcodes extends FW_Extension
 		}
 	}
 
+	/**
+	 * @since 1.3.21
+	 */
 	public function get_builder_data()
 	{
 		static $builder_data = array();
