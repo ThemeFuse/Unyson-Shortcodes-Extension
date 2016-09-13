@@ -1,4 +1,5 @@
-(function (fwe, _, itemData) {
+(function (fwe) {
+    fw.unysonShortcodesData();
 	fwe.on('fw-builder:' + 'page-builder' + ':register-items', function (builder) {
 		var PageBuilderSectionItem,
 			PageBuilderSectionItemView,
@@ -47,7 +48,7 @@
 						options: options.modalOptions,
 						values: this.model.get('atts'),
 						size: options.modalSize,
-						headerElements: itemData.header_elements
+						headerElements: itemData().header_elements
 					}, eventData.modalSettings);
 
 					this.listenTo(this.modal, 'change:values', function (modal, values) {
@@ -111,7 +112,7 @@
 			render: function () {
 				{
 					var title = this.templateData.title,
-						titleTemplate = itemData.title_template;
+						titleTemplate = itemData().title_template;
 
 					if (titleTemplate && this.model.get('atts')) {
 						try {
@@ -223,15 +224,15 @@
 				this.view = new PageBuilderSectionItemView({
 					id: 'page-builder-item-' + this.cid,
 					model: this,
-					modalOptions: itemData.options,
-					modalSize: itemData.popup_size,
+					modalOptions: itemData().options,
+					modalSize: itemData().popup_size,
 					templateData: {
-						hasOptions: !!itemData.options,
-						edit : itemData.l10n.edit,
-						duplicate : itemData.l10n.duplicate,
-						remove : itemData.l10n.remove,
-						collapse : itemData.l10n.collapse,
-						title: itemData.title
+						hasOptions: !!itemData().options,
+						edit : itemData().l10n.edit,
+						duplicate : itemData().l10n.duplicate,
+						remove : itemData().l10n.remove,
+						collapse : itemData().l10n.collapse,
+						title: itemData().title
 					}
 				});
 
@@ -247,5 +248,9 @@
 
 		builder.registerItemClass(PageBuilderSectionItem);
 	});
-})(fwEvents, _, page_builder_item_type_section_data);
+
+	function itemData () {
+		return fw.unysonShortcodesData()['section'];
+	}
+})(fwEvents);
 

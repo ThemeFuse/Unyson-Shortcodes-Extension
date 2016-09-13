@@ -1,4 +1,6 @@
-(function(fwe, _, itemData) {
+(function(fwe) {
+	fw.unysonShortcodesData()
+
 	fwe.on('fw-builder:' + 'page-builder' + ':register-items', function(builder) {
 		var PageBuilderColumnItem,
 			PageBuilderColumnItemView,
@@ -27,7 +29,7 @@
 			};
 
 		PageBuilderColumnItemViewWidthChanger = FwBuilderComponents.ItemView.WidthChanger.extend({
-			widths: itemData.item_widths
+			widths: itemData().item_widths
 		});
 
 		PageBuilderColumnItemView = builder.classes.ItemView.extend({
@@ -51,11 +53,11 @@
 					triggerEvent(this.model, 'options-modal:settings', eventData);
 
 					this.modal = new fw.OptionsModal({
-						title: itemData.l10n.title,
+						title: itemData().l10n.title,
 						options: options.modalOptions,
 						values: this.model.get('atts'),
 						size: options.modalSize,
-						headerElements: itemData.header_elements
+						headerElements: itemData().header_elements
 					}, eventData.modalSettings);
 
 					this.listenTo(this.modal, 'change:values', function (modal, values) {
@@ -199,7 +201,7 @@
 			defaults: {
 				type: 'column'
 			},
-			restrictedTypes: itemData.restrictedTypes,
+			restrictedTypes: itemData().restrictedTypes,
 			initialize: function(atts, opts) {
 				if (
 					!this.get('width')
@@ -212,14 +214,14 @@
 				this.view = new PageBuilderColumnItemView({
 					id: 'page-builder-item-'+ this.cid,
 					model: this,
-					modalOptions: itemData.options,
-					modalSize: itemData.popup_size,
+					modalOptions: itemData().options,
+					modalSize: itemData().popup_size,
 					templateData: {
-						hasOptions: !!itemData.options,
-						edit : itemData.l10n.edit,
-						duplicate : itemData.l10n.duplicate,
-						remove : itemData.l10n.remove,
-						collapse: itemData.l10n.collapse,
+						hasOptions: !! itemData().options,
+						edit : itemData().l10n.edit,
+						duplicate : itemData().l10n.duplicate,
+						remove : itemData().l10n.remove,
+						collapse: itemData().l10n.collapse,
 					}
 				});
 
@@ -241,4 +243,8 @@
 
 		builder.registerItemClass(PageBuilderColumnItem);
 	});
-})(fwEvents, _, page_builder_item_type_column_data);
+
+	function itemData () {
+		return fw.unysonShortcodesData()['column'];
+	}
+})(fwEvents);
