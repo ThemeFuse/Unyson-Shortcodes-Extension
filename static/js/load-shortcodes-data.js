@@ -40,7 +40,9 @@ fw.shortcodesLoadData = (function ($) {
 })(jQuery);
 
 fwEvents.on('fw:option-type:builder:delay-init-promise', function (data) {
-	data.push(fw.shortcodesLoadData());
+	if (data.type === 'page-builder') {
+		data.collectedPromises.push(fw.shortcodesLoadData());
+	}
 });
 
 /**
