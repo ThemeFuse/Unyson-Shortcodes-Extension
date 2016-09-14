@@ -49,6 +49,12 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 			fw()->theme->manifest->get_version(),
 			true
 		);
+
+		wp_localize_script(
+			$this->get_builder_type() . '_item_type_' . $this->get_type(),
+			str_replace('-', '_', $this->get_builder_type() . '_item_type_' . $this->get_type() . '_data'),
+			$shortcode_instance->get_item_data()
+		);
 	}
 
 	protected function get_thumbnails_data()

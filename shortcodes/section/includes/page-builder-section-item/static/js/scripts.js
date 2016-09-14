@@ -1,5 +1,4 @@
 (function (fwe) {
-    fw.unysonShortcodesData();
 	fwe.on('fw-builder:' + 'page-builder' + ':register-items', function (builder) {
 		var PageBuilderSectionItem,
 			PageBuilderSectionItemView,
@@ -250,7 +249,8 @@
 	});
 
 	function itemData () {
-		return fw.unysonShortcodesData()['section'];
+		// return fw.unysonShortcodesData()['section'];
+		return page_builder_item_type_section_data;
 	}
 })(fwEvents);
 
