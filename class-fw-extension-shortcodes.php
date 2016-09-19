@@ -54,7 +54,7 @@ class FW_Extension_Shortcodes extends FW_Extension
 			array($this, '_action_editor_shortcodes')
 		);
 
-		// renders the shortcodes so that css will get in <head>
+		// Process the shortcodes and enqueue their assets in page <head>
 		add_action(
 			'wp_enqueue_scripts',
 			array($this, '_action_enqueue_shortcodes_static_in_frontend_head'),
