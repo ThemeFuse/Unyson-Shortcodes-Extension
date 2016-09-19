@@ -350,71 +350,92 @@ class FW_Extension_Shortcodes extends FW_Extension
 	 */
 	public function get_builder_data()
 	{
-		static $builder_data = array();
+		try {
+			return FW_Cache::get($cache_key = 'fw:ext:shortcodes:builder-data');
+		} catch (FW_Cache_Not_Found_Exception $e) {
+			$builder_data = array();
 
-		if (empty($builder_data)) {
-			$shortcodes = $this->get_shortcodes();
-			foreach ($shortcodes as $tag => $shortcode) {
-				$config = $shortcode->get_config('page_builder');
-				if ($config) {
-
-					// check if the shortcode type is valid
-					$config = array_merge(array('type' => 'simple'), $config);
-					if ($config['type'] !== 'simple') {
-						continue;
-					}
-
-					if (!isset($config['tab'])) {
-						trigger_error(
-							sprintf(__("No Page Builder tab specified for shortcode: %s", 'fw'), $tag),
-							E_USER_WARNING
-						);
-					}
-
-					$item_data = array_merge(
-						array(
-							'tab'         => '~',
-							'title'       => $tag,
-							'tag'	=> $tag,
-							'description' => '',
-							'localize' => array(
-								'edit' => __( 'Edit', 'fw' ),
-								'remove' => __( 'Remove', 'fw' ),
-								'duplicate' => __( 'Duplicate', 'fw' ),
-							),
-							'icon' => null,
-							'title_template' => null,
-							'popup_size' => 'small'
-						),
-						$config
-					);
-
-					if (
-						!isset($item_data['icon'])
-						&&
-						($icon = $shortcode->locate_URI('/static/img/page_builder.png'))
-					) {
-						$item_data['icon'] = $icon;
-					}
-
-					// if the shortcode has options we store them and then they are passed to the modal
-					$options = $shortcode->get_options();
-
-					if ($options) {
-						$item_data['options'] = $this->transform_options($options);
-						fw()->backend->enqueue_options_static($options);
-
-						$item_data['default_values'] = fw_get_options_values_from_input(
-							$options, array()
-						);
-					}
-
+			foreach ($this->get_shortcodes() as $tag => $shortcode) {
+				if ($item_data = $this->get_shortcode_builder_data($tag)) {
 					$builder_data[$tag] = $item_data;
 				}
 			}
-		}
 
-		return $builder_data;
+			FW_Cache::set($cache_key, $builder_data);
+
+			return $builder_data;
+		}
+	}
+
+	/**
+	 * @since 1.3.21
+	 * @param string $tag
+	 * @return array|null
+	 */
+	public function get_shortcode_builder_data($tag) {
+		try {
+			return FW_Cache::get(
+				/** the same cache key as @see get_builder_data() */
+				$cache_key = 'fw:ext:shortcodes:builder-data/'. $tag
+			);
+		} catch (FW_Cache_Not_Found_Exception $e) {
+			if (!(
+				($shortcode = $this->get_shortcode($tag))
+				&&
+				($config = $shortcode->get_config('page_builder'))
+				&&
+				($config = array_merge(array('type' => 'simple'), $config))
+				&&
+				$config['type'] === 'simple' // check if the shortcode type is valid
+			)) {
+				return;
+			}
+
+			if (!isset($config['tab'])) {
+				trigger_error(
+					sprintf(__("No Page Builder tab specified for shortcode: %s", 'fw'), $tag),
+					E_USER_WARNING
+				);
+			}
+
+			$item_data = array_merge(
+				array(
+					'tab'   => '~',
+					'title' => $tag,
+					'tag'	=> $tag,
+					'description' => '',
+					'localize' => array(
+						'edit' => __( 'Edit', 'fw' ),
+						'remove' => __( 'Remove', 'fw' ),
+						'duplicate' => __( 'Duplicate', 'fw' ),
+					),
+					'icon' => null,
+					'title_template' => null,
+					'popup_size' => 'small'
+				),
+				$config
+			);
+
+			if (
+				!isset($item_data['icon'])
+				&&
+				($icon = $shortcode->locate_URI('/static/img/page_builder.png'))
+			) {
+				$item_data['icon'] = $icon;
+			}
+
+			// if the shortcode has options we store them and then they are passed to the modal
+			if ($options = $shortcode->get_options()) {
+				$item_data['options'] = $this->transform_options($options);
+				$item_data['default_values'] = fw_get_options_values_from_input(
+					$options, array()
+				);
+			}
+
+			FW_Cache::set($cache_key, $item_data);
+
+			return $item_data;
+		}
 	}
 
 	public function add_simple_shortcodes_data_to_filter( $structure ) {
