@@ -44,7 +44,7 @@ $table = $shortcodes->get_shortcode('table');
 							</small>
 						</div>
 					<?php elseif ( $row['name'] == 'button-row' ) : ?>
-						<?php if ($button = $table->get_button_shortcode(): ?>
+						<?php if ($button = $table->get_button_shortcode()): ?>
 							<div class="fw-button-row">
 								<?php if ( false === empty( $atts['table']['content'][ $row_key ][ $col_key ]['button'] ) and false === empty($button) ) : ?>
 									<?php echo $button->render($atts['table']['content'][ $row_key ][ $col_key ]['button']); ?>
