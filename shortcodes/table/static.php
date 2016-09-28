@@ -1,11 +1,15 @@
 <?php if (!defined('FW')) die('Forbidden');
 
-if (fw_ext('shortcodes')->get_shortcode('button')) {
-	fw_ext('shortcodes')->get_shortcode('button')->_enqueue_static();
+/** @var FW_Extension_Shortcodes $shortcodes */
+$shortcodes = fw_ext('shortcodes');
+/** @var FW_Shortcode_Table $table */
+$table = $shortcodes->get_shortcode('table');
+
+if ($button = $table->get_button_shortcode()) {
+	$button->_enqueue_static();
 }
 
-$shortcodes_extension = fw_ext('shortcodes');
 wp_enqueue_style(
 	'fw-shortcode-table',
-	$shortcodes_extension->get_declared_URI('/shortcodes/table/static/css/styles.css')
+	$shortcodes->get_declared_URI('/shortcodes/table/static/css/styles.css')
 );

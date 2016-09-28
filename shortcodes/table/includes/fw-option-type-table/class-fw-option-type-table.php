@@ -210,6 +210,11 @@ class FW_Option_Type_Table extends FW_Option_Type
 	 * @internal
 	 */
 	protected function _get_defaults() {
+		/** @var FW_Extension_Shortcodes $shortcodes */
+		$shortcodes = fw_ext('shortcodes');
+		/** @var FW_Shortcode_Table $table */
+		$table = $shortcodes->get_shortcode('table');
+
 		return apply_filters( 'fw_option_type_table_defaults', array(
 			'header_options'  => array(
 				'table_purpose' => array(
@@ -302,14 +307,17 @@ class FW_Option_Type_Table extends FW_Option_Type
 					),
 				),
 				'button-row'  => array(
-					'button' => ( $button = fw()->extensions->get( 'shortcodes' )->get_shortcode( 'button' ) )
+					'button' => ( $button = $table->get_button_shortcode() )
 						? array(
 							'type'          => 'popup',
 							'popup-title'   => __( 'Button', 'fw' ),
 							'button'        => __( 'Add', 'fw' ),
 							'popup-options' => $button->get_options()
 						)
-						: array()
+						: array(
+							'type' => 'multi',
+							'label' => false,
+						)
 				),
 				'switch-row'  => array(
 					'switch' => array(

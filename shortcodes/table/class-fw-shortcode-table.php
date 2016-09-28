@@ -39,15 +39,15 @@ class FW_Shortcode_Table extends FW_Shortcode {
 			return;
 		}
 
-		/** @var FW_Extension_Shortcodes $shortcodes */
-		$shortcodes = fw_ext('shortcodes');
-
-		if ($button = $shortcodes->get_shortcode('button')) {
+		if ($button = $this->get_button_shortcode()) {
 			// Here is included `button/static.php` with `add_action('fw_ext_shortcodes_enqueue_static:button', ...`
 			$button->_enqueue_static();
 		} else {
 			return;
 		}
+
+		/** @var FW_Extension_Shortcodes $shortcodes */
+		$shortcodes = fw_ext('shortcodes');
 
 		$coder = $shortcodes->get_attr_coder('json');
 
@@ -62,7 +62,10 @@ class FW_Shortcode_Table extends FW_Shortcode {
 				}
 
 				$atts_string = '';
-				foreach ($coder->encode($row['button'], 'button', 0) as $attr_name => $attr_val) {
+				foreach (
+					$coder->encode($row['button'], $this->get_button_shortcode_tag(), 0)
+					as $attr_name => $attr_val
+				) {
 					$atts_string .= $attr_name .'="'. $attr_val .'" ';
 				}
 
@@ -98,5 +101,37 @@ class FW_Shortcode_Table extends FW_Shortcode {
 			'content' => $content,
 			'tag'     => $tag
 		) );
+	}
+
+	/**
+	 * @return string
+	 * @since 1.3.22
+	 */
+	public function get_button_shortcode_tag() {
+		try {
+			return FW_Cache::get($cache_key = 'fw:ext:shortcodes:table:button-shortcode-name');
+		} catch (FW_Cache_Not_Found_Exception $e) {
+			FW_Cache::set(
+				$cache_key,
+				/**
+				 * If you disable default shortcode 'button' and create your own shortcode use this filter to specify its name.
+				 * Fixes https://github.com/ThemeFuse/Unyson/issues/2056
+				 */
+				$shortcode_name = apply_filters('fw:ext:shortcodes:table:button-shortcode-name', 'button')
+			);
+
+			return $shortcode_name;
+		}
+	}
+
+	/**
+	 * @return FW_Shortcode|null
+	 * @since 1.3.22
+	 */
+	public function get_button_shortcode() {
+		/** @var FW_Extension_Shortcodes $shortcodes */
+		$shortcodes = fw_ext('shortcodes');
+
+		return $shortcodes->get_shortcode($this->get_button_shortcode_tag());
 	}
 }
