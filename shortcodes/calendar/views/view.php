@@ -3,7 +3,6 @@
 }
 /**
  * @var $wrapper_atts
- * @var $default_template
  * @var $atts
  * @var $content
  * @var $tag
