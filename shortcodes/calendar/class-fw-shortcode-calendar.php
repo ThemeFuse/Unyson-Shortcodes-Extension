@@ -150,7 +150,7 @@ class FW_Shortcode_Calendar extends FW_Shortcode
 		$wrapper_atts = array(
 			'data-extends-ajax-params'  => json_encode($ajax_params),
 			'data-ajax-url'             => admin_url( 'admin-ajax.php' ),
-			'data-template'             => $atts['template'],
+			'data-template'             => isset($atts['template']) ? $atts['template'] : 'month',
 			'data-template-path'        => $this->get_declared_URI('/views/'),
 			'data-first-day'            => $atts['first_week_day'],
 		);
