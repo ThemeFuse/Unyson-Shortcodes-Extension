@@ -4,7 +4,7 @@ $shortcodes_extension = fw_ext('shortcodes');
 
 {
 	$query_params = array(
-		'v' => '3.23',
+		'v' => '3.25',
 		'language' => substr( get_locale(), 0, 2 ),
 		'libraries' => 'places',
 	);
