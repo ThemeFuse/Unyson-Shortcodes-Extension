@@ -11,3 +11,8 @@ $manifest = array(
 	),
 	'github_update' => 'ThemeFuse/Unyson-Shortcodes-Extension'
 );
+
+$manifest['github_repo'] = 'https://github.com/ThemeFuse/Unyson-Shortcodes-Extension';
+$manifest['uri'] = 'http://manual.unyson.io/en/latest/extension/shortcodes/index.html#content';
+$manifest['author'] = 'ThemeFuse';
+$manifest['author_uri'] = 'http://themefuse.com/';
