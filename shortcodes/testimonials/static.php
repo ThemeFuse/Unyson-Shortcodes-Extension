@@ -4,7 +4,7 @@ $shortcodes_extension = fw_ext('shortcodes');
 wp_enqueue_style(
 	'fw-shortcode-testimonials',
 	$shortcodes_extension->get_declared_URI('/shortcodes/testimonials/static/css/styles.css'),
-	array('fw-font-awesome')
+	array('font-awesome')
 );
 wp_enqueue_script(
 	'fw-shortcode-testimonials-caroufredsel',

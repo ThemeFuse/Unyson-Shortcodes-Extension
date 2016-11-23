@@ -19,7 +19,7 @@ class FW_Option_Type_Table extends FW_Option_Type
 
 		$static_uri = $table_shortcode->get_declared_uri() . '/includes/fw-option-type-table/static/';
 
-		wp_enqueue_style( 'fw-font-awesome' );
+		wp_enqueue_style( 'font-awesome' );
 
 		wp_enqueue_style(
 			'fw-option-' . $this->get_type() . '-default',
