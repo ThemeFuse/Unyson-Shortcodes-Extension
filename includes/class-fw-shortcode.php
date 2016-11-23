@@ -64,33 +64,14 @@ class FW_Shortcode
 	 */
 	final public function locate_path($rel_path = '')
 	{
-		if (class_exists('FW_File_Cache')) {
-			try {
-				return FW_File_Cache::get($cache_key = 'ext:shcd:'. $this->tag .':path:'. $rel_path);
-			} catch (FW_File_Cache_Not_Found_Exception $e) {
-				$result = false;
-				foreach (array_merge($this->rewrite_paths, array($this->path)) as $path) {
-					$actual_path = $path . $rel_path;
-					if (file_exists($actual_path)) {
-						$result = $actual_path;
-						break;
-					}
-				}
-
-				FW_File_Cache::set($cache_key, $result);
-
-				return $result;
+		foreach (array_merge($this->rewrite_paths, array($this->path)) as $path) {
+			$actual_path = $path . $rel_path;
+			if (file_exists($actual_path)) {
+				return $actual_path;
 			}
-		} else {
-			foreach (array_merge($this->rewrite_paths, array($this->path)) as $path) {
-				$actual_path = $path . $rel_path;
-				if (file_exists($actual_path)) {
-					return $actual_path;
-				}
-			}
-
-			return false;
 		}
+
+		return false;
 	}
 
 	/**
@@ -112,37 +93,16 @@ class FW_Shortcode
 	 */
 	final public function locate_URI($rel_path = '')
 	{
-		if (class_exists('FW_File_Cache')) {
-			try {
-				return FW_File_Cache::get( $cache_key = 'ext:shcd:' . $this->tag . ':uri:' . $rel_path );
-			} catch ( FW_File_Cache_Not_Found_Exception $e ) {
-				$result = false;
-				$paths  = array_merge( $this->rewrite_paths, array( $this->path ) );
-				$uris   = array_merge( $this->rewrite_uris, array( $this->uri ) );
-				foreach ( $paths as $key => $path ) {
-					$actual_path = $path . $rel_path;
-					if ( file_exists( $actual_path ) ) {
-						$result = $uris[ $key ] . $rel_path;
-						break;
-					}
-				}
-
-				FW_File_Cache::set( $cache_key, $result );
-
-				return $result;
+		$paths = array_merge( $this->rewrite_paths, array( $this->path ) );
+		$uris  = array_merge( $this->rewrite_uris, array( $this->uri ) );
+		foreach ( $paths as $key => $path ) {
+			$actual_path = $path . $rel_path;
+			if ( file_exists( $actual_path ) ) {
+				return $uris[ $key ] . $rel_path;
 			}
-		} else {
-			$paths  = array_merge( $this->rewrite_paths, array( $this->path ) );
-			$uris   = array_merge( $this->rewrite_uris, array( $this->uri ) );
-			foreach ( $paths as $key => $path ) {
-				$actual_path = $path . $rel_path;
-				if ( file_exists( $actual_path ) ) {
-					return $uris[ $key ] . $rel_path;
-				}
-			}
-
-			return false;
 		}
+
+		return false;
 	}
 
 	public function get_config($key = null)
