@@ -1,7 +1,7 @@
 <?php if (!defined('FW')) die('Forbidden');
 
 $manifest = array(
-	'version'       => '1.3.23',
+	'version'       => '1.3.24',
 	'display'       => false,
 	'standalone'    => true,
 	'requirements'  => array(
