@@ -32,59 +32,8 @@
 			initialize: function (options) {
 				this.defaultInitialize();
 
-				this.templateData = options.templateData;
-
-				if (options.modalOptions) {
-					var eventData = {modalSettings: {buttons: []}};
-
-					/**
-					 * eventData.modalSettings can be changed by reference
-					 */
-					triggerEvent(this.model, 'options-modal:settings', eventData);
-
-					this.modal = new fw.OptionsModal({
-						title: 'Section',
-						options: options.modalOptions,
-						values: this.model.get('atts'),
-						size: options.modalSize,
-						headerElements: itemData().header_elements
-					}, eventData.modalSettings);
-
-					this.listenTo(this.modal, 'change:values', function (modal, values) {
-						this.model.set('atts', values);
-					});
-
-					this.listenTo(this.modal, {
-						'open': function(){
-							fwEvents.trigger(getEventName(this.model, 'options-modal:open'), {
-								modal: this.modal,
-								item: this.model,
-								itemView: this
-							});
-						},
-						'render': function(){
-							fwEvents.trigger(getEventName(this.model, 'options-modal:render'), {
-								modal: this.modal,
-								item: this.model,
-								itemView: this
-							});
-						},
-						'close': function(){
-							fwEvents.trigger(getEventName(this.model, 'options-modal:close'), {
-								modal: this.modal,
-								item: this.model,
-								itemView: this
-							});
-						},
-						'change:values': function(){
-							fwEvents.trigger(getEventName(this.model, 'options-modal:change:values'), {
-								modal: this.modal,
-								item: this.model,
-								itemView: this
-							});
-						}
-					});
-				}
+				this.initOptions = options;
+				this.initOptions.templateData = this.initOptions.templateData || {};
 			},
 			template: _.template(
 				'<div class="pb-item-type-column pb-item custom-section">' +
@@ -110,7 +59,7 @@
 			),
 			render: function () {
 				{
-					var title = this.templateData.title,
+					var title = this.initOptions.templateData.title,
 						titleTemplate = itemData().title_template;
 
 					if (titleTemplate && this.model.get('atts')) {
@@ -138,7 +87,7 @@
 				}
 
 				this.defaultRender(
-					jQuery.extend({}, this.templateData, {title: title})
+					jQuery.extend({}, this.initOptions.templateData, {title: title})
 				);
 
 				this.$el[this.model.get('fw-collapse') ? 'addClass' : 'removeClass']('pb-item-section-collapsed');
@@ -159,8 +108,67 @@
 				'click .custom-section-delete': 'removeItem',
 				'click .custom-section-collapse': 'collapseItem'
 			},
+			lazyInitModal: function () {
+				this.lazyInitModal = function (){};
+
+				if (_.isEmpty(this.initOptions.modalOptions)) {
+					return;
+				}
+
+				var eventData = {modalSettings: {buttons: []}};
+
+				/**
+				 * eventData.modalSettings can be changed by reference
+				 */
+				triggerEvent(this.model, 'options-modal:settings', eventData);
+
+				this.modal = new fw.OptionsModal({
+					title: 'Section',
+					options: this.initOptions.modalOptions,
+					values: this.model.get('atts'),
+					size: this.initOptions.modalSize,
+					headerElements: itemData().header_elements
+				}, eventData.modalSettings);
+
+				this.listenTo(this.modal, 'change:values', function (modal, values) {
+					this.model.set('atts', values);
+				});
+
+				this.listenTo(this.modal, {
+					'open': function(){
+						fwEvents.trigger(getEventName(this.model, 'options-modal:open'), {
+							modal: this.modal,
+							item: this.model,
+							itemView: this
+						});
+					},
+					'render': function(){
+						fwEvents.trigger(getEventName(this.model, 'options-modal:render'), {
+							modal: this.modal,
+							item: this.model,
+							itemView: this
+						});
+					},
+					'close': function(){
+						fwEvents.trigger(getEventName(this.model, 'options-modal:close'), {
+							modal: this.modal,
+							item: this.model,
+							itemView: this
+						});
+					},
+					'change:values': function(){
+						fwEvents.trigger(getEventName(this.model, 'options-modal:change:values'), {
+							modal: this.modal,
+							item: this.model,
+							itemView: this
+						});
+					}
+				});
+			},
 			editOptions: function (e) {
 				e.stopPropagation();
+
+				this.lazyInitModal();
 
 				if (!this.modal) {
 					return;
