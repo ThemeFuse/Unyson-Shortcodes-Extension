@@ -1,18 +1,23 @@
 (function($, localized){
 	var eventsNamespace = '.templates-column',
 		loadingId = 'fw-builder-templates-type-column',
-		modal = new fw.OptionsModal({
-			title: localized.l10n.save_template,
-			options: [
-				{
-					'template_name': {
-						'type': 'text',
-						'label': localized.l10n.template_name
+		modal,
+		lazyInitModal = function () {
+			lazyInitModal = function (){};
+
+			modal = new fw.OptionsModal({
+				title: localized.l10n.save_template,
+				options: [
+					{
+						'template_name': {
+							'type': 'text',
+							'label': localized.l10n.template_name
+						}
 					}
-				}
-			],
-			values: ''
-		});
+				],
+				values: ''
+			});
+		};
 
 	fwEvents.on('fw:option-type:builder:templates:init', function(data){
 		var loading = data.tooltipLoading,
@@ -117,6 +122,8 @@
 				.on('click', function(e){
 					e.stopPropagation();
 					e.preventDefault();
+
+					lazyInitModal();
 
 					// reset previous values
 					modal.set('values', {}, {silent: true});
