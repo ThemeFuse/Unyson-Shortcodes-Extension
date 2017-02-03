@@ -34,65 +34,15 @@
 			initialize: function(options) {
 				this.defaultInitialize();
 
-				this.templateData = options.templateData;
+				this.initOptions = options;
+				this.initOptions.templateData = this.initOptions.templateData || {};
+				this.initOptions.modalOptions = this.initOptions.modalOptions || {};
 
 				this.widthChangerView = new PageBuilderColumnItemViewWidthChanger({
 					model: this.model,
 					view: this,
 					modelAttribute: 'width'
 				});
-
-				if (options.modalOptions) {
-					var eventData = {modalSettings: {buttons: []}};
-
-					/**
-					 * eventData.modalSettings can be changed by reference
-					 */
-					triggerEvent(this.model, 'options-modal:settings', eventData);
-
-					this.modal = new fw.OptionsModal({
-						title: itemData().l10n.title,
-						options: options.modalOptions,
-						values: this.model.get('atts'),
-						size: options.modalSize,
-						headerElements: itemData().header_elements
-					}, eventData.modalSettings);
-
-					this.listenTo(this.modal, 'change:values', function (modal, values) {
-						this.model.set('atts', values);
-					});
-
-					this.listenTo(this.modal, {
-						'open': function(){
-							fwEvents.trigger(getEventName(this.model, 'options-modal:open'), {
-								modal: this.modal,
-								item: this.model,
-								itemView: this
-							});
-						},
-						'render': function(){
-							fwEvents.trigger(getEventName(this.model, 'options-modal:render'), {
-								modal: this.modal,
-								item: this.model,
-								itemView: this
-							});
-						},
-						'close': function(){
-							fwEvents.trigger(getEventName(this.model, 'options-modal:close'), {
-								modal: this.modal,
-								item: this.model,
-								itemView: this
-							});
-						},
-						'change:values': function(){
-							fwEvents.trigger(getEventName(this.model, 'options-modal:change:values'), {
-								modal: this.modal,
-								item: this.model,
-								itemView: this
-							});
-						}
-					});
-				}
 			},
 			template: _.template(
 				'<div class="pb-item-type-column pb-item <% if (hasOptions) { print(' + '"has-options"' + ')} %>">' +
@@ -117,7 +67,7 @@
 				'</div>'
 			),
 			render: function() {
-				this.defaultRender(this.templateData);
+				this.defaultRender(this.initOptions.templateData);
 
 				this.$('.width-changer').append(this.widthChangerView.$el);
 				this.widthChangerView.delegateEvents();
@@ -140,8 +90,67 @@
 				'click .column-item-delete': 'removeItem',
 				'click .column-item-collapse': 'collapseItem'
 			},
+			lazyInitModal: function () {
+				this.lazyInitModal = function (){};
+
+				if (_.isEmpty(this.initOptions.modalOptions)) {
+					return;
+				}
+
+				var eventData = {modalSettings: {buttons: []}};
+
+				/**
+				 * eventData.modalSettings can be changed by reference
+				 */
+				triggerEvent(this.model, 'options-modal:settings', eventData);
+
+				this.modal = new fw.OptionsModal({
+					title: itemData().l10n.title,
+					options: this.initOptions.modalOptions,
+					values: this.model.get('atts'),
+					size: this.initOptions.modalSize,
+					headerElements: itemData().header_elements
+				}, eventData.modalSettings);
+
+				this.listenTo(this.modal, 'change:values', function (modal, values) {
+					this.model.set('atts', values);
+				});
+
+				this.listenTo(this.modal, {
+					'open': function(){
+						fwEvents.trigger(getEventName(this.model, 'options-modal:open'), {
+							modal: this.modal,
+							item: this.model,
+							itemView: this
+						});
+					},
+					'render': function(){
+						fwEvents.trigger(getEventName(this.model, 'options-modal:render'), {
+							modal: this.modal,
+							item: this.model,
+							itemView: this
+						});
+					},
+					'close': function(){
+						fwEvents.trigger(getEventName(this.model, 'options-modal:close'), {
+							modal: this.modal,
+							item: this.model,
+							itemView: this
+						});
+					},
+					'change:values': function(){
+						fwEvents.trigger(getEventName(this.model, 'options-modal:change:values'), {
+							modal: this.modal,
+							item: this.model,
+							itemView: this
+						});
+					}
+				});
+			},
 			editOptions: function (e) {
 				e.stopPropagation();
+
+				this.lazyInitModal();
 
 				if (!this.modal) {
 					return;
