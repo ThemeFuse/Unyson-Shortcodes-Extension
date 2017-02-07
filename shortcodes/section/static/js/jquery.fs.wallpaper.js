@@ -484,7 +484,7 @@
 		if (!data.posterLoaded) {
 			if (!data.source.poster) {
 				// data.source.poster = "http://img.youtube.com/vi/" + data.videoId + "/maxresdefault.jpg";
-				data.source.poster = "http://img.youtube.com/vi/" + data.videoId + "/0.jpg";
+				data.source.poster = "//img.youtube.com/vi/" + data.videoId + "/0.jpg";
 			}
 
 			data.posterLoaded = true;
