@@ -21,27 +21,31 @@ $table = $shortcodes->get_shortcode( 'table' );
 				<?php foreach ( $atts['table']['rows'] as $row_key => $row ): ?>
 					<?php if ( $col['name'] == 'desc-col' ) : ?>
                         <div class="fw-default-row">
-							<?php $value = $atts['table']['content'][ $row_key ][ $col_key ]['textarea']; ?>
-							<?php echo $value ?>
+							<?php echo fw_akg( 'textarea', $atts['table']['content'][ $row_key ][ $col_key ], '' ); ?>
                         </div>
 						<?php continue; endif; ?>
 					<?php if ( $row['name'] === 'heading-row' ): ?>
                         <div class="fw-heading-row">
-							<?php $value = $atts['table']['content'][ $row_key ][ $col_key ]['textarea']; ?>
                             <span>
-								<?php echo ( empty( $value ) && $col['name'] === 'desc-col' ) ? '&nbps;' : $value; ?>
+								<?php echo fw_akg(
+									'textarea',
+									$atts['table']['content'][ $row_key ][ $col_key ],
+									$col['name'] === 'desc-col' ? '&nbps;' : ''
+								); ?>
 							</span>
                         </div>
 					<?php elseif ( $row['name'] === 'pricing-row' ): ?>
                         <div class="fw-pricing-row">
-							<?php $amount = $atts['table']['content'][ $row_key ][ $col_key ]['amount'] ?>
-							<?php $desc = $atts['table']['content'][ $row_key ][ $col_key ]['description']; ?>
-                            <span>
-								<?php echo ( empty( $value ) && $col['name'] === 'desc-col' ) ? '&nbps;' : $amount; ?>
-							</span>
-                            <small>
-								<?php echo ( empty( $value ) && $col['name'] === 'desc-col' ) ? '&nbps;' : $desc; ?>
-                            </small>
+                            <span><?php echo fw_akg(
+		                            'amount',
+		                            $atts['table']['content'][ $row_key ][ $col_key ],
+		                            $col['name'] === 'desc-col' ? '&nbps;' : ''
+	                            ) ?></span>
+                            <small><?php echo fw_akg(
+									'description',
+									$atts['table']['content'][ $row_key ][ $col_key ],
+									$col['name'] === 'desc-col' ? '&nbps;' : ''
+								) ?></small>
                         </div>
 					<?php elseif ( $row['name'] == 'button-row' ) : ?>
 						<?php if ( $button = $table->get_button_shortcode() ): ?>
@@ -61,10 +65,9 @@ $table = $shortcodes->get_shortcode( 'table' );
 							</span>
                         </div>
 					<?php elseif ( $row['name'] === 'default-row' ) : ?>
-                        <div class="fw-default-row">
-							<?php $value = $atts['table']['content'][ $row_key ][ $col_key ]['textarea']; ?>
-							<?php echo $value ?>
-                        </div>
+                        <div class="fw-default-row"><?php
+							echo fw_akg( "textarea", $atts['table']['content'][ $row_key ][ $col_key ] )
+							?></div>
 					<?php endif; ?>
 				<?php endforeach; ?>
             </div>
