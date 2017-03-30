@@ -19,6 +19,7 @@ $options = array(
 		),
 		'choices' => $calendar_shortcode->_get_picker_choices(),
 		'show_borders' => false,
+		'hide_picker' => true
 	),
 	'template' => array(
 		'label'   => __('Calendar Type', 'fw' ),

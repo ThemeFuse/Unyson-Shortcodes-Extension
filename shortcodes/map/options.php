@@ -18,6 +18,7 @@ $options = array(
 		),
 		'choices' => $map_shortcode->_get_picker_choices(),
 		'show_borders' => false,
+		'hide_picker' => true
 	),
 	'gmap-key' => array_merge(
 		array(
