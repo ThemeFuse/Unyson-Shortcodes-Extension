@@ -6,11 +6,11 @@
 .fw-option-type-page-builder .builder-item .fw-shortcode-section-save {
 	display: inline-block;
 	width: 14px;
-	height: 13px;
-	margin: 2px 4px 0 0;
-	background: transparent url(save-icon.png) no-repeat scroll 0 0;
+	height: 14px;
+	margin: 0 4px 0 0;
+	background: transparent url(save-icon.svg) no-repeat scroll 0 0;
 }
 
 .fw-option-type-page-builder .builder-item .fw-shortcode-section-save:hover {
-	background-position-y: -14px;
+	background-position-y: -15px;
 }

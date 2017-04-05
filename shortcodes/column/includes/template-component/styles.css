@@ -6,12 +6,12 @@
 .fw-option-type-page-builder .builder-item .fw-shortcode-column-save {
 	display: inline-block;
 	width: 14px;
-	height: 13px;
+	height: 14px;
 	margin-right: 4px;
 	margin-left: 4px;
-	background: transparent url(save-icon.png) no-repeat scroll 0 0;
+	background: transparent url(save-icon.svg) no-repeat scroll 0 0;
 }
 
 .fw-option-type-page-builder .builder-item .fw-shortcode-column-save:hover {
-	background-position-y: -14px;
+	background-position-y: -15px;
 }
