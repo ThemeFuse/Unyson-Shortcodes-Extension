@@ -74,7 +74,7 @@ body.rtl .pb-item-type-column > .panel .controls {
 	content: "\f142"; /* .dashicons-arrow-up */
 }
 
-.builder-item.pb-item-column-collapsed > .pb-item-type-column > .builder-items {
+.builder-item.pb-item-column-collapsed > .pb-item-type-column .builder-items.ui-sortable {
 	min-height: 0.001px;
 	height: 0.001px;
 	overflow: hidden; /* insted of display:none, prevents glitch when the second section is collapsed */
