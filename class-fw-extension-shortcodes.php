@@ -228,7 +228,23 @@ class FW_Extension_Shortcodes extends FW_Extension
 			return;
 		}
 
+		/**
+		* @since 1.3.26
+		*/
+		do_action(
+			'fw:ext:shortcodes:enqueue_shortcodes_static:before',
+			$post->post_content
+		);
+		
 		$this->enqueue_shortcodes_static($post->post_content);
+		
+		/**
+		* @since 1.3.26
+		*/
+		do_action(
+			'fw:ext:shortcodes:enqueue_shortcodes_static:after',
+			$post->post_content
+		);
 	}
 
 	/**
