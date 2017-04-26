@@ -279,6 +279,15 @@ class FW_Extension_Shortcodes extends FW_Extension
 			/** @var WP_Post $post */
 			global $post;
 
+			/**
+			 * @since 1.3.26
+			 */
+			do_action('fw_ext_shortcodes_enqueue_static_before', $tag, array(
+				'raw_shortcode' => $shortcode,
+				'atts_string' => $shortcode[3],
+				'post' => $post
+			));
+
 			do_action('fw_ext_shortcodes_enqueue_static:'. $tag, array(
 				/**
 				 * Transform to array:
