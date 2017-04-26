@@ -282,7 +282,8 @@ class FW_Extension_Shortcodes extends FW_Extension
 			/**
 			 * @since 1.3.26
 			 */
-			do_action('fw_ext_shortcodes_enqueue_static_before', $tag, array(
+			do_action('fw_ext_shortcodes_enqueue_static_before', array(
+				'tag' => $tag,
 				'raw_shortcode' => $shortcode,
 				'atts_string' => $shortcode[3],
 				'post' => $post
