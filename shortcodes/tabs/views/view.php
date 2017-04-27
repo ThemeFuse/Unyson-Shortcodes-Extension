@@ -10,7 +10,7 @@
 <div class="fw-tabs-container" id="<?php echo esc_attr($tabs_id); ?>">
 	<div class="fw-tabs">
 		<ul>
-			<?php foreach ($atts['tabs'] as $key => $tab) : ?>
+			<?php foreach (fw_akg( 'tabs', $atts, array() ) as $key => $tab) : ?>
 				<li><a href="#<?php echo esc_attr($tabs_id . '-' . ($key + 1)); ?>"><?php echo $tab['tab_title']; ?></a></li>
 			<?php endforeach; ?>
 		</ul>

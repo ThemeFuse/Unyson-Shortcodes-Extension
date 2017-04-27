@@ -32,7 +32,7 @@ $id = uniqid( 'testimonials-' );
 	<?php endif; ?>
 
 	<div class="fw-testimonials-list" id="<?php echo esc_attr($id); ?>">
-		<?php foreach ($atts['testimonials'] as $testimonial): ?>
+		<?php foreach ( fw_akg( 'testimonials', $atts, array() ) as $testimonial ): ?>
 			<div class="fw-testimonials-item clearfix">
 				<div class="fw-testimonials-text">
 					<p><?php echo $testimonial['content']; ?></p>
