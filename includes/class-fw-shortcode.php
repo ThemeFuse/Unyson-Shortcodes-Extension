@@ -135,6 +135,16 @@ class FW_Shortcode {
 	}
 
 	/**
+	 * @param string $key
+	 * @param null|mixed|FW_Callback $default
+	 *
+	 * @return mixed|null
+	 */
+	public function get_option( $key, $default = null ) {
+		return fw_akg( $key, $this->get_options(), $default, '/' );
+	}
+
+	/**
 	 * Used as an public alias method of enqueue_static
 	 */
 	public function _enqueue_static() {
