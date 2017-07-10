@@ -379,13 +379,17 @@
 
 				openEditor: function ($cell) {
 					process.closeEditor();
-					$cell.find('.fw-active-content .fw-cell-option-wrapper > *').trigger('activate');
+					$cell.find(
+						'.fw-active-content .fw-cell-option-wrapper > .fw-backend-option-descriptor > *'
+					).trigger('activate');
 					process.setCurrentCell($cell);
 				},
 
 				closeEditor: function () {
 					if ($currentCell) {
-						$currentCell.find('.fw-active-content .fw-cell-option-wrapper > *').trigger('deactivate');
+						$currentCell.find(
+							'.fw-active-content .fw-cell-option-wrapper > .fw-backend-option-descriptor > *'
+						).trigger('deactivate');
 					}
 					process.setCurrentCell(false);
 				},
