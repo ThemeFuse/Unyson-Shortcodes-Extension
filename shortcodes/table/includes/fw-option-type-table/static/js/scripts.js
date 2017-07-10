@@ -174,7 +174,7 @@
 						classNames = rowClassNames.map(function (item) {
 							return item.value;
 						}).join(" "),
-						$selectCell = $select.parent(),
+						$selectCell = $select.parent().parent(),
 						$row = $selectCell.parent();
 
 					$row.removeClass(classNames).addClass(newClass);
@@ -208,7 +208,7 @@
 						classNames = colClassNames.map(function (item) {
 							return item.value;
 						}).join(" "),
-						$cell = $select.parent(),
+						$cell = $select.parent().parent(),
 						colId = parseInt($cell.data('col')),
 						$elements = $table.find('[data-col=' + colId + ']');
 
