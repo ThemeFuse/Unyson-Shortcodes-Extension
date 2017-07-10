@@ -310,7 +310,9 @@
 					var $templateRow = $tableBuilder.find('.fw-template-row');
 					lastRow++;
 
-					var $insertedRow = $templateRow.clone().removeClass('fw-template-row').attr('data-row', lastRow).insertBefore($templateRow);
+					var $insertedRow = $templateRow.clone().removeClass(
+						'fw-template-row fw-filter-from-serialization'
+					).attr('data-row', lastRow).insertBefore($templateRow);
 
 					$insertedRow.find('.fw-table-cell-worksheet').each(function(){
 						var col = $(this).data('col');

@@ -126,8 +126,7 @@ unset(
 
 
 		<?php /** Start template row */ ?>
-		<div class="fw-table-row fw-template-row">
-
+		<div class="fw-table-row fw-template-row fw-filter-from-serialization">
 			<div class='fw-table-cell fw-table-cell-options'>
 				<i class="fa fa-unsorted fw-table-gripper"></i>
 				<?php $data_rows = array(
