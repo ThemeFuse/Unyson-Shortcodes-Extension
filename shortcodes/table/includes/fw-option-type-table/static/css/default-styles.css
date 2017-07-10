@@ -79,6 +79,11 @@ body.rtl .fw-option-type-table .fw-table-row-delete {
 	border-bottom: none;
 }
 
+.fw-option-type-table .fw-table-cell-options > .fw-backend-option-descriptor,
+.fw-option-type-table .fw-table-col-option > .fw-backend-option-descriptor{
+	display: inline;
+}
+
 .fw-option-type-table .empty-cell {
 	border: none;
 }
