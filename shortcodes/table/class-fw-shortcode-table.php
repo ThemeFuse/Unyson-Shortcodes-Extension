@@ -30,10 +30,16 @@ class FW_Shortcode_Table extends FW_Shortcode {
 	 * @param array $data
 	 */
 	public function _action_enqueue_buttons ($data) {
-		$attr = fw_ext_shortcodes_decode_attr(
-			shortcode_parse_atts( $data['atts_string'] ),
-			'table', 0
-		);
+		$attr = null;
+
+		if (isset($data['atts_full'])) {
+			$attr = $data['atts_full'];
+		} else {
+			$attr = fw_ext_shortcodes_decode_attr(
+				shortcode_parse_atts( $data['atts_string'] ),
+				'table', 0
+			);
+		}
 
 		if (is_wp_error($attr)) {
 			return;
