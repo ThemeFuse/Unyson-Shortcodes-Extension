@@ -143,7 +143,7 @@ class FW_Extension_Shortcodes extends FW_Extension
 	public function _parse_single_shortcode( $shortcode ) {
 		$result = array();
 
-		$icon = $this->_locate_shortocode_icon($shortcode);
+		$icon = $this->_locate_shortcode_icon($shortcode);
 
 		if ($icon) {
 			$result['icon'] = $icon;
@@ -445,7 +445,7 @@ class FW_Extension_Shortcodes extends FW_Extension
 			if (
 				!isset($item_data['icon'])
 				&&
-				($icon = $this->_locate_shortocode_icon($shortcode))
+				($icon = $this->_locate_shortcode_icon($shortcode))
 			) {
 				$item_data['icon'] = $icon;
 			}
@@ -464,15 +464,18 @@ class FW_Extension_Shortcodes extends FW_Extension
 		}
 	}
 
-	public function _locate_shortocode_icon($shortcode) {
-		$maybe_svg = $shortcode->locate_URI('/static/img/page_builder.svg');
+	public function _locate_shortcode_icon($shortcode) {
+		$maybe_svg = $shortcode->locate_path('/static/img/page_builder.svg');
 
 		if (! $maybe_svg) {
 			$maybe_png = $shortcode->locate_URI('/static/img/page_builder.png');
 			return $maybe_png;
 		}
 
-		return $maybe_svg;
+		/**
+		 * Put SVG inline, do not wrap it into an <img> tag.
+		 */
+		return trim(fw_render_view($maybe_svg));
 	}
 
 	public function add_simple_shortcodes_data_to_filter( $structure ) {
