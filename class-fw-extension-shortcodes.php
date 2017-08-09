@@ -143,7 +143,7 @@ class FW_Extension_Shortcodes extends FW_Extension
 	public function _parse_single_shortcode( $shortcode ) {
 		$result = array();
 
-		$icon = $shortcode->locate_URI('/static/img/page_builder.png');
+		$icon = $this->_locate_shortocode_icon($shortcode);
 
 		if ($icon) {
 			$result['icon'] = $icon;
@@ -445,7 +445,7 @@ class FW_Extension_Shortcodes extends FW_Extension
 			if (
 				!isset($item_data['icon'])
 				&&
-				($icon = $shortcode->locate_URI('/static/img/page_builder.png'))
+				($icon = $this->_locate_shortocode_icon($shortcode))
 			) {
 				$item_data['icon'] = $icon;
 			}
@@ -462,6 +462,13 @@ class FW_Extension_Shortcodes extends FW_Extension
 
 			return $item_data;
 		}
+	}
+
+	public function _locate_shortocode_icon($shortcode) {
+		$maybe_svg = $shortcode->locate_URI('/static/img/page_builder.svg');
+		$maybe_png = $shortcode->locate_URI('/static/img/page_builder.png');
+
+		return $maybe_svg || $maybe_png;
 	}
 
 	public function add_simple_shortcodes_data_to_filter( $structure ) {
