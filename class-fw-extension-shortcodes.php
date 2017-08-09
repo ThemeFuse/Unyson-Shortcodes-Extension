@@ -468,7 +468,11 @@ class FW_Extension_Shortcodes extends FW_Extension
 		$maybe_svg = $shortcode->locate_URI('/static/img/page_builder.svg');
 		$maybe_png = $shortcode->locate_URI('/static/img/page_builder.png');
 
-		return $maybe_svg || $maybe_png;
+		if (! $maybe_svg) {
+			return $maybe_png;
+		}
+
+		return $maybe_svg;
 	}
 
 	public function add_simple_shortcodes_data_to_filter( $structure ) {
