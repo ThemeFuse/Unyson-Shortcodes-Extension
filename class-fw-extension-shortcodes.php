@@ -466,9 +466,9 @@ class FW_Extension_Shortcodes extends FW_Extension
 
 	public function _locate_shortocode_icon($shortcode) {
 		$maybe_svg = $shortcode->locate_URI('/static/img/page_builder.svg');
-		$maybe_png = $shortcode->locate_URI('/static/img/page_builder.png');
 
 		if (! $maybe_svg) {
+			$maybe_png = $shortcode->locate_URI('/static/img/page_builder.png');
 			return $maybe_png;
 		}
 
