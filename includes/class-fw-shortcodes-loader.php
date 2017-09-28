@@ -234,50 +234,61 @@ class _FW_Shortcodes_Loader
 		}
 	}
 
-	private static function load_shortcode($data)
-	{
-		$tag          = $data['tag'];
-		$path         = $data['path'];
-		$uri          = $data['uri'];
-		$dir_name     = strtolower(basename($path));
-		$class_file   = "$path/class-fw-shortcode-$dir_name.php";
+	private static function load_shortcode( $data ) {
+		$tag        = $data['tag'];
+		$path       = $data['path'];
+		$uri        = $data['uri'];
+		$dir_name   = strtolower( basename( $path ) );
+		$class_file = "{$path}/class-fw-shortcode-{$dir_name}.php";
 
 		$args = array(
 			'tag'           => $tag,
 			'path'          => $path,
 			'uri'           => $uri,
-			'rewrite_paths' => !empty($data['rewrite_paths']) ? $data['rewrite_paths'] : array(),
-			'rewrite_uris'  => !empty($data['rewrite_uris'])  ? $data['rewrite_uris']  : array()
+			'rewrite_paths' => ! empty( $data['rewrite_paths'] ) ? $data['rewrite_paths'] : array(),
+			'rewrite_uris'  => ! empty( $data['rewrite_uris'] ) ? $data['rewrite_uris'] : array()
 		);
 		$custom_class_found = false;
 
+		// try to find class in rewrite paths first
+		if ( ! empty( $data['rewrite_paths'] ) ) {
+			foreach ( array_reverse( $data['rewrite_paths'] ) as $rewrite_path ) {
+				$rewrite_class_file = "{$rewrite_path}/class-fw-shortcode-{$dir_name}.php";
+
+				if ( file_exists( $rewrite_class_file ) ) {
+					$class_file = $rewrite_class_file;
+					break;
+				}
+			}
+		}
+
 		// try to find a custom class for the shortcode
-		if (file_exists($class_file)) {
+		if ( file_exists( $class_file ) ) {
 			require $class_file;
 
-			$class_name = explode('_', $tag);
-			$class_name = array_map('ucfirst', $class_name);
-			$class_name = 'FW_Shortcode_' . implode('_', $class_name);
+			$class_name = explode( '_', $tag );
+			$class_name = array_map( 'ucfirst', $class_name );
+			$class_name = 'FW_Shortcode_' . implode( '_', $class_name );
 
-			if (!class_exists($class_name)) {
+			if ( ! class_exists( $class_name ) ) {
 				trigger_error(
-					sprintf(__('Class file found for shortcode %s but no class %s found', 'fw'), $tag, $class_name),
+					sprintf( __( 'Class file found for shortcode %s but no class %s found', 'fw' ), $tag, $class_name ),
 					E_USER_WARNING
 				);
-			} elseif (!is_subclass_of($class_name, 'FW_Shortcode')) {
+			} elseif ( ! is_subclass_of( $class_name, 'FW_Shortcode' ) ) {
 				trigger_error(
-					sprintf(__('The class %s must extend from FW_Shortcode', 'fw'), $class_name),
+					sprintf( __( 'The class %s must extend from FW_Shortcode', 'fw' ), $class_name ),
 					E_USER_WARNING
 				);
 			} else {
-				$shortcode_instance  = new $class_name($args);
-				$custom_class_found  = true;
+				$shortcode_instance = new $class_name( $args );
+				$custom_class_found = true;
 			}
 		}
 
 		// if no custom shortcode class found instantiate a default one
-		if (!$custom_class_found) {
-			$shortcode_instance = new FW_Shortcode($args);
+		if ( ! $custom_class_found ) {
+			$shortcode_instance = new FW_Shortcode( $args );
 		}
 
 		return $shortcode_instance;
