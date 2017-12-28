@@ -75,6 +75,8 @@ class Page_Builder_Column_Item extends Page_Builder_Item {
 
 	public function get_value_from_attributes( $attributes ) {
 		$attributes['type'] = $this->get_type();
+		$original_attributes = $attributes;
+
 		if ( ! isset( $attributes['width'] ) ) {
 			$attributes['width'] = fw_ext_builder_get_item_width( $this->get_builder_type() );
 			end( $attributes['width'] ); // move to the last width (usually it's the biggest)
@@ -82,6 +84,7 @@ class Page_Builder_Column_Item extends Page_Builder_Item {
 		}
 
 		$options = $this->get_shortcode_options();
+
 		if ( ! empty( $options ) ) {
 			if ( empty( $attributes['atts'] ) ) {
 				/**
@@ -112,7 +115,11 @@ class Page_Builder_Column_Item extends Page_Builder_Item {
 			}
 		}
 
-		return $attributes;
+		return apply_filters(
+			'fw:ext:shortcodes:column:value-from-attributes',
+			$attributes,
+			$original_attributes
+		);
 	}
 
 	public function get_shortcode_data( $atts = array() ) {
