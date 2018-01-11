@@ -30,10 +30,10 @@ class FW_Shortcode_Section extends FW_Shortcode
 	{
 		$config = $this->get_config('page_builder');
 
-		$icon = $this->locate_path( "/thumbnails/section.svg" );
+		$icon = $this->locate_path( "/static/img/page_builder.svg" );
 
 		if (!$icon) {
-			$icon = $this->locate_URI( "/thumbnails/section.png" );
+			$icon = $this->locate_URI( "/static/img/page_builder.png" );
 		} else {
 			$icon = file_get_contents($icon);
 		}
