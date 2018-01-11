@@ -26,17 +26,27 @@ class FW_Shortcode_Section extends FW_Shortcode
 		return array_merge( $structure, $data );
 	}
 
-	private function get_shortcode_config()
+	public function get_shortcode_config()
 	{
 		$config = $this->get_config('page_builder');
+
+		$icon = $this->locate_path( "/thumbnails/section.svg" );
+
+		if (!$icon) {
+			$icon = $this->locate_URI( "/thumbnails/section.png" );
+		} else {
+			$icon = file_get_contents($icon);
+		}
+
 		return array_merge(
 			array(
 				'tab'         => __('Layout Elements', 'fw'),
 				'title'       => __('Section', 'fw'),
 				'description' => __('Creates a section', 'fw'),
 				'title_template' => null,
+				'icon' => $icon
 			),
-			is_array($config) ? $config : array()
+			(is_array($config) ? $config : array())
 		);
 	}
 
