@@ -117,7 +117,7 @@
 
 	fwEvents.on('fw:page-builder:shortcode:column:controls', function(data){
 		data.$controls.prepend(
-			$('<i class="fw-shortcode-column-save"></i>')
+			$('<i class="fw-shortcode-column-save dashicons dashicons-download"></i>')
 				.attr('data-hover-tip', localized.l10n.save_template_tooltip)
 				.on('click', function(e){
 					e.stopPropagation();

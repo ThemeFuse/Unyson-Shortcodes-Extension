@@ -1,17 +1,10 @@
 .fw-builder-templates-types > .fw-builder-templates-type-column > .fw-builder-templates-type-content .load-template-title {
 	margin-top: 0;
 }
-
-
 .fw-option-type-page-builder .builder-item .fw-shortcode-column-save {
 	display: inline-block;
 	width: 14px;
 	height: 14px;
 	margin-right: 4px;
 	margin-left: 4px;
-	background: transparent url(save-icon.svg) no-repeat scroll 0 0;
-}
-
-.fw-option-type-page-builder .builder-item .fw-shortcode-column-save:hover {
-	background-position-y: -15px;
 }

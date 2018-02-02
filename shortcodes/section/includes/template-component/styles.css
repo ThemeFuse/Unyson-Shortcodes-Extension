@@ -1,16 +1,9 @@
 .fw-builder-templates-types > .fw-builder-templates-type-section > .fw-builder-templates-type-content .load-template-title {
 	margin-top: 0;
 }
-
-
 .fw-option-type-page-builder .builder-item .fw-shortcode-section-save {
 	display: inline-block;
 	width: 14px;
 	height: 14px;
 	margin: 0 4px 0 0;
-	background: transparent url(save-icon.svg) no-repeat scroll 0 0;
-}
-
-.fw-option-type-page-builder .builder-item .fw-shortcode-section-save:hover {
-	background-position-y: -15px;
 }
