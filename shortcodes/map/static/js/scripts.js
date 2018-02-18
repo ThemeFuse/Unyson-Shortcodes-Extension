@@ -48,7 +48,7 @@
 									"<div class='infowindow-content'>" +
 										"<% if ( isNotEmptyString(location.url) || isNotEmptyString(location.title) ) { %>" +
 											"<div class='infowindow-title'>" +
-												"<% if ( isNotEmptyString(location.url) ) { %><a href='<%- location.url %>'><% } %><%- isNotEmptyString(location.title) ?  location.title : location.url  %><% if ( isNotEmptyString(location.url) ) { %></a><% } %>" +
+												"<a href='<%- location.url %>'><%- isNotEmptyString(location.title) ?  location.title : location.url  %></a>" +
 											"</div>" +
 										"<% } %>" +
 										"<% if ( isNotEmptyString(location.description) ) { %>"+
