@@ -426,20 +426,20 @@ class FW_Extension_Shortcodes extends FW_Extension
 
 			$item_data = array_merge(
 				array(
-					'tab'   => '~',
-					'title' => $tag,
-					'tag'	=> $tag,
-					'description' => '',
-					'localize' => array(
-						'edit' => __( 'Edit', 'fw' ),
-						'remove' => __( 'Remove', 'fw' ),
+					'tab'            => '~',
+					'title'          => $tag,
+					'tag'            => $tag,
+					'description'    => '',
+					'localize'       => array(
+						'edit'      => __( 'Edit', 'fw' ),
+						'remove'    => __( 'Remove', 'fw' ),
 						'duplicate' => __( 'Duplicate', 'fw' ),
 					),
-					'icon' => null,
+					'icon'           => null,
 					'title_template' => null,
-					'popup_size' => 'small'
+					'popup_size'     => 'small'
 				),
-				$config
+				apply_filters( 'fw_ext:shortcodes:config_shortcode', $config, $tag )
 			);
 
 			if (
