@@ -15,17 +15,7 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 
 	private function get_shortcode_config()
 	{
-		$shortcode_instance = fw_ext('shortcodes')->get_shortcode('section');
-		$config = $shortcode_instance->get_config('page_builder');
-		return array_merge(
-			array(
-				'tab'         => __('Layout Elements', 'fw'),
-				'title'       => __('Section', 'fw'),
-				'description' => __('Creates a section', 'fw'),
-				'title_template' => null,
-			),
-			is_array($config) ? $config : array()
-		);
+		return fw_ext( 'shortcodes' )->get_shortcode( 'section' )->get_shortcode_config();
 	}
 
 	/**
