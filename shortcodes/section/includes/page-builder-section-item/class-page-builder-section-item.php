@@ -15,9 +15,17 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 
 	private function get_shortcode_config()
 	{
-		return fw_ext(
-			'shortcodes'
-		)->get_shortcode('section')->get_shortcode_config();
+		$shortcode_instance = fw_ext('shortcodes')->get_shortcode('section');
+		$config = $shortcode_instance->get_config('page_builder');
+		return array_merge(
+			array(
+				'tab'         => __('Layout Elements', 'fw'),
+				'title'       => __('Section', 'fw'),
+				'description' => __('Creates a section', 'fw'),
+				'title_template' => null,
+			),
+			is_array($config) ? $config : array()
+		);
 	}
 
 	/**
@@ -103,5 +111,4 @@ class Page_Builder_Section_Item extends Page_Builder_Item
 		return $return;
 	}
 }
-
 FW_Option_Type_Builder::register_item_type('Page_Builder_Section_Item');
