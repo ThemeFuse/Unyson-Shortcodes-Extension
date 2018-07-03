@@ -250,18 +250,6 @@ class _FW_Shortcodes_Loader
 		);
 		$custom_class_found = false;
 
-		// try to find class in rewrite paths first
-		if ( ! empty( $data['rewrite_paths'] ) ) {
-			foreach ( array_reverse( $data['rewrite_paths'] ) as $rewrite_path ) {
-				$rewrite_class_file = "{$rewrite_path}/class-fw-shortcode-{$dir_name}.php";
-
-				if ( file_exists( $rewrite_class_file ) ) {
-					$class_file = $rewrite_class_file;
-					break;
-				}
-			}
-		}
-
 		// try to find a custom class for the shortcode
 		if ( file_exists( $class_file ) ) {
 			require $class_file;
